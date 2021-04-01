@@ -54,7 +54,8 @@ pub extern "C" fn rust_main() -> ! {
     for (i, value) in vec.into_iter().enumerate() {
         assert_eq!(value, i);
     }
-    println!("heap test passed, Zhang Xuan");
+    println!("heap test passed");
+    println!("Name: Xuan Zhang");
     println!("shutdown!");
     sbi::shutdown();
 }

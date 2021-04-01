@@ -2,13 +2,13 @@
 
 ## Description
 
-This is a Github Repository of the course *Operating System*.
+This is a GitHub repository of the course *Operating System*, based on *rCore*.
 
 ## Information 
 
 |  Name   | Student ID  |
 |  :----:  | :----:  |
-| Zhang Xuan  | 2019141460363 |
+| Xuan Zhang  | 2019141460363 |
 
 ## Usage
 ```bash

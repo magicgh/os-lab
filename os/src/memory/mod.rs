@@ -6,11 +6,14 @@
 // 所以在模块范围内不提示「未使用的函数」等警告
 #![allow(dead_code)]
 
-
+pub mod address;
 pub mod config;
 pub mod heap;
 
-pub use {config::*};
+/// 一个缩写，模块中一些函数会使用
+pub type MemoryResult<T> = Result<T, &'static str>;
+
+pub use {address::*, config::*};
 
 /// 初始化内存相关的子模块
 ///

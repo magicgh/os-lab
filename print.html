@@ -196,7 +196,7 @@
 </ul>
 <h3 id="example"><a class="header" href="#example">Example</a></h3>
 <p><img src="virtual_memory/./assets/algorithm_compare.png" alt="Algorithm Compare" /></p>
-<h2 id="unfrequent-algorithms"><a class="header" href="#unfrequent-algorithms">Unfrequent Algorithms</a></h2>
+<h2 id="infrequent-algorithms"><a class="header" href="#infrequent-algorithms">Infrequent Algorithms</a></h2>
 <h3 id="improved-clock"><a class="header" href="#improved-clock">Improved Clock</a></h3>
 <ol>
 <li>Not accessed recently, not modified (u = 0; m = 0)</li>
@@ -215,7 +215,7 @@ use bit to 0 on each frame that is bypassed.</li>
 of the frames in the set will have a use bit of 0. Repeat step 1 and, if necessary,
 step 2. This time, a frame will be found for the replacement.</li>
 </ul>
-<p>In breif, the transitions of each state are shown in the table below, </p>
+<p>In brief, the transitions of each state are shown in the table below, </p>
 <table><thead><tr><th align="center">Use Bit</th><th align="center">Modify Bit</th><th align="center">Next State</th></tr></thead><tbody>
 <tr><td align="center">0</td><td align="center">0</td><td align="center">swap</td></tr>
 <tr><td align="center">0</td><td align="center">1</td><td align="center">0 0</td></tr>
@@ -229,8 +229,8 @@ step 2. This time, a frame will be found for the replacement.</li>
 <li>When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, the block with the smallest count is selected.</li>
 <li>Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals.</li>
 </ul>
-<h2 id="belady-anamoly"><a class="header" href="#belady-anamoly">Belady Anamoly</a></h2>
-<p>Conficts between the FIFO algorithm and the memory dynamic feature.</p>
+<h2 id="belady-anomaly"><a class="header" href="#belady-anomaly">Belady Anomaly</a></h2>
+<p>Conflicts between the FIFO algorithm and the memory dynamic feature.</p>
 
                     </main>
 

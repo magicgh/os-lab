@@ -38,23 +38,11 @@ pub extern "C" fn rust_main() -> ! {
     // 初始化各种模块
     interrupt::init();
     memory::init();
-    
-    // 物理页分配
-    
-    let new_frame = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
-        Result::Ok(frame_tracker) => frame_tracker,
-        Result::Err(err) => panic!("{}", err)
-    };
-    println!("{}", new_frame.address());
-    
-    unsafe {
-        for i in 0..=1023 {
-            let target_addr = new_frame.address().0 + i*4;
-            let val = target_addr as *mut i32;
-            *val = i as i32;
-            println!("value: {}, address: {}", *val, target_addr);
-        }
-    }
-    
+
+    let remap = memory::mapping::MemorySet::new_kernel().unwrap();
+    remap.activate();
+
+    println!("kernel remapped");
+
     sbi::shutdown();
 }

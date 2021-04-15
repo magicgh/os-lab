@@ -40,18 +40,21 @@ pub extern "C" fn rust_main() -> ! {
     memory::init();
     
     // 物理页分配
-    for _ in 0..2 {
-        let frame_0 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
-            Result::Ok(frame_tracker) => frame_tracker,
-            Result::Err(err) => panic!("{}", err)
-        };
-        let frame_1 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
-            Result::Ok(frame_tracker) => frame_tracker,
-            Result::Err(err) => panic!("{}", err)
-        };
-        println!("{} and {}", frame_0.address(), frame_1.address());
+    
+    let new_frame = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
+        Result::Ok(frame_tracker) => frame_tracker,
+        Result::Err(err) => panic!("{}", err)
+    };
+    println!("{}", new_frame.address());
+    
+    unsafe {
+        for i in 0..=1023 {
+            let target_addr = new_frame.address().0 + i*4;
+            let val = target_addr as *mut i32;
+            *val = i as i32;
+            println!("value: {}, address: {}", *val, target_addr);
+        }
     }
-    let name = "Xuan Zhang";
-    println!("Hi, {}.", name);
+    
     sbi::shutdown();
 }

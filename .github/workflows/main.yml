@@ -19,6 +19,9 @@ jobs:
 
       - run: cd ./docs && mdbook build
 
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -26,4 +29,4 @@ jobs:
           publish_dir: ./docs/book
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: ':rocket: ${{ github.event.head_commit.message }}'
+          commit_message: ':rocket:'

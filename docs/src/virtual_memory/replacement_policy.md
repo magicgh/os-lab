@@ -27,7 +27,7 @@
 
 ![Algorithm Compare](./assets/algorithm_compare.png)
 
-## Unfrequent Algorithms
+## Infrequent Algorithms
 
 ### Improved Clock
 
@@ -46,7 +46,7 @@ use bit to 0 on each frame that is bypassed.
 of the frames in the set will have a use bit of 0. Repeat step 1 and, if necessary,
 step 2. This time, a frame will be found for the replacement.
 
-In breif, the transitions of each state are shown in the table below, 
+In brief, the transitions of each state are shown in the table below, 
 
 | Use Bit | Modify Bit| Next State |
 | :---: | :---: | :---: |
@@ -60,9 +60,9 @@ In breif, the transitions of each state are shown in the table below,
 * could be implemented by associating a counter with each block.
 * When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, the block with the smallest count is selected.
 * Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals.
-## Belady Anamoly
+## Belady Anomaly
 
-Conficts between the FIFO algorithm and the memory dynamic feature.
+Conflicts between the FIFO algorithm and the memory dynamic feature.
 
 
 

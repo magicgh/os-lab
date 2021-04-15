@@ -15,5 +15,11 @@ Cargo.lock
 os/target
 user/target
 user/build
+
+### mdBook
+# Rust 编译文件
+docs/target
+docs/book 
+
 # GDB 临时文件
 .gdb_history

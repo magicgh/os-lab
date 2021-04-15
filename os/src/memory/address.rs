@@ -7,7 +7,7 @@ use super::config::PAGE_SIZE;
 /// 物理地址
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct  PhysicalAddress(pub usize);
+pub struct PhysicalAddress(pub usize);
 
 /// 物理页号
 #[repr(C)]

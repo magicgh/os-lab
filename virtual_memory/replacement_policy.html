@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Hardware Interrupt</title>
+        <title>Replacement Policy</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../ch0/index.html"><strong aria-hidden="true">1.</strong> Chapter 0</a></li><li class="chapter-item expanded "><a href="../ch1/index.html"><strong aria-hidden="true">2.</strong> Chapter 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ch1/hardware_interrupt.html" class="active"><strong aria-hidden="true">2.1.</strong> Hardware Interrupt</a></li><li class="chapter-item expanded "><a href="../ch1/exception.html"><strong aria-hidden="true">2.2.</strong> Exception</a></li><li class="chapter-item expanded "><a href="../ch1/system_call.html"><strong aria-hidden="true">2.3.</strong> System Call</a></li></ol></li><li class="chapter-item expanded "><a href="../ch2/index.html"><strong aria-hidden="true">3.</strong> Chapter 2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ch2/fixed_partitioning.html"><strong aria-hidden="true">3.1.</strong> Fixed Partitioning</a></li><li class="chapter-item expanded "><a href="../ch2/dynamic_partitioning.html"><strong aria-hidden="true">3.2.</strong> Dynamic Partitioning</a></li><li class="chapter-item expanded "><a href="../ch2/buddy_system.html"><strong aria-hidden="true">3.3.</strong> Buddy System</a></li><li class="chapter-item expanded "><a href="../ch2/paging.html"><strong aria-hidden="true">3.4.</strong> Paging</a></li><li class="chapter-item expanded "><a href="../ch2/segmentation.html"><strong aria-hidden="true">3.5.</strong> Segmentation</a></li></ol></li><li class="chapter-item expanded "><a href="../ch3/index.html"><strong aria-hidden="true">4.</strong> Chapter 3</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ch3/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../ch3/replacement_policy.html"><strong aria-hidden="true">4.2.</strong> Replacement Policy</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exception_handling/hardware_interrupt.html"><strong aria-hidden="true">2.1.</strong> Hardware Interrupt</a></li><li class="chapter-item expanded "><a href="../exception_handling/exception.html"><strong aria-hidden="true">2.2.</strong> Exception</a></li><li class="chapter-item expanded "><a href="../exception_handling/system_call.html"><strong aria-hidden="true">2.3.</strong> System Call</a></li></ol></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/fixed_partitioning.html"><strong aria-hidden="true">3.1.</strong> Fixed Partitioning</a></li><li class="chapter-item expanded "><a href="../memory_management/dynamic_partitioning.html"><strong aria-hidden="true">3.2.</strong> Dynamic Partitioning</a></li><li class="chapter-item expanded "><a href="../memory_management/buddy_system.html"><strong aria-hidden="true">3.3.</strong> Buddy System</a></li><li class="chapter-item expanded "><a href="../memory_management/paging.html"><strong aria-hidden="true">3.4.</strong> Paging</a></li><li class="chapter-item expanded "><a href="../memory_management/segmentation.html"><strong aria-hidden="true">3.5.</strong> Segmentation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy.html" class="active"><strong aria-hidden="true">4.2.</strong> Replacement Policy</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,22 +163,82 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="hardware-interrupt"><a class="header" href="#hardware-interrupt">Hardware Interrupt</a></h1>
+                        <h1 id="replacement-policy"><a class="header" href="#replacement-policy">Replacement Policy</a></h1>
+<h2 id="basic-algorithms"><a class="header" href="#basic-algorithms">Basic Algorithms</a></h2>
+<h3 id="optimal"><a class="header" href="#optimal">Optimal</a></h3>
+<ul>
+<li>Selects for replacement that page for which the time to the next reference is the longest.</li>
+<li>Impossible to implement</li>
+<li>Benchmark algorithm</li>
+</ul>
+<h3 id="least-recently-used-lru"><a class="header" href="#least-recently-used-lru">Least recently used (LRU)</a></h3>
+<ul>
+<li>Replaces the page in memory that has not been referenced for the long time.</li>
+<li>Does nearly as well as the optimal policy.</li>
+<li>Implement by linked list or stack, ordered by visit time, with high time complexity.</li>
+</ul>
+<h3 id="first-in-first-out-fifo"><a class="header" href="#first-in-first-out-fifo">First-in-first-out (FIFO)</a></h3>
+<ul>
+<li>Process as a circular buffer</li>
+<li>May cause <em>belady anomaly</em></li>
+<li>Easy to implement</li>
+</ul>
+<h3 id="clock"><a class="header" href="#clock">Clock</a></h3>
+<ul>
+<li>Organize frames in a circular buffer.</li>
+<li>First loaded or subsequently referenced, use bit = 1.</li>
+<li>When replace, find a frame with use bit = 0, and reset use bit of frames that each scan encounters to 0.</li>
+<li>If all of the frames have a use bit of 1, then the pointer will make one complete cycle through the buffer, setting all the use bits to 0, and stop at its original position, replacing the page in that frame.</li>
+<li>An implementation of LRU using FIFO mechanism.</li>
+</ul>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<p><img src="./assets/algorithm_compare.png" alt="Algorithm Compare" /></p>
+<h2 id="infrequent-algorithms"><a class="header" href="#infrequent-algorithms">Infrequent Algorithms</a></h2>
+<h3 id="improved-clock"><a class="header" href="#improved-clock">Improved Clock</a></h3>
+<ol>
+<li>Not accessed recently, not modified (u = 0; m = 0)</li>
+<li>Accessed recently, not modified (u = 1; m = 0)</li>
+<li>Not accessed recently, modified (u = 0; m = 1)</li>
+<li>Accessed recently, modified (u = 1; m = 1)</li>
+</ol>
+<ul>
+<li>Beginning at the current position of the pointer, scan the frame buffer. During
+this scan, make no changes to the use bit. The first frame encountered with
+(u = 0; m = 0) is selected for replacement.</li>
+<li>If step 1 fails, scan again, looking for the frame with (u = 0; m = 1). The first
+such frame encountered is selected for replacement. During this scan, set the
+use bit to 0 on each frame that is bypassed.</li>
+<li>If step 2 fails, the pointer should have returned to its original position and all
+of the frames in the set will have a use bit of 0. Repeat step 1 and, if necessary,
+step 2. This time, a frame will be found for the replacement.</li>
+</ul>
+<p>In brief, the transitions of each state are shown in the table below, </p>
+<table><thead><tr><th align="center">Use Bit</th><th align="center">Modify Bit</th><th align="center">Next State</th></tr></thead><tbody>
+<tr><td align="center">0</td><td align="center">0</td><td align="center">swap</td></tr>
+<tr><td align="center">0</td><td align="center">1</td><td align="center">0 0</td></tr>
+<tr><td align="center">1</td><td align="center">0</td><td align="center">0 0</td></tr>
+<tr><td align="center">1</td><td align="center">1</td><td align="center">0 1</td></tr>
+</tbody></table>
+<h3 id="least-frequently-used"><a class="header" href="#least-frequently-used">Least Frequently Used</a></h3>
+<ul>
+<li>Replace the block in the set that has experienced the fewest references.</li>
+<li>could be implemented by associating a counter with each block.</li>
+<li>When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, the block with the smallest count is selected.</li>
+<li>Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals.</li>
+</ul>
+<h2 id="belady-anomaly"><a class="header" href="#belady-anomaly">Belady Anomaly</a></h2>
+<p>Conflicts between the FIFO algorithm and the memory dynamic feature.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../ch1/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../virtual_memory/preliminary_concepts.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="../ch1/exception.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -188,15 +248,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../ch1/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../virtual_memory/preliminary_concepts.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a rel="next" href="../ch1/exception.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

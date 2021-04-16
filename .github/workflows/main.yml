@@ -19,9 +19,6 @@ jobs:
 
       - run: cd ./docs && mdbook build
 
-      - name: Add SHORT_SHA env property with commit short sha
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

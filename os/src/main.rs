@@ -4,7 +4,7 @@
 // 不使用 main 函数作为程序入口
 #![no_main]
 
-// 内嵌汇编及内嵌整个汇编文件
+// 内嵌汇编及内嵌整个汇编文件`
 #![feature(llvm_asm)]
 #![feature(global_asm)]
 

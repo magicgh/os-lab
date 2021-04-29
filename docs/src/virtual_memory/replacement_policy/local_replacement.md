@@ -1,22 +1,27 @@
-# Replacement Policy
+# Local Replacement
 
-## Basic Algorithms 
+## Basic Algorithms
 
-### Optimal 
+### Optimal
+
 * Selects for replacement that page for which the time to the next reference is the longest.
 * Impossible to implement
 * Benchmark algorithm
+
 ### Least recently used (LRU)
+
 * Replaces the page in memory that has not been referenced for the long time.
 * Does nearly as well as the optimal policy.
 * Implement by linked list or stack, ordered by visit time, with high time complexity.
 
 ### First-in-first-out (FIFO)
+
 * Process as a circular buffer
 * May cause *belady anomaly*
 * Easy to implement
 
 ### Clock
+
 * Organize frames in a circular buffer.
 * First loaded or subsequently referenced, use bit = 1.
 * When replace, find a frame with use bit = 0, and reset use bit of frames that each scan encounters to 0.
@@ -46,7 +51,7 @@ use bit to 0 on each frame that is bypassed.
 of the frames in the set will have a use bit of 0. Repeat step 1 and, if necessary,
 step 2. This time, a frame will be found for the replacement.
 
-In brief, the transitions of each state are shown in the table below, 
+In brief, the transitions of each state are shown in the table below,
 
 | Use Bit | Modify Bit| Next State |
 | :---: | :---: | :---: |
@@ -56,16 +61,12 @@ In brief, the transitions of each state are shown in the table below,
 | 1 | 1 | 0 1 |
 
 ### Least Frequently Used
+
 * Replace the block in the set that has experienced the fewest references.
 * could be implemented by associating a counter with each block.
 * When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, the block with the smallest count is selected.
 * Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals.
+
 ## Belady Anomaly
 
 Conflicts between the FIFO algorithm and the memory dynamic feature.
-
-
-
-
-
-

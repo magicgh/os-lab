@@ -4,3 +4,11 @@ authors = "magicgh"
 language = "en"
 multilingual = false
 src = "src"
+
+[preprocessor.katex]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]

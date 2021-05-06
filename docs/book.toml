@@ -6,7 +6,7 @@ multilingual = false
 src = "src"
 
 [preprocessor.katex]
-
+    
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
 

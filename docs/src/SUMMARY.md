@@ -27,3 +27,5 @@
   - [Threads](./processes_and_threads/threads.md)
   - [Control](./processes_and_threads/control.md)
   - [Schedule and Dispatch](./processes_and_threads/schedule_and_dispatch.md)
+  - [Multiple Cores](./processes_and_threads/multiple_cores.md)
+  - [Communication](./processes_and_threads/communication.md)

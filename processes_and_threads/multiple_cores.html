@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Exception Handling</title>
+        <title>Multiple Cores</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html" class="active"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exception_handling/hardware_interrupt.html"><strong aria-hidden="true">2.1.</strong> Hardware Interrupt</a></li><li class="chapter-item expanded "><a href="../exception_handling/exception.html"><strong aria-hidden="true">2.2.</strong> Exception</a></li><li class="chapter-item expanded "><a href="../exception_handling/system_call.html"><strong aria-hidden="true">2.3.</strong> System Call</a></li></ol></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/fixed_partitioning.html"><strong aria-hidden="true">3.1.</strong> Fixed Partitioning</a></li><li class="chapter-item expanded "><a href="../memory_management/dynamic_partitioning.html"><strong aria-hidden="true">3.2.</strong> Dynamic Partitioning</a></li><li class="chapter-item expanded "><a href="../memory_management/buddy_system.html"><strong aria-hidden="true">3.3.</strong> Buddy System</a></li><li class="chapter-item expanded "><a href="../memory_management/paging.html"><strong aria-hidden="true">3.4.</strong> Paging</a></li><li class="chapter-item expanded "><a href="../memory_management/segmentation.html"><strong aria-hidden="true">3.5.</strong> Segmentation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/index.html"><strong aria-hidden="true">4.2.</strong> Replacement Policy</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/local_replacement.html"><strong aria-hidden="true">4.2.1.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/global_replacement.html"><strong aria-hidden="true">4.2.2.</strong> Global Replacement</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Process</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/control.html"><strong aria-hidden="true">5.3.</strong> Control</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/schedule_and_dispatch.html"><strong aria-hidden="true">5.4.</strong> Schedule and Dispatch</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/multiple_cores.html"><strong aria-hidden="true">5.5.</strong> Multiple Cores</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/communication.html"><strong aria-hidden="true">5.6.</strong> Communication</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../exception_handling/hardware_interrupt.html"><strong aria-hidden="true">2.1.</strong> Hardware Interrupt</a></li><li class="chapter-item expanded "><a href="../exception_handling/exception.html"><strong aria-hidden="true">2.2.</strong> Exception</a></li><li class="chapter-item expanded "><a href="../exception_handling/system_call.html"><strong aria-hidden="true">2.3.</strong> System Call</a></li></ol></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/fixed_partitioning.html"><strong aria-hidden="true">3.1.</strong> Fixed Partitioning</a></li><li class="chapter-item expanded "><a href="../memory_management/dynamic_partitioning.html"><strong aria-hidden="true">3.2.</strong> Dynamic Partitioning</a></li><li class="chapter-item expanded "><a href="../memory_management/buddy_system.html"><strong aria-hidden="true">3.3.</strong> Buddy System</a></li><li class="chapter-item expanded "><a href="../memory_management/paging.html"><strong aria-hidden="true">3.4.</strong> Paging</a></li><li class="chapter-item expanded "><a href="../memory_management/segmentation.html"><strong aria-hidden="true">3.5.</strong> Segmentation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/index.html"><strong aria-hidden="true">4.2.</strong> Replacement Policy</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/local_replacement.html"><strong aria-hidden="true">4.2.1.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/global_replacement.html"><strong aria-hidden="true">4.2.2.</strong> Global Replacement</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Process</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/control.html"><strong aria-hidden="true">5.3.</strong> Control</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/schedule_and_dispatch.html"><strong aria-hidden="true">5.4.</strong> Schedule and Dispatch</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/multiple_cores.html" class="active"><strong aria-hidden="true">5.5.</strong> Multiple Cores</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/communication.html"><strong aria-hidden="true">5.6.</strong> Communication</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -165,20 +165,80 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="exception-handling"><a class="header" href="#exception-handling">Exception Handling</a></h1>
+                        <h1 id="multiple-cores"><a class="header" href="#multiple-cores">Multiple Cores</a></h1>
+<h2 id="cache-coherence"><a class="header" href="#cache-coherence">Cache Coherence</a></h2>
+<ul>
+<li>
+<p>Broadcast</p>
+</li>
+<li>
+<p>Flashing</p>
+</li>
+</ul>
+<h2 id="algorithms"><a class="header" href="#algorithms">Algorithms</a></h2>
+<h3 id="sqms-single-queue-multiprocessor-schedule"><a class="header" href="#sqms-single-queue-multiprocessor-schedule">SQMS (Single Queue Multiprocessor Schedule)</a></h3>
+<ul>
+<li>
+<p>Lack of scalability.</p>
+</li>
+<li>
+<p>Weak in cache affinity, violates the locality principle.</p>
+</li>
+<li>
+<p>Let process run in the same CPU, load balance will be invalid.</p>
+</li>
+<li>
+<p>Thus either assure the cache affinity or load balance.</p>
+</li>
+</ul>
+<h3 id="mqms-multi-queue-multiprocessor-scheduling"><a class="header" href="#mqms-multi-queue-multiprocessor-scheduling">MQMS (Multi-Queue Multiprocessor Scheduling)</a></h3>
+<ul>
+<li>
+<p>Queues assign to different CPUs, and the scheduling algorithms can be different.</p>
+</li>
+<li>
+<p>所有进程都可以保持在一个 CPU 上。</p>
+</li>
+<li>
+<p>容易造成负载不均。</p>
+</li>
+</ul>
+<blockquote>
+<p>例如：某一个 CPU 任务执行完毕后，该 CPU 处于空转状态。因此只有通过进程的跨 CPU 迁移才能实现负载均衡。</p>
+</blockquote>
+<ul>
+<li>具有可扩展性，队列数可根据 CPU 数进行扩展。</li>
+</ul>
+<p><strong>如何进行进程工作的迁移？</strong></p>
+<ul>
+<li>Work stealing: 进程、页表基址等需要迁移。</li>
+</ul>
+<h2 id="smp-and-linux-kernel"><a class="header" href="#smp-and-linux-kernel">SMP and Linux Kernel</a></h2>
+<p>Linux Kernel 2.4 的 $O(n)$ 调度算法：<em>initial queue</em> 和 <em>expired queue</em>， 单队列机制。</p>
+<p>Linux Kernel 2.6 的 $O(1)$ 调度算法：由 Ingo Molnar 设计，由于 Linux 系统有 140 中优先级，因此用一个 140 维的数组存放。在 active bitarray 中寻找 left-most bit 的位置，并在 APA 中寻找 APA[x]， 从 APA[x] 中 dequeue 一个 process，对于当前执行完的 process，重新计算 priority 再 enqueue 到 expired priority array 相应的队列 EPA[x] 中。在一定时间间隔后，要进行 load balance 分析。</p>
+<p><strong>操作系统内核和驱动程序属于动态链接库。</strong></p>
+<p>CPS 算法：通过计算进程消耗的 CPU 时间而不是优先级来进行调度。占用的资源越少，优先级就越高。但有些进程相比于其他进程更加重要即使执行的时间很长，因此会对每个进程进行赋权。分配给进程的运行时间 = 调度周期 × 进程权重/总权重之和。
+Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。</p>
+<p>问题：新进程的 vruntime 为 0，则在相当长时间内都会保持抢占 CPU 的优势，因此应该设定一个最小值从而与老进程保持在一个合理的差距范围内。<br />
+休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。<br />
+进程从一个 CPU 迁移到另一个 CPU 上时 vruntime 会不会变？
+当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。<br />
+同时 vrumtime 可能会溢出，因此在比较 vruntime 的时候应该先减去 min_vruntime。</p>
+<h2 id="bfs-brain-fuck-scheduler"><a class="header" href="#bfs-brain-fuck-scheduler">(BFS) Brain Fuck Scheduler</a></h2>
+<p>一种时间片轮转算法的变种，在多处理机情况的但就绪队列选择，增加了队列互斥访问的开销。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../introduction/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../processes_and_threads/schedule_and_dispatch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../exception_handling/hardware_interrupt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../processes_and_threads/communication.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -190,13 +250,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../introduction/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../processes_and_threads/schedule_and_dispatch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../exception_handling/hardware_interrupt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../processes_and_threads/communication.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

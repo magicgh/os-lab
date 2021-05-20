@@ -29,3 +29,4 @@
   - [Schedule and Dispatch](./processes_and_threads/schedule_and_dispatch.md)
   - [Multiple Cores](./processes_and_threads/multiple_cores.md)
   - [Communication](./processes_and_threads/communication.md)
+  - [Semaphore](./processes_and_threads/semaphore.md)

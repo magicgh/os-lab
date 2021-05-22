@@ -45,9 +45,12 @@ CPS 算法：通过计算进程消耗的 CPU 时间而不是优先级来进行�
 Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。
 
 问题：新进程的 vruntime 为 0，则在相当长时间内都会保持抢占 CPU 的优势，因此应该设定一个最小值从而与老进程保持在一个合理的差距范围内。  
-休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。  
+
+休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。
+
 进程从一个 CPU 迁移到另一个 CPU 上时 vruntime 会不会变？
-当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。  
+当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。 
+ 
 同时 vrumtime 可能会溢出，因此在比较 vruntime 的时候应该先减去 min_vruntime。
 
 ## (BFS) Brain Fuck Scheduler

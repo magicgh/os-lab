@@ -100,8 +100,7 @@ Lock::Release() {
 
 ``` c++
 class Lock {
-    const bool tmp = 1;
-    bool value = 0;
+    bool tmp = 1, value = 0;
 }
 
 Lock::Acquire() {

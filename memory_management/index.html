@@ -168,15 +168,79 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="memory-management"><a class="header" href="#memory-management">Memory Management</a></h1>
 <h2 id="the-memory-hierarchy"><a class="header" href="#the-memory-hierarchy">The Memory Hierarchy</a></h2>
-<p>A typical hierarchy is illustrated in figure below.
-<img src="./assets/the_memory_hierarchy.png" alt="The Memory Hierarchy" />
-As one goes down the hierarchy, the following occur:</p>
+<p>A typical hierarchy is illustrated in figure below.</p>
+<p><img src="./assets/the_memory_hierarchy.png" alt="The Memory Hierarchy" /></p>
+<p>As one goes down the hierarchy, the following occur:</p>
 <ul>
 <li>Decreasing cost per bit</li>
 <li>Increasing capacity</li>
 <li>Increasing access time</li>
 <li>Decreasing frequency of access to the memory by the processor</li>
 </ul>
+<h2 id="cache-memory"><a class="header" href="#cache-memory">Cache Memory</a></h2>
+<p>Although cache memory is invisible to the OS, it interacts with other memory management hardware.</p>
+<h2 id="cache-principles"><a class="header" href="#cache-principles">Cache Principles</a></h2>
+<p>Cache memory is intended to provide memory access time approaching that of the fastest memories available, and at the same time support a large memory size that has the price of less expensive types of semiconductor memories. The concept is illustrated in the Figure below</p>
+<p><img src="./assets/single_cache.png" alt="Single Cache" /></p>
+<p>There is a relatively large and slow main memory together with a smaller, faster cache memory.</p>
+<p>The next Figure depicts the use of multiple levels of cache.</p>
+<p><img src="./assets/three-level_cache_organization.png" alt="Three-level Cache Organization" /></p>
+<p>Main memory consists of up to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span> addressable words, with each word having a unique <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span>-bit address. For mapping purposes, this memory is considered to consist of a number of fixed length <strong>blocks</strong>
+of K words each. That is there are <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> blocks. Cache consists of C <strong>slots</strong> (<em>lines</em>) of K words each, and the number of slots is considerably less than the number of main memory blocks (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>).</p>
+<p><img src="./assets/cache_main_memory_structure.png" alt="Cache/Main Memory Structure" /></p>
+<h2 id="memory-management-methods"><a class="header" href="#memory-management-methods">Memory Management Methods</a></h2>
+<ul>
+<li>Relocation</li>
+<li>Segmentatio   n</li>
+<li>Paging</li>
+<li>Virtual Memory</li>
+</ul>
+<h2 id="address-space"><a class="header" href="#address-space">Address Space</a></h2>
+<p>The range of addresses available to a computer program.</p>
+<ul>
+<li>
+<p>A logical address is a reference to a memory location <strong>independent</strong> of the current assignment of data to memory; a translation must be made to a physical address before the memory access can be achieved.</p>
+</li>
+<li>
+<p>A relative address is a particular
+example of logical address, in which the address is expressed as a location relative to some known point, usually a value in a processor register.</p>
+</li>
+<li>
+<p>A physical address, or absolute address is an <strong>actual</strong> location in main memory.</p>
+</li>
+</ul>
+<h3 id="generating-logical-address"><a class="header" href="#generating-logical-address">Generating Logical Address</a></h3>
+<ul>
+<li>Compile</li>
+<li>Assemble</li>
+<li>Link</li>
+<li>Relocation</li>
+</ul>
+<h3 id="procedures"><a class="header" href="#procedures">Procedures</a></h3>
+<ul>
+<li>CPU
+<ul>
+<li>ALU: 需要逻辑地址的内存内容</li>
+<li>MMU：进行逻辑地址和物理地址的转换</li>
+<li>CPU 控制逻辑：给总线发送物理地址请求</li>
+</ul>
+</li>
+<li>内存： 发送物理地址的内容给 CPU 或接受 CPU 数据到物理地址</li>
+<li>操作系统：建立逻辑地址与物理地址的映射</li>
+</ul>
+<h3 id="address-check"><a class="header" href="#address-check">Address Check</a></h3>
+<p><img src="./assets/address_check.png" alt="Address Check" /></p>
+<h2 id="memory-partitioning"><a class="header" href="#memory-partitioning">Memory Partitioning</a></h2>
+<p>The principal operation of memory management is to bring processes into main memory for execution by the processor.</p>
+<h3 id="fixed-partitioning"><a class="header" href="#fixed-partitioning">Fixed Partitioning</a></h3>
+<p>In most schemes for memory management, we can assume the OS occupies some fixed portion of main memory, and the rest of main memory is available for use by multiple processes. The simplest scheme for managing this available memory is to partition it into regions with fixed boundaries.</p>
+<h4 id="description"><a class="header" href="#description">Description</a></h4>
+<p>Main memory is divided into a number of static partitions <em>at system generation time</em>. A process may be loaded into a partition of <em>equal or greater size</em>.</p>
+<h4 id="strengths"><a class="header" href="#strengths">Strengths</a></h4>
+<p>Simple to implement; little operating system overhead.</p>
+<h4 id="weaknesses"><a class="header" href="#weaknesses">Weaknesses</a></h4>
+<p>Inefficient use of memory due to internal fragmentation; maximum number of active processes is fixed.</p>
+<p><img src="./assets/example_of_fixed_partitioning.png" alt="Example of Fixed Partitioning" /></p>
 
                     </main>
 

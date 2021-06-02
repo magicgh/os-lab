@@ -167,7 +167,75 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>There are some simple notes of <em>Operating System</em>. Most contents are copied from slides.</p>
+<h2 id="isolation"><a class="header" href="#isolation">Isolation</a></h2>
+<ul>
+<li>强制隔离以避免对整个系统的可用性、可靠性和安全影响</li>
+<li>运行的程序通常是隔离的单元</li>
+<li>防止程序 X 破坏或监视程序 Y
+<ul>
+<li>读/写内存，使用 100% CPU，更改文件描述符</li>
+</ul>
+</li>
+<li>防止进程干扰操作系统</li>
+<li>防止恶意程序、病毒、木马和 bug
+<ul>
+<li>错误的过程可能会试图欺骗硬件或内核</li>
+</ul>
+</li>
+</ul>
+<h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
+<ul>
+<li>地址空间
+<ul>
+<li>一个程序仅寻址其自己的内存</li>
+<li>每个程序若无许可，则无法访问不属于自己的内存</li>
+</ul>
+</li>
+<li>CPU 硬件中的特权模式/中断机制
+<ul>
+<li>防止应用程序访问设备和敏感的 CPU 寄存器</li>
+<li>例如地址空间配置寄存器</li>
+<li>例如打断一直占用 CPU 的应用程序</li>
+</ul>
+</li>
+</ul>
+<h2 id="program-call"><a class="header" href="#program-call">Program Call</a></h2>
+<ul>
+<li>好处
+<ul>
+<li>执行很快</li>
+<li>灵活且易于传递和返回复杂数据类型</li>
+<li>程序员熟悉的机制</li>
+</ul>
+</li>
+<li>坏处
+<ul>
+<li>应用程序不可靠，可能有崩溃的风险</li>
+</ul>
+</li>
+</ul>
+<h2 id="interrupt"><a class="header" href="#interrupt">Interrupt</a></h2>
+<ul>
+<li>CPU 硬件支持中断、异常的处理</li>
+<li>中断是异步发生的，是来自处理器外部的 I/O 设备的信号结果
+<ul>
+<li>硬件中断不是由任意一条专门的 CPU 指令造成，从这个意义上它是异步的</li>
+</ul>
+</li>
+<li>硬件中断的异常处理程序通常称为中断处理程序
+<ul>
+<li>I/O 设备通过向处理器芯片的一个引脚发信号，并将异常信号放到系统总线上以触发中断</li>
+<li>在当前指令执行完后，处理器从系统总线读取异常号，保存现场，切换到 Kernel Mode</li>
+<li>调用中断处理程序，当中断处理程序完成后，它将控制返回到下一条本来要执行的指令</li>
+</ul>
+</li>
+<li>Timer 可以稳定定时地产生中断
+<ul>
+<li>防止应用程序一直占用 CPU</li>
+<li>让 OS Kernel 能周期性地进行资源管理</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 

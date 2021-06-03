@@ -93,3 +93,35 @@ Simple to implement; little operating system overhead.
 Inefficient use of memory due to internal fragmentation; maximum number of active processes is fixed.
 
 ![Example of Fixed Partitioning](./assets/example_of_fixed_partitioning.png)
+
+With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition
+
+### Internal Fragmentation
+
+Occurs when memory is divided into fixed-size partitions (e.g., page frames in main memory, physical blocks on disk). If a block of data is assigned to one or more partitions, then there may be wasted space in the last partition. This will occur if the last portion of data is smaller than the last partition.
+
+### External Fragmentation
+
+Occurs when memory is divided into variable-size partitions corresponding to the blocks of data assigned to the memory (e.g., segments in main memory). As segments are moved into and out of the memory, gaps will occur between the occupied portions of memory.
+
+### Dynamic Partitioning
+
+#### Description
+
+Partitions are created dynamically, so each process is loaded into a partition of exactly the same size as that process.
+
+#### Strengths
+
+No internal fragmentation; more efficient use of main memory.
+
+#### Weaknesses
+
+Inefficient use of processor due to the need for compaction to counter external fragmentation.
+
+#### Placement Algorithms
+
+Three placement algorithms that might be considered are **best-fit, first-fit, and next-fit**. All, of course, are limited to choosing among free blocks of main memory that are equal to or larger than the process to be brought in. **Best-fit** chooses the block that is closest in size to the request. **First-fit** begins to scan memory from the beginning and chooses the first available block that is large enough. **Next-fit** begins to scan memory from the location of the last placement and chooses the next available block that is large enough.
+
+* Best-fit:
+* First-fit:
+* Next-fit:

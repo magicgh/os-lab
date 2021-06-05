@@ -108,7 +108,7 @@ Occurs when memory is divided into variable-size partitions corresponding to the
 
 #### Description
 
-Partitions are created dynamically, so each process is loaded into a partition of exactly the same size as that process.
+Partitions are created dynamically, so each process is loaded into a partition of exactly the same size as that process. Data structure is used in dynamic partitioning to maintain allocated blocks and empty blocks.
 
 #### Strengths
 
@@ -122,6 +122,69 @@ Inefficient use of processor due to the need for compaction to counter external 
 
 Three placement algorithms that might be considered are **best-fit, first-fit, and next-fit**. All, of course, are limited to choosing among free blocks of main memory that are equal to or larger than the process to be brought in. **Best-fit** chooses the block that is closest in size to the request. **First-fit** begins to scan memory from the beginning and chooses the first available block that is large enough. **Next-fit** begins to scan memory from the location of the last placement and chooses the next available block that is large enough.
 
-* Best-fit:
-* First-fit:
-* Next-fit:
+* Best-fit: 分配 n 字节的分区时，查找并使用不小于 n 的最小空闲分区
+  * 原理及实现
+    * 空闲分区列表按大小排序
+    * 分配时查找一个合适的分区
+    * 释放时查找并合并邻近的空闲分区
+  * 优点
+    * 大部分分配块的尺寸较小时效果较好
+    * 可避免大的空闲分区被拆分
+    * 可减小外部碎片的大小
+    * 实现简单
+  * 缺点
+    * 容易产生外部碎片
+    * 释放分区速度较慢
+
+* Worst-fit: 分配 n 字节，使用尺寸不小于 n 的最大空闲分区
+  * 原理及实现
+    * 空闲分区列表按由大到小排序
+    * 分配时，选最大的分区
+    * 释放时，尽可能与邻近分区合并，并调整空闲分区列表顺序
+  * 优点
+    * 中等大小的分配请求较多时，效果最好
+    * 不会出现太多的小碎片
+
+  * 缺点
+    * 释放分区速度较慢
+    * 容易产生外部碎片
+    * 容易破坏大的空闲分区
+
+* First-fit: 分配 n 个字节，使用第一个可用的空间比 n 大的空闲块。
+  * 原理及实现
+    * 空闲分区列表按地址顺序排序
+    * 分配时，选第一个合适的分区
+    * 释放时，尽可能与邻近分区合并
+  * 优点
+    * 实现简单
+    * 在高地址空间有大块的空闲分区  
+  * 缺点
+    * 分配大块空间速度较慢
+    * 容易产生外部碎片
+
+### Defragmentation
+
+通过调整进程占用的分区位置来减少或避免分区碎片。
+
+#### Compaction
+
+通过移动分配给进程的内存分区，以合并外部碎片。  
+碎片紧凑的条件：所有的应用程序可动态重定位。
+
+#### Swapping in/out
+
+通过抢占并回收处于等待状态进程的分区，以增大可用内存空间
+
+## Buddy System
+
+Both fixed and dynamic partitioning schemes have drawbacks. A fixed partitioning scheme limits the number of active processes and may use space inefficiently if there is a poor match between available partition sizes and process sizes. A dynamic partitioning scheme is more complex to maintain and includes the overhead of compaction. An interesting compromise is the buddy system.
+In a buddy system, memory blocks are available of size $2^K$ words, $L \leq K \leq U$, where  
+
+* $2^L =$ small size block that allocated
+
+* $2^U =$ largest size block that is allocated; generally $2^U$ is the size of the entire memory available for allocation
+
+To begin, the entire space available for allocation is treated as a single block of size $2^U$. If a request of size $s$ such that $2^{U-1} <s \leq 2^U$ is made, then the entire block is allocated. Otherwise, the block is split into two equal buddies of size $2^{U-1}$. This process continues until the smallest block greater than or equal to $s$ is generated and allocated to the request. At any time, the buddy system maintains a list of holes (unallocated blocks) of each size $2^i$. A hole may be removed from the $(i + 1)$ list by splitting it in half to create two buddies of size $2^i$ in the $i$ list. Whenever a pair of buddies on the $i$ list both become unallocated,they are removed from that list and coalesced into a single block on the $(i + 1)$ list. Presented with a request for an allocation of size $k$ such that $2^{i-1} < k \leq 2^i$.  
+The Figure below gives an example using a 1-Mbyte initial block.
+
+![Example of Buddy System](./assets/example_of_buddy_system.png)

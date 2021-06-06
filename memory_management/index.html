@@ -136,15 +136,13 @@
                         </a>
                         
                         
-                        
-
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -186,7 +184,7 @@
 <p>The next Figure depicts the use of multiple levels of cache.</p>
 <p><img src="./assets/three-level_cache_organization.png" alt="Three-level Cache Organization" /></p>
 <p>Main memory consists of up to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span> addressable words, with each word having a unique <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span>-bit address. For mapping purposes, this memory is considered to consist of a number of fixed length <strong>blocks</strong>
-of K words each. That is there are <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> blocks. Cache consists of C <strong>slots</strong> (<em>lines</em>) of K words each, and the number of slots is considerably less than the number of main memory blocks (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>).</p>
+of K words each. That is there are <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> blocks. Cache consists of C <strong>slots</strong> (<em>lines</em>) of K words each, and the number of slots is considerably less than the number of main memory blocks (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>).</p>
 <p><img src="./assets/cache_main_memory_structure.png" alt="Cache/Main Memory Structure" /></p>
 <h2 id="memory-management-methods"><a class="header" href="#memory-management-methods">Memory Management Methods</a></h2>
 <ul>
@@ -241,6 +239,121 @@ example of logical address, in which the address is expressed as a location rela
 <h4 id="weaknesses"><a class="header" href="#weaknesses">Weaknesses</a></h4>
 <p>Inefficient use of memory due to internal fragmentation; maximum number of active processes is fixed.</p>
 <p><img src="./assets/example_of_fixed_partitioning.png" alt="Example of Fixed Partitioning" /></p>
+<p>With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition</p>
+<h3 id="internal-fragmentation"><a class="header" href="#internal-fragmentation">Internal Fragmentation</a></h3>
+<p>Occurs when memory is divided into fixed-size partitions (e.g., page frames in main memory, physical blocks on disk). If a block of data is assigned to one or more partitions, then there may be wasted space in the last partition. This will occur if the last portion of data is smaller than the last partition.</p>
+<h3 id="external-fragmentation"><a class="header" href="#external-fragmentation">External Fragmentation</a></h3>
+<p>Occurs when memory is divided into variable-size partitions corresponding to the blocks of data assigned to the memory (e.g., segments in main memory). As segments are moved into and out of the memory, gaps will occur between the occupied portions of memory.</p>
+<h3 id="dynamic-partitioning"><a class="header" href="#dynamic-partitioning">Dynamic Partitioning</a></h3>
+<h4 id="description-1"><a class="header" href="#description-1">Description</a></h4>
+<p>Partitions are created dynamically, so each process is loaded into a partition of exactly the same size as that process. Data structure is used in dynamic partitioning to maintain allocated blocks and empty blocks.</p>
+<h4 id="strengths-1"><a class="header" href="#strengths-1">Strengths</a></h4>
+<p>No internal fragmentation; more efficient use of main memory.</p>
+<h4 id="weaknesses-1"><a class="header" href="#weaknesses-1">Weaknesses</a></h4>
+<p>Inefficient use of processor due to the need for compaction to counter external fragmentation.</p>
+<h4 id="placement-algorithms"><a class="header" href="#placement-algorithms">Placement Algorithms</a></h4>
+<p>Three placement algorithms that might be considered are <strong>best-fit, first-fit, and next-fit</strong>. All, of course, are limited to choosing among free blocks of main memory that are equal to or larger than the process to be brought in. <strong>Best-fit</strong> chooses the block that is closest in size to the request. <strong>First-fit</strong> begins to scan memory from the beginning and chooses the first available block that is large enough. <strong>Next-fit</strong> begins to scan memory from the location of the last placement and chooses the next available block that is large enough.</p>
+<ul>
+<li>
+<p>Best-fit: 分配 n 字节的分区时，查找并使用不小于 n 的最小空闲分区</p>
+<ul>
+<li>原理及实现
+<ul>
+<li>空闲分区列表按大小排序</li>
+<li>分配时查找一个合适的分区</li>
+<li>释放时查找并合并邻近的空闲分区</li>
+</ul>
+</li>
+<li>优点
+<ul>
+<li>大部分分配块的尺寸较小时效果较好</li>
+<li>可避免大的空闲分区被拆分</li>
+<li>可减小外部碎片的大小</li>
+<li>实现简单</li>
+</ul>
+</li>
+<li>缺点
+<ul>
+<li>容易产生外部碎片</li>
+<li>释放分区速度较慢</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Worst-fit: 分配 n 字节，使用尺寸不小于 n 的最大空闲分区</p>
+<ul>
+<li>
+<p>原理及实现</p>
+<ul>
+<li>空闲分区列表按由大到小排序</li>
+<li>分配时，选最大的分区</li>
+<li>释放时，尽可能与邻近分区合并，并调整空闲分区列表顺序</li>
+</ul>
+</li>
+<li>
+<p>优点</p>
+<ul>
+<li>中等大小的分配请求较多时，效果最好</li>
+<li>不会出现太多的小碎片</li>
+</ul>
+</li>
+<li>
+<p>缺点</p>
+<ul>
+<li>释放分区速度较慢</li>
+<li>容易产生外部碎片</li>
+<li>容易破坏大的空闲分区</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>First-fit: 分配 n 个字节，使用第一个可用的空间比 n 大的空闲块。</p>
+<ul>
+<li>原理及实现
+<ul>
+<li>空闲分区列表按地址顺序排序</li>
+<li>分配时，选第一个合适的分区</li>
+<li>释放时，尽可能与邻近分区合并</li>
+</ul>
+</li>
+<li>优点
+<ul>
+<li>实现简单</li>
+<li>在高地址空间有大块的空闲分区</li>
+</ul>
+</li>
+<li>缺点
+<ul>
+<li>分配大块空间速度较慢</li>
+<li>容易产生外部碎片</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="defragmentation"><a class="header" href="#defragmentation">Defragmentation</a></h3>
+<p>通过调整进程占用的分区位置来减少或避免分区碎片。</p>
+<h4 id="compaction"><a class="header" href="#compaction">Compaction</a></h4>
+<p>通过移动分配给进程的内存分区，以合并外部碎片。<br />
+碎片紧凑的条件：所有的应用程序可动态重定位。</p>
+<h4 id="swapping-inout"><a class="header" href="#swapping-inout">Swapping in/out</a></h4>
+<p>通过抢占并回收处于等待状态进程的分区，以增大可用内存空间</p>
+<h2 id="buddy-system"><a class="header" href="#buddy-system">Buddy System</a></h2>
+<p>Both fixed and dynamic partitioning schemes have drawbacks. A fixed partitioning scheme limits the number of active processes and may use space inefficiently if there is a poor match between available partition sizes and process sizes. A dynamic partitioning scheme is more complex to maintain and includes the overhead of compaction. An interesting compromise is the buddy system.
+In a buddy system, memory blocks are available of size <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span></span></span></span></span></span></span></span></span></span></span> words, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span>, where</p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> small size block that allocated</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> largest size block that is allocated; generally <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span></span></span></span></span></span></span></span></span></span></span> is the size of the entire memory available for allocation</p>
+</li>
+</ul>
+<p>To begin, the entire space available for allocation is treated as a single block of size <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span></span></span></span></span></span></span></span></span></span></span>. If a request of size <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span></span></span></span> such that <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.880431em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span></span></span></span></span></span></span></span></span></span></span> is made, then the entire block is allocated. Otherwise, the block is split into two equal buddies of size <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span>. This process continues until the smallest block greater than or equal to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span></span></span></span> is generated and allocated to the request. At any time, the buddy system maintains a list of holes (unallocated blocks) of each size <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.824664em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span></span></span></span></span></span></span>. A hole may be removed from the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> list by splitting it in half to create two buddies of size <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.824664em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span></span></span></span></span></span></span> in the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> list. Whenever a pair of buddies on the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> list both become unallocated,they are removed from that list and coalesced into a single block on the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> list. Presented with a request for an allocation of size <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> such that <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.863764em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.824664em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span></span></span></span></span></span></span>.<br />
+The Figure below gives an example using a 1-Mbyte initial block.</p>
+<p><img src="./assets/example_of_buddy_system.png" alt="Example of Buddy System" /></p>
 
                     </main>
 

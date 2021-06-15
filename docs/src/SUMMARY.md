@@ -7,6 +7,8 @@
 - [Exception Handling](./exception_handling/README.md)
 
 - [Memory Management](./memory_management/README.md)
+  - [Contiguous Memory Allocation](./memory_management/contiguous_memory_allocation.md)
+  - [Non-contiguous Memory Allocation](./memory_management/noncontiguous_memory_allocation.md)
 
 - [Virtual Memory](./virtual_memory/README.md)
   - [Preliminary Concepts](./virtual_memory/preliminary_concepts.md)

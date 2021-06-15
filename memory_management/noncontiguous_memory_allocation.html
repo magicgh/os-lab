@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Monitor</title>
+        <title>Non-contiguous Memory Allocation</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="../memory_management/noncontiguous_memory_allocation.html"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/index.html"><strong aria-hidden="true">4.2.</strong> Replacement Policy</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/local_replacement.html"><strong aria-hidden="true">4.2.1.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/global_replacement.html"><strong aria-hidden="true">4.2.2.</strong> Global Replacement</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Process</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/control.html"><strong aria-hidden="true">5.3.</strong> Control</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/schedule_and_dispatch.html"><strong aria-hidden="true">5.4.</strong> Schedule and Dispatch</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/multiple_cores.html"><strong aria-hidden="true">5.5.</strong> Multiple Cores</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/communication.html"><strong aria-hidden="true">5.6.</strong> Communication</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/semaphore.html"><strong aria-hidden="true">5.7.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/monitor.html" class="active"><strong aria-hidden="true">5.8.</strong> Monitor</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="../memory_management/noncontiguous_memory_allocation.html" class="active"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/index.html"><strong aria-hidden="true">4.2.</strong> Replacement Policy</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/local_replacement.html"><strong aria-hidden="true">4.2.1.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/replacement_policy/global_replacement.html"><strong aria-hidden="true">4.2.2.</strong> Global Replacement</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Process</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/control.html"><strong aria-hidden="true">5.3.</strong> Control</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/schedule_and_dispatch.html"><strong aria-hidden="true">5.4.</strong> Schedule and Dispatch</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/multiple_cores.html"><strong aria-hidden="true">5.5.</strong> Multiple Cores</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/communication.html"><strong aria-hidden="true">5.6.</strong> Communication</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/semaphore.html"><strong aria-hidden="true">5.7.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/monitor.html"><strong aria-hidden="true">5.8.</strong> Monitor</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -164,22 +164,27 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="monitor"><a class="header" href="#monitor">Monitor</a></h1>
-<p>管程是一种用于多线程互斥访问共享资源的程序结构</p>
-<ul>
-<li>采用面向对象的方法，简化</li>
-</ul>
+<h1 id="non-contiguous-memory-allocation"><a class="header" href="#non-contiguous-memory-allocation">Non-contiguous Memory Allocation</a></h1>
+<h2 id="segmentation"><a class="header" href="#segmentation">Segmentation</a></h2>
+<h3 id="segmented-address-space"><a class="header" href="#segmented-address-space">Segmented Address Space</a></h3>
+<p>进程的段地址空间由多个段组成：主代码段、子模块代码段、公用库代码段、堆栈段（stack）、堆数据（heap）、初始化数据段和符号表等。<br />
+段式存储管理的目的在于<strong>更细粒度和灵活的分离与共享</strong>。</p>
+<h3 id="access-mechanisms"><a class="header" href="#access-mechanisms">Access Mechanisms</a></h3>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../processes_and_threads/semaphore.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../memory_management/contiguous_memory_allocation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
+                        
+                            <a rel="next" href="../virtual_memory/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -189,11 +194,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../processes_and_threads/semaphore.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../memory_management/contiguous_memory_allocation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
+                
+                    <a rel="next" href="../virtual_memory/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

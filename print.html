@@ -642,11 +642,86 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 </ul>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="non-contiguous-memory-allocation"><a class="header" href="#non-contiguous-memory-allocation">Non-contiguous Memory Allocation</a></h1>
+<ul>
+<li>设计目标：提高内存利用效率和管理灵活性</li>
+<li>优点
+<ul>
+<li>允许一个程序的使用非连续的物理地址空间</li>
+<li>允许共享代码与数据</li>
+<li>支持动态加载和动态链接</li>
+</ul>
+</li>
+</ul>
 <h2 id="segmentation"><a class="header" href="#segmentation">Segmentation</a></h2>
 <h3 id="segmented-address-space"><a class="header" href="#segmented-address-space">Segmented Address Space</a></h3>
 <p>进程的段地址空间由多个段组成：主代码段、子模块代码段、公用库代码段、堆栈段（stack）、堆数据（heap）、初始化数据段和符号表等。<br />
 段式存储管理的目的在于<strong>更细粒度和灵活的分离与共享</strong>。</p>
 <h3 id="access-mechanisms"><a class="header" href="#access-mechanisms">Access Mechanisms</a></h3>
+<ul>
+<li>
+<p>段的概念</p>
+<ul>
+<li>段表示访问方式和储存数据等属性相同的一段地址空间。</li>
+<li>对应一个连续的内存块</li>
+<li>若干个段组成逻辑地址空间</li>
+</ul>
+</li>
+<li>
+<p>段访问： 逻辑地址由段基址+段内偏移组成的二元组<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">s</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathrm">a</span><span class="mord mathrm">d</span><span class="mord mathrm">d</span><span class="mord mathrm">r</span></span><span class="mclose">)</span></span></span></span>构成</p>
+</li>
+</ul>
+<h2 id="paging"><a class="header" href="#paging">Paging</a></h2>
+<ul>
+<li>Frame: 把物理地址空间划分为大小相同的基本分配单位（2 的 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> 次方）</li>
+<li>Page: 把逻辑地址空间也划分为相同大小的基本分配单位</li>
+<li>Frame 和 Page 的大小必须是相同的</li>
+</ul>
+<h3 id="frame"><a class="header" href="#frame">Frame</a></h3>
+<p>物理内存被划分为相同大小的帧，用二元组 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">o</span><span class="mclose">)</span></span></span></span> 表示，其中 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> 代表帧号（共有 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10764em;">f</span></span></span></span></span></span></span></span></span></span></span> 个帧），每个帧有 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span></span></span></span></span></span></span></span> 个字节。因此物理地址计算公式为 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.747722em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">o</span></span></span></span></p>
+<h3 id="page"><a class="header" href="#page">Page</a></h3>
+<p>进程逻辑地址空间被划分为大小相等的页，通常来讲，页内偏移等于段内偏移但页号不等于帧号。逻辑地址由二元组 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">o</span><span class="mclose">)</span></span></span></span> 表示，虚拟地址计算公式为 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.747722em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">o</span></span></span></span></p>
+<h3 id="address-mapping"><a class="header" href="#address-mapping">Address Mapping</a></h3>
+<ul>
+<li>逻辑地址中的页号是连续的</li>
+<li>物理地址中的帧号不是连续的</li>
+<li><strong>不是</strong>所有的页都有相应的帧对应</li>
+</ul>
+<h3 id="page-tables"><a class="header" href="#page-tables">Page Tables</a></h3>
+<p>Page tables save the information of the mapping from logical addresses to physical addresses.</p>
+<p>每一个进程都有一个页表，每一个页面对应一个页表项，通过 Page Table Base Register (PTBR) 实现页面到页表项之间的映射。</p>
+<ul>
+<li>页表项的构成
+<ul>
+<li>帧号：f</li>
+<li>页表项标志
+<ul>
+<li>存在位</li>
+<li>修改位</li>
+<li>引用位</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="performance-problem"><a class="header" href="#performance-problem">Performance Problem</a></h3>
+<ol>
+<li>访问一个内存单元需要先访问页表，再访问数据。</li>
+<li>页表可能会非常大</li>
+</ol>
+<p>How to solve: Caching or Indirection</p>
+<h2 id="translation-lookaside-buffer"><a class="header" href="#translation-lookaside-buffer">Translation Lookaside Buffer</a></h2>
+<p>Translation lookaside buffer (TLB) functions in
+the same way as a memory cache and contains those page table
+entries that have been most recently used. The organization of the resulting paging
+hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is
+not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number
+from the page table entry to form the real address. The processor also updates the
+TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.</p>
+<p><img src="memory_management/./assets/use_of_a_tlb.png" alt="Use of a Translation Lookaside Buffer" /></p>
+<h3 id="hierarchical-page-table"><a class="header" href="#hierarchical-page-table">Hierarchical Page Table</a></h3>
+<p>Take a two-level hierarchical page table as an example:</p>
+<p><img src="memory_management/./assets/a_two_level_hierarchical_page_table.png" alt="A Two-Level Hierarchical Page Table" /></p>
+<p><img src="memory_management/./assets/address_translation_in_a_hierarchical_paging_system.png" alt="Address Translation in a Two-Level Paging System" /></p>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="virtual-memory"><a class="header" href="#virtual-memory">Virtual Memory</a></h1>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">

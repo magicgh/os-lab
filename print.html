@@ -439,7 +439,7 @@ processor time.</p>
 <p>Cache memory is intended to provide memory access time approaching that of the fastest memories available, and at the same time support a large memory size that has the price of less expensive types of semiconductor memories. The concept is illustrated in the Figure below</p>
 <p><img src="memory_management/./assets/single_cache.png" alt="Single Cache" /></p>
 <p>There is a relatively large and slow main memory together with a smaller, faster cache memory.</p>
-<p>The next Figure depicts the use of multiple levels of cache.</p>
+<p>The next figure depicts the use of multiple levels of cache.</p>
 <p><img src="memory_management/./assets/three-level_cache_organization.png" alt="Three-level Cache Organization" /></p>
 <p>Main memory consists of up to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span> addressable words, with each word having a unique <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span>-bit address. For mapping purposes, this memory is considered to consist of a number of fixed length <strong>blocks</strong>
 of K words each. That is there are <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> blocks. Cache consists of C <strong>slots</strong> (<em>lines</em>) of K words each, and the number of slots is considerably less than the number of main memory blocks (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>).</p>
@@ -447,7 +447,7 @@ of K words each. That is there are <span class="katex"><span class="katex-html" 
 <h2 id="memory-management-methods"><a class="header" href="#memory-management-methods">Memory Management Methods</a></h2>
 <ul>
 <li>Relocation</li>
-<li>Segmentatio   n</li>
+<li>Segmentation</li>
 <li>Paging</li>
 <li>Virtual Memory</li>
 </ul>
@@ -689,18 +689,27 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 <h3 id="page-tables"><a class="header" href="#page-tables">Page Tables</a></h3>
 <p>Page tables save the information of the mapping from logical addresses to physical addresses.</p>
 <p>每一个进程都有一个页表，每一个页面对应一个页表项，通过 Page Table Base Register (PTBR) 实现页面到页表项之间的映射。</p>
+<pre><code>    #### Page Table Entries
+</code></pre>
+<p><img src="memory_management/./assets/page_table_entry_information.png" alt="Page Table Entry Information" /></p>
 <ul>
-<li>页表项的构成
-<ul>
-<li>帧号：f</li>
-<li>页表项标志
-<ul>
-<li>存在位</li>
-<li>修改位</li>
-<li>引用位</li>
-</ul>
+<li>
+<p>Frame Number: It gives the frame number in which the current page you are looking for is present. The number of bits required depends on the number of frames.Frame bit is also known as <strong>address translation bit</strong>.</p>
 </li>
-</ul>
+<li>
+<p>Present/Absent Bit: Present or absent bit says whether a particular page you are looking for is present or absent. In case if it is not present, that is called <strong>Page Faults</strong>. It is set to 0 if the corresponding page is not in memory. Used to control page faults by the operating system to support virtual memory. Sometimes this bit is also known as <strong>valid/invalid bits</strong>.</p>
+</li>
+<li>
+<p>Protection Bit: Protection bit says that what kind of protection you want on that page. So, these bit for the protection of the page frame (read, write etc).</p>
+</li>
+<li>
+<p>Referenced bit: Referenced bit will say whether this page has been referred in the last clock cycle or not. It is set to 1 by hardware when the page is accessed.</p>
+</li>
+<li>
+<p>Modified Bit: Modified bit says whether the page has been modified or not. Modified means sometimes you might try to write something on to the page. If a page is modified, then whenever you should replace that page with some other page, then the modified information should be kept on the hard disk or it has to be written back or it has to be saved back. It is set to 1 by hardware on write-access to page. Sometimes this modified bit is also called as the <strong>Dirty bit</strong>.</p>
+</li>
+<li>
+<p>Caching Enable/Disabled: a bit <strong>enables</strong> or <strong>disable</strong> caching of the page.</p>
 </li>
 </ul>
 <h3 id="performance-problem"><a class="header" href="#performance-problem">Performance Problem</a></h3>
@@ -710,13 +719,7 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 </ol>
 <p>How to solve: Caching or Indirection</p>
 <h2 id="translation-lookaside-buffer"><a class="header" href="#translation-lookaside-buffer">Translation Lookaside Buffer</a></h2>
-<p>Translation lookaside buffer (TLB) functions in
-the same way as a memory cache and contains those page table
-entries that have been most recently used. The organization of the resulting paging
-hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is
-not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number
-from the page table entry to form the real address. The processor also updates the
-TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.</p>
+<p>Translation lookaside buffer (TLB) functions in the same way as a memory cache and contains those page table entries that have been most recently used. The organization of the resulting paging hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number from the page table entry to form the real address. The processor also updates the TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.</p>
 <p><img src="memory_management/./assets/use_of_a_tlb.png" alt="Use of a Translation Lookaside Buffer" /></p>
 <h3 id="hierarchical-page-table"><a class="header" href="#hierarchical-page-table">Hierarchical Page Table</a></h3>
 <p>Take a two-level hierarchical page table as an example:</p>
@@ -726,6 +729,205 @@ TLB to include this new page table entry. Finally, if the present bit is not set
 <h1 id="virtual-memory"><a class="header" href="#virtual-memory">Virtual Memory</a></h1>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="preliminary-concepts"><a class="header" href="#preliminary-concepts">Preliminary Concepts</a></h1>
+<h2 id="overlay"><a class="header" href="#overlay">Overlay</a></h2>
+<ul>
+<li>
+<p>解释：应用程序<strong>手动</strong>把需要的指令和数据保存在内存中</p>
+</li>
+<li>
+<p>目标：在较小的可用内存中运行较大的程序</p>
+</li>
+<li>
+<p>特点：</p>
+<ul>
+<li>只能发生在没有调用关系的模块间</li>
+<li><strong>程序员</strong>必须给出模块间的逻辑覆盖结构</li>
+<li>发生在运行程序的内部模块间</li>
+</ul>
+</li>
+<li>
+<p>方法：根据程序逻辑结构，将程序划分为若干<strong>功能相对独立的模块</strong>，将不会同时执行的模块<strong>共享同一块内存区域</strong>。</p>
+<ul>
+<li>必要部分（常用功能）的代码和数据常驻内存</li>
+<li>可选部分（不常用功能）放在其他程序模块中，只在需要用到的时候装入内存</li>
+<li>不存在调用关系模块可共享一块内存区域</li>
+</ul>
+</li>
+<li>
+<p>示例<br />
+<img src="virtual_memory/./../memory_management/assets/overlay_example.png" alt="An Overlay Example" /></p>
+</li>
+<li>
+<p>不足</p>
+<ul>
+<li>增加编程困难
+<ul>
+<li>需要划分功能模块并确定模块间的覆盖关系</li>
+<li>增加了编程的复杂度</li>
+</ul>
+</li>
+<li>增加执行时间
+<ul>
+<li>从外存装入覆盖模块</li>
+<li>时间换空间</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="swapping"><a class="header" href="#swapping">Swapping</a></h2>
+<ul>
+<li>目标：增加正在运行或需要运行的程序的内存</li>
+<li>特点：
+<ul>
+<li>以进程为单位</li>
+<li>不需要模块间的逻辑覆盖结构</li>
+<li>发生在内存进程间</li>
+</ul>
+</li>
+<li>实现方法：
+<ul>
+<li>可将暂时不能运行的程序放到外存</li>
+<li>换入换出的基本单位：整个进程的地址空间</li>
+<li>换出 (swap out)：把一个进程的整个地址空间保存到外存</li>
+<li>换入 (swap in)：将外存中某进程的地址空间读入到内存</li>
+</ul>
+</li>
+<li>问题与解答
+<ul>
+<li>何时需要交换：当内存空间不够或又不够的可能时换出</li>
+<li>交换区大小：存放所有用户进程的所有内存映像的拷贝</li>
+<li>换出后再换入时要放在原处吗（重定位问题）：采用动态地址映射的方法</li>
+</ul>
+</li>
+</ul>
+<h2 id="the-principle-of-locality"><a class="header" href="#the-principle-of-locality">The Principle of Locality</a></h2>
+<p>Intuitively, the principle of locality makes sense. Consider the following line of
+reasoning:</p>
+<ol>
+<li>
+<p>Except for <strong>branch and call instructions</strong>, which constitute only a small fraction
+of all program instructions, program execution is sequential. Hence, in most
+cases, the next instruction to be fetched immediately follows the last instruction
+fetched.</p>
+</li>
+<li>
+<p>It is rare to have a long uninterrupted sequence of procedure calls followed by
+the corresponding sequence of returns. Rather, a program remains confined to a
+rather narrow window of procedure-invocation depth. Thus, over a short period
+of time, references to instructions tend to <strong>be localized to a few procedures</strong>.</p>
+</li>
+<li>
+<p>Most iterative constructs consist of <strong>a relatively small number of instructions repeated many times</strong>. For the duration of the iteration, computation is therefore
+confined to a small contiguous portion of a program.</p>
+</li>
+<li>
+<p>In many programs, much of the computation involves processing data structures, such as arrays or sequences of records. In many cases, <strong>successive references to these data structures</strong> will be to closely located data items.</p>
+</li>
+</ol>
+<p>To summarize, the principle of locality states that program and data references within a process tend to cluster. Hence, the assumption that only a few pieces of a process will be needed over a short period of time is valid. Also, it should be possible to make intelligent guesses about which pieces of a process will be needed in the near future, which avoids thrashing.</p>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<pre><code class="language-c++">for (int j = 0; j &lt; 1024; j++)
+  for (int i = 0; i &lt; 1024; i++) A[i][j] = 0;
+
+for (int i = 0; i &lt; 1024; i++)
+  for (int j = 0; j &lt; 1024; j++) A[i][j] = 0;
+</code></pre>
+<p>In the first code, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">2</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">2</span><span class="mord">4</span></span></span></span> page faults occur, and in the second code, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">2</span><span class="mord">4</span></span></span></span> page faults occur.</p>
+<h2 id="virtual-storage"><a class="header" href="#virtual-storage">Virtual Storage</a></h2>
+<ul>
+<li>
+<p>思路</p>
+<ul>
+<li>把不常用的部分内存块暂存到外</li>
+</ul>
+</li>
+<li>
+<p>原理</p>
+<ul>
+<li>装载程序时
+<ul>
+<li>只将当前指令执行需要的部分页面或段载入内存</li>
+</ul>
+</li>
+<li>指令执行中需要的指令或数据不在内存（即缺页或缺段）时
+<ul>
+<li>处理器通知操作系统将相应的页或段调入内存</li>
+</ul>
+</li>
+<li>操作系统将内存中暂时不用的页或段保存到外存</li>
+</ul>
+</li>
+<li>
+<p>实现方式</p>
+<ul>
+<li>虚拟页式存储</li>
+<li>虚拟段式存储</li>
+</ul>
+</li>
+<li>
+<p>基本特征</p>
+<ul>
+<li>不连续性
+<ul>
+<li>物理内存分配非连续</li>
+<li>虚拟地址空间使用非连续</li>
+</ul>
+</li>
+<li>大用户空间
+<ul>
+<li>提供给用户的虚拟内存可大于实际的物理内存</li>
+</ul>
+</li>
+<li>部分交换
+<ul>
+<li>虚拟存储只对部分虚拟地址空间进行调入和调出</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="virtual-pages"><a class="header" href="#virtual-pages">Virtual Pages</a></h2>
+<p>在<a href="virtual_memory/../memory_management/noncontiguous_memory_allocation.html#Paging">页式存储管理</a>的增加请求掉和和页面替换</p>
+<ul>
+<li>当用户程序装载到内存运行时，只装入部分页面就启动程序运行</li>
+<li>进程在运行中发现有需要的代码或数据不在内存中就向系统发出缺页异常请求</li>
+<li>操作系统在处理缺页异常时，将外存中的相应页面载入内存使得进程能继续执行
+<img src="virtual_memory/./assets/address_translation_in_virtual_pages.png" alt="Address Translation in Virtual Pages" /></li>
+</ul>
+<h3 id="a-hrefvirtual_memorymemory_managementnoncontiguous_memory_allocationhtmlpage-table-entriespage-table-entriesa"><a class="header" href="#a-hrefvirtual_memorymemory_managementnoncontiguous_memory_allocationhtmlpage-table-entriespage-table-entriesa"><a href="virtual_memory/../memory_management/noncontiguous_memory_allocation.html#Page-Table-Entries">Page Table Entries</a></a></h3>
+<h2 id="page-faults"><a class="header" href="#page-faults">Page Faults</a></h2>
+<h3 id="procedures-1"><a class="header" href="#procedures-1">Procedures</a></h3>
+<ol>
+<li>在内存中有空闲物理帧时，分配一物理帧 f，转第 5 步</li>
+<li>根据页面替换算法选择将被替换的物理帧对应的逻辑页 q</li>
+<li>若 q 被修改过则将它写回内存</li>
+<li>修改 q 的 present bit 为 0</li>
+<li>将需要访问的页 p 载入物理帧 f</li>
+<li>修改 p 的 present bit 为 1，帧号为 f</li>
+<li>重新执行产生缺页的指令</li>
+</ol>
+<h3 id="effective-memory-access-time"><a class="header" href="#effective-memory-access-time">Effective Memory-access Time</a></h3>
+<ul>
+<li>
+<p>Hit Ratio: The percentage of times that a particular page number is found in the TLB.</p>
+</li>
+<li>
+<p>TLB Hit: The page is found in TLB</p>
+</li>
+<li>
+<p>TLB Miss: The page is not found in the TLB so that accessing memory to get the page table entries and the data is needed.</p>
+</li>
+</ul>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0000000000000004em;vertical-align:-1.2500000000000002em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7500000000000002em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">E</span><span class="mord mathrm">A</span><span class="mord mathrm">T</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2500000000000002em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7500000000000002em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">m</span><span class="mord mathrm">i</span><span class="mord mathrm">s</span><span class="mord mathrm">s</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">s</span><span class="mord mathrm">e</span><span class="mord mathrm">a</span><span class="mord mathrm">r</span><span class="mord mathrm">c</span><span class="mord mathrm">h</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">e</span><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">r</span><span class="mord mathrm" style="margin-right:0.01389em;">y</span><span class="mspace"> </span><span class="mord mathrm">a</span><span class="mord mathrm">c</span><span class="mord mathrm">c</span><span class="mord mathrm">e</span><span class="mord mathrm">s</span><span class="mord mathrm">s</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">s</span><span class="mord mathrm">e</span><span class="mord mathrm">a</span><span class="mord mathrm">r</span><span class="mord mathrm">c</span><span class="mord mathrm">h</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">e</span><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">r</span><span class="mord mathrm" style="margin-right:0.01389em;">y</span><span class="mspace"> </span><span class="mord mathrm">a</span><span class="mord mathrm">c</span><span class="mord mathrm">c</span><span class="mord mathrm">e</span><span class="mord mathrm">s</span><span class="mord mathrm">s</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2500000000000002em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+<h4 id="example-1"><a class="header" href="#example-1">Example</a></h4>
+<ul>
+<li>TLB lookup takes 5 nano sec.</li>
+<li>Memory access time is 100 nano sec.</li>
+<li>Hit ratio is 80%.</li>
+</ul>
+<p>What is the effective memory access time?
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathrm">E</span><span class="mord mathrm">A</span><span class="mord mathrm">T</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">.</span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">5</span><span class="mord"><span class="mspace"> </span><span class="mord mathrm">n</span><span class="mord mathrm">a</span><span class="mord mathrm">n</span><span class="mord mathrm">o</span><span class="mspace"> </span><span class="mord mathrm">s</span><span class="mord mathrm">e</span><span class="mord mathrm">c</span></span></span></span></span></span></p>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="replacement-policy"><a class="header" href="#replacement-policy">Replacement Policy</a></h1>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
@@ -757,7 +959,7 @@ TLB to include this new page table entry. Finally, if the present bit is not set
 <li>If all of the frames have a use bit of 1, then the pointer will make one complete cycle through the buffer, setting all the use bits to 0, and stop at its original position, replacing the page in that frame.</li>
 <li>An implementation of LRU using FIFO mechanism.</li>
 </ul>
-<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<h3 id="example-2"><a class="header" href="#example-2">Example</a></h3>
 <p><img src="virtual_memory/replacement_policy/./assets/algorithm_compare.png" alt="Algorithm Compare" /></p>
 <h2 id="infrequent-algorithms"><a class="header" href="#infrequent-algorithms">Infrequent Algorithms</a></h2>
 <h3 id="improved-clock"><a class="header" href="#improved-clock">Improved Clock</a></h3>

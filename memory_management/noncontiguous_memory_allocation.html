@@ -212,18 +212,27 @@
 <h3 id="page-tables"><a class="header" href="#page-tables">Page Tables</a></h3>
 <p>Page tables save the information of the mapping from logical addresses to physical addresses.</p>
 <p>每一个进程都有一个页表，每一个页面对应一个页表项，通过 Page Table Base Register (PTBR) 实现页面到页表项之间的映射。</p>
+<pre><code>    #### Page Table Entries
+</code></pre>
+<p><img src="./assets/page_table_entry_information.png" alt="Page Table Entry Information" /></p>
 <ul>
-<li>页表项的构成
-<ul>
-<li>帧号：f</li>
-<li>页表项标志
-<ul>
-<li>存在位</li>
-<li>修改位</li>
-<li>引用位</li>
-</ul>
+<li>
+<p>Frame Number: It gives the frame number in which the current page you are looking for is present. The number of bits required depends on the number of frames.Frame bit is also known as <strong>address translation bit</strong>.</p>
 </li>
-</ul>
+<li>
+<p>Present/Absent Bit: Present or absent bit says whether a particular page you are looking for is present or absent. In case if it is not present, that is called <strong>Page Faults</strong>. It is set to 0 if the corresponding page is not in memory. Used to control page faults by the operating system to support virtual memory. Sometimes this bit is also known as <strong>valid/invalid bits</strong>.</p>
+</li>
+<li>
+<p>Protection Bit: Protection bit says that what kind of protection you want on that page. So, these bit for the protection of the page frame (read, write etc).</p>
+</li>
+<li>
+<p>Referenced bit: Referenced bit will say whether this page has been referred in the last clock cycle or not. It is set to 1 by hardware when the page is accessed.</p>
+</li>
+<li>
+<p>Modified Bit: Modified bit says whether the page has been modified or not. Modified means sometimes you might try to write something on to the page. If a page is modified, then whenever you should replace that page with some other page, then the modified information should be kept on the hard disk or it has to be written back or it has to be saved back. It is set to 1 by hardware on write-access to page. Sometimes this modified bit is also called as the <strong>Dirty bit</strong>.</p>
+</li>
+<li>
+<p>Caching Enable/Disabled: a bit <strong>enables</strong> or <strong>disable</strong> caching of the page.</p>
 </li>
 </ul>
 <h3 id="performance-problem"><a class="header" href="#performance-problem">Performance Problem</a></h3>
@@ -233,13 +242,7 @@
 </ol>
 <p>How to solve: Caching or Indirection</p>
 <h2 id="translation-lookaside-buffer"><a class="header" href="#translation-lookaside-buffer">Translation Lookaside Buffer</a></h2>
-<p>Translation lookaside buffer (TLB) functions in
-the same way as a memory cache and contains those page table
-entries that have been most recently used. The organization of the resulting paging
-hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is
-not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number
-from the page table entry to form the real address. The processor also updates the
-TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.</p>
+<p>Translation lookaside buffer (TLB) functions in the same way as a memory cache and contains those page table entries that have been most recently used. The organization of the resulting paging hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number from the page table entry to form the real address. The processor also updates the TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.</p>
 <p><img src="./assets/use_of_a_tlb.png" alt="Use of a Translation Lookaside Buffer" /></p>
 <h3 id="hierarchical-page-table"><a class="header" href="#hierarchical-page-table">Hierarchical Page Table</a></h3>
 <p>Take a two-level hierarchical page table as an example:</p>

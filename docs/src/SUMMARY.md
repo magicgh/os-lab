@@ -12,9 +12,8 @@
 
 - [Virtual Memory](./virtual_memory/README.md)
   - [Preliminary Concepts](./virtual_memory/preliminary_concepts.md)
-  - [Replacement Policy](./virtual_memory/replacement_policy/README.md)
-    - [Local Replacement](./virtual_memory/replacement_policy/local_replacement.md)
-    - [Global Replacement](./virtual_memory/replacement_policy/global_replacement.md)
+  - [Local Replacement](./virtual_memory/local_replacement.md)
+  - [Global Replacement](./virtual_memory/global_replacement.md)
   
 - [Processes and Threads](./processes_and_threads/README.md)
   - [Process](./processes_and_threads/processes.md)

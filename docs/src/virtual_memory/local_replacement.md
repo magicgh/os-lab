@@ -1,24 +1,41 @@
 # Local Replacement
 
-## Basic Algorithms
+## Introduction
 
-### Optimal
+* 置换算法实现的功能：当出现缺页异常，需调入新页面而内存已满时，置换算法**选择被置换的物理页面**
+* 设计目标
+  * 尽可能**减少页面调入调出的次数**
+  * 把短期内不再访问的页面调出
+* 页面锁定 (frame locking)
+  * 描述必须常驻内存的逻辑页面
+  * 操作系统的关键部分
+  * 要求响应速度的代码和数据
+  * 页表中的锁定标志位 (lock bit)
+* 评价方法
+  * 模拟页面置换行为，记录产生缺页的次数
+  * 更少的缺页次数，更好的性能
 
-* Selects for replacement that page for which the time to the next reference is the longest.
+## Algorithms
+
+### Optimal (OPT)
+
+* Selects for replacement that page for which **the time to the next reference is the longest**, and results in the fewest number of page faults.
 * Impossible to implement
-* Benchmark algorithm
+* Benchmark algorithm (a standard to judge real-world
+algorithms)
 
 ### Least recently used (LRU)
 
-* Replaces the page in memory that has not been referenced for the long time.
+* Replaces the page in memory that **has not been referenced for the long time**. By the principle of locality, this should be the page least likely to be referenced in the near future.
 * Does nearly as well as the optimal policy.
 * Implement by linked list or stack, ordered by visit time, with high time complexity.
 
 ### First-in-first-out (FIFO)
 
+* **Replacing the page that has been in memory the longest**: A page fetched into memory a long time ago may have now fallen out of use
 * Process as a circular buffer
 * May cause *belady anomaly*
-* Easy to implement
+* Easy to implement but preforms poorly
 
 ### Clock
 

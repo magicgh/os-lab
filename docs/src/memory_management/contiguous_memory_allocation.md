@@ -25,7 +25,7 @@ Cache memory is intended to provide memory access time approaching that of the f
 
 There is a relatively large and slow main memory together with a smaller, faster cache memory.
 
-The next Figure depicts the use of multiple levels of cache.
+The next figure depicts the use of multiple levels of cache.
 
 ![Three-level Cache Organization](./assets/three-level_cache_organization.png)
 
@@ -37,7 +37,7 @@ of K words each. That is there are $M=2^n/K$ blocks. Cache consists of C **slots
 ## Memory Management Methods
 
 * Relocation
-* Segmentatio   n
+* Segmentation
 * Paging
 * Virtual Memory
 

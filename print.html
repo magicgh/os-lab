@@ -689,8 +689,7 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 <h3 id="page-tables"><a class="header" href="#page-tables">Page Tables</a></h3>
 <p>Page tables save the information of the mapping from logical addresses to physical addresses.</p>
 <p>每一个进程都有一个页表，每一个页面对应一个页表项，通过 Page Table Base Register (PTBR) 实现页面到页表项之间的映射。</p>
-<pre><code>    #### Page Table Entries
-</code></pre>
+<h4 id="page-table-entries"><a class="header" href="#page-table-entries">Page Table Entries</a></h4>
 <p><img src="memory_management/./assets/page_table_entry_information.png" alt="Page Table Entry Information" /></p>
 <ul>
 <li>
@@ -888,14 +887,14 @@ for (int i = 0; i &lt; 1024; i++)
 </li>
 </ul>
 <h2 id="virtual-pages"><a class="header" href="#virtual-pages">Virtual Pages</a></h2>
-<p>在<a href="virtual_memory/../memory_management/noncontiguous_memory_allocation.html#Paging">页式存储管理</a>的增加请求掉和和页面替换</p>
+<p>在<a href="virtual_memory/../memory_management/noncontiguous_memory_allocation.html#paging">页式存储管理</a>的增加请求掉和和页面替换</p>
 <ul>
 <li>当用户程序装载到内存运行时，只装入部分页面就启动程序运行</li>
 <li>进程在运行中发现有需要的代码或数据不在内存中就向系统发出缺页异常请求</li>
 <li>操作系统在处理缺页异常时，将外存中的相应页面载入内存使得进程能继续执行
 <img src="virtual_memory/./assets/address_translation_in_virtual_pages.png" alt="Address Translation in Virtual Pages" /></li>
 </ul>
-<h3 id="a-hrefvirtual_memorymemory_managementnoncontiguous_memory_allocationhtmlpage-table-entriespage-table-entriesa"><a class="header" href="#a-hrefvirtual_memorymemory_managementnoncontiguous_memory_allocationhtmlpage-table-entriespage-table-entriesa"><a href="virtual_memory/../memory_management/noncontiguous_memory_allocation.html#Page-Table-Entries">Page Table Entries</a></a></h3>
+<h3 id="a-hrefvirtual_memorymemory_managementnoncontiguous_memory_allocationhtmlpage-table-entriespage-table-entriesa"><a class="header" href="#a-hrefvirtual_memorymemory_managementnoncontiguous_memory_allocationhtmlpage-table-entriespage-table-entriesa"><a href="virtual_memory/../memory_management/noncontiguous_memory_allocation.html#page-table-entries">Page Table Entries</a></a></h3>
 <h2 id="page-faults"><a class="header" href="#page-faults">Page Faults</a></h2>
 <h3 id="procedures-1"><a class="header" href="#procedures-1">Procedures</a></h3>
 <ol>

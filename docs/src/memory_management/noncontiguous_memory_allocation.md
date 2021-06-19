@@ -48,7 +48,7 @@ Page tables save the information of the mapping from logical addresses to physic
 
 每一个进程都有一个页表，每一个页面对应一个页表项，通过 Page Table Base Register (PTBR) 实现页面到页表项之间的映射。
 
-        #### Page Table Entries
+#### Page Table Entries
 
 ![Page Table Entry Information](./assets/page_table_entry_information.png)
 

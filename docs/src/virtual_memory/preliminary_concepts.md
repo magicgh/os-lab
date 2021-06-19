@@ -98,14 +98,14 @@ In the first code, $1024 \times 1024$ page faults occur, and in the second code,
 
 ## Virtual Pages
 
-在[页式存储管理](../memory_management/noncontiguous_memory_allocation.md#Paging)的增加请求掉和和页面替换
+在[页式存储管理](../memory_management/noncontiguous_memory_allocation.md#paging)的增加请求掉和和页面替换
 
 * 当用户程序装载到内存运行时，只装入部分页面就启动程序运行
 * 进程在运行中发现有需要的代码或数据不在内存中就向系统发出缺页异常请求
 * 操作系统在处理缺页异常时，将外存中的相应页面载入内存使得进程能继续执行
 ![Address Translation in Virtual Pages](./assets/address_translation_in_virtual_pages.png)
 
-### [Page Table Entries](../memory_management/noncontiguous_memory_allocation.md#Page-Table-Entries)
+### [Page Table Entries](../memory_management/noncontiguous_memory_allocation.md#page-table-entries)
 
 ## Page Faults
 

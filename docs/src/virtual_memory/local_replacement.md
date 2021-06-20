@@ -71,6 +71,9 @@ step 2. This time, a frame will be found for the replacement.
 * could be implemented by associating a counter with each block.
 * When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, **the block with the smallest count is selected**.
 * Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals of repeated references due to locality, thus building up high reference counts.
+
+#### FBR
+
 * To overcome this difficulty with LFU, a technique known as **frequency-based replacement** is proposed.
   * A simple version in the Figure (a): The blocks are organized in a stack and the top part of the stack is designated for the new section, which means the referenced block is moved to the top of the new section if there is a cache hit. Besides, if the block is not in the new section (i.e. the old section), its reference count increments by 1.
   * A further refinement addresses this problem, seeing Figure (b): Divide the stack into three sections (new, middle and old). As before, reference counts are not incremented on blocks in the new section. However, only blocks in the old section are eligible for replacement. Supposing a sufficiently large middle section, this allows relatively frequently referenced blocks a chance to build uo their counts before becoming eligible for replacement (buffer section). Simulation studies indicates that this refined policy is significantly better than LRU or LFU. Note that sizes of new, middle and old sections are hyperparameters which should be fine tuned in daily use.

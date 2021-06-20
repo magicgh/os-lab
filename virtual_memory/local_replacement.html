@@ -192,36 +192,35 @@
 <h2 id="algorithms"><a class="header" href="#algorithms">Algorithms</a></h2>
 <h3 id="optimal-opt"><a class="header" href="#optimal-opt">Optimal (OPT)</a></h3>
 <ul>
-<li>Selects for replacement that page for which <strong>the time to the next reference is the longest</strong>, and results in the fewest number of page faults.</li>
+<li>Selects for replacement that page for which <strong>the time to the next reference is the longest</strong> (based on future information), and results in the fewest number of page faults.</li>
 <li>Impossible to implement</li>
 <li>Benchmark algorithm (a standard to judge real-world
 algorithms)</li>
 </ul>
 <h3 id="least-recently-used-lru"><a class="header" href="#least-recently-used-lru">Least recently used (LRU)</a></h3>
 <ul>
-<li>Replaces the page in memory that <strong>has not been referenced for the long time</strong>. By the principle of locality, this should be the page least likely to be referenced in the near future.</li>
+<li>Replaces the page in memory that <strong>has not been referenced for the long time</strong> (based on past information). By the principle of locality, this should be the page least likely to be referenced in the near future.</li>
 <li>Does nearly as well as the optimal policy.</li>
 <li>Implement by linked list or stack, ordered by visit time, with high time complexity.</li>
+<li>LRU can be degenerated into FIFO if a block have not been referenced since it was fetched into memory.</li>
 </ul>
 <h3 id="first-in-first-out-fifo"><a class="header" href="#first-in-first-out-fifo">First-in-first-out (FIFO)</a></h3>
 <ul>
 <li><strong>Replacing the page that has been in memory the longest</strong>: A page fetched into memory a long time ago may have now fallen out of use</li>
 <li>Process as a circular buffer</li>
 <li>May cause <em>belady anomaly</em></li>
-<li>Easy to implement but preforms poorly</li>
+<li>Easy to implement but performs poorly (<a href="#belady-anomaly">Belady Anomaly</a>)</li>
 </ul>
 <h3 id="clock"><a class="header" href="#clock">Clock</a></h3>
 <ul>
-<li>Organize frames in a circular buffer.</li>
+<li>Organize frames in a circular buffer with which a pointer is associated.</li>
 <li>First loaded or subsequently referenced, use bit = 1.</li>
 <li>When replace, find a frame with use bit = 0, and reset use bit of frames that each scan encounters to 0.</li>
 <li>If all of the frames have a use bit of 1, then the pointer will make one complete cycle through the buffer, setting all the use bits to 0, and stop at its original position, replacing the page in that frame.</li>
 <li>An implementation of LRU using FIFO mechanism.</li>
 </ul>
-<h3 id="example"><a class="header" href="#example">Example</a></h3>
-<p><img src="./assets/algorithm_compare.png" alt="Algorithm Compare" /></p>
-<h2 id="infrequent-algorithms"><a class="header" href="#infrequent-algorithms">Infrequent Algorithms</a></h2>
 <h3 id="improved-clock"><a class="header" href="#improved-clock">Improved Clock</a></h3>
+<p>The clock algorithm can be made more powerful by increasing the number of bits that it employs like</p>
 <ol>
 <li>Not accessed recently, not modified (u = 0; m = 0)</li>
 <li>Accessed recently, not modified (u = 1; m = 0)</li>
@@ -230,31 +229,60 @@ algorithms)</li>
 </ol>
 <ul>
 <li>Beginning at the current position of the pointer, scan the frame buffer. During
-this scan, make no changes to the use bit. The first frame encountered with
+this scan, <strong>make no changes to the use bit</strong>. The first frame encountered with
 (u = 0; m = 0) is selected for replacement.</li>
 <li>If step 1 fails, scan again, looking for the frame with (u = 0; m = 1). The first
-such frame encountered is selected for replacement. During this scan, set the
-use bit to 0 on each frame that is bypassed.</li>
+such frame encountered is selected for replacement. During this scan, <strong>set the
+use bit to 0 on each frame that is bypassed</strong>.</li>
 <li>If step 2 fails, the pointer should have returned to its original position and all
 of the frames in the set will have a use bit of 0. Repeat step 1 and, if necessary,
 step 2. This time, a frame will be found for the replacement.</li>
 </ul>
-<p>In brief, the transitions of each state are shown in the table below,</p>
-<table><thead><tr><th align="center">Use Bit</th><th align="center">Modify Bit</th><th align="center">Next State</th></tr></thead><tbody>
-<tr><td align="center">0</td><td align="center">0</td><td align="center">swap</td></tr>
-<tr><td align="center">0</td><td align="center">1</td><td align="center">0 0</td></tr>
-<tr><td align="center">1</td><td align="center">0</td><td align="center">0 0</td></tr>
-<tr><td align="center">1</td><td align="center">1</td><td align="center">0 1</td></tr>
-</tbody></table>
 <h3 id="least-frequently-used"><a class="header" href="#least-frequently-used">Least Frequently Used</a></h3>
 <ul>
-<li>Replace the block in the set that has experienced the fewest references.</li>
+<li>Replace the block in the set that has <strong>experienced the fewest references</strong>.</li>
 <li>could be implemented by associating a counter with each block.</li>
-<li>When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, the block with the smallest count is selected.</li>
-<li>Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals.</li>
+<li>When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, <strong>the block with the smallest count is selected</strong>.</li>
+<li>Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals of repeated references due to locality, thus building up high reference counts.</li>
+<li>To overcome this difficulty with LFU, a technique known as <strong>frequency-based replacement</strong> is proposed.
+<ul>
+<li>A simple version in the Figure (a): The blocks are organized in a stack and the top part of the stack is designated for the new section, which means the referenced block is moved to the top of the new section if there is a cache hit. Besides, if the block is not in the new section (i.e. the old section), its reference count increments by 1.</li>
+<li>A further refinement addresses this problem, seeing Figure (b): Divide the stack into three sections (new, middle and old). As before, reference counts are not incremented on blocks in the new section. However, only blocks in the old section are eligible for replacement. Supposing a sufficiently large middle section, this allows relatively frequently referenced blocks a chance to build uo their counts before becoming eligible for replacement (buffer section). Simulation studies indicates that this refined policy is significantly better than LRU or LFU. Note that sizes of new, middle and old sections are hyperparameters which should be fine tuned in daily use.</li>
 </ul>
+</li>
+</ul>
+<div align="center">
+<p><img src="./assets/frequency_based_replacement.png" alt="Frequency-Based Replacement" /></p>
+</div>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<h4 id="optlrufifoclock"><a class="header" href="#optlrufifoclock">OPT/LRU/FIFO/CLOCK</a></h4>
+<p><img src="./assets/algorithm_compare.png" alt="Algorithm Compare" /></p>
+<h4 id="improved-clock-1"><a class="header" href="#improved-clock-1">Improved Clock</a></h4>
+<center>
+<table><thead><tr><th align="center">Time</th><th align="center">0</th><th align="center">1</th><th align="center">2</th><th align="center">3</th><th align="center">4</th><th align="center">5</th><th align="center">6</th><th align="center">7</th><th align="center">8</th><th align="center">9</th><th align="center">10</th></tr></thead><tbody>
+<tr><td align="center">Request</td><td align="center"></td><td align="center">c</td><td align="center">a<sup>w</sup></td><td align="center">d</td><td align="center">b<sup>w</sup></td><td align="center">e</td><td align="center">b</td><td align="center">a<sup>w</sup></td><td align="center">b</td><td align="center">c</td><td align="center">d</td></tr>
+<tr><td align="center">Frame 0 (u,m)</td><td align="center"><em>a(00)</em></td><td align="center"><em>a(00)</em></td><td align="center"><em><strong>a(11)</strong></em></td><td align="center"><em>a(11)</em></td><td align="center"><em>a(11)</em></td><td align="center">a(01)</td><td align="center">a(01)</td><td align="center"><strong>a(11)</strong></td><td align="center">a(11)</td><td align="center"><em>a(11)</em></td><td align="center">a(01)</td></tr>
+<tr><td align="center">Frame 1 (u,m)</td><td align="center">b(00)</td><td align="center">b(00)</td><td align="center">b(00)</td><td align="center">b(00)</td><td align="center"><strong>b(11)</strong></td><td align="center">b(01)</td><td align="center"><strong>b(11)</strong></td><td align="center">b(11)</td><td align="center"><strong>b(11)</strong></td><td align="center">b(11)</td><td align="center">b(01)</td></tr>
+<tr><td align="center">Frame 2 (u,m)</td><td align="center">c(00)</td><td align="center"><strong>c(10)</strong></td><td align="center">c(10)</td><td align="center">c(10)</td><td align="center">c(10)</td><td align="center"><strong>e(10)</strong></td><td align="center">e(10)</td><td align="center">e(10)</td><td align="center">e(10)</td><td align="center">e(10)</td><td align="center"><strong>d(10)</strong></td></tr>
+<tr><td align="center">Frame 3 (u,m)</td><td align="center">d(00)</td><td align="center">d(00)</td><td align="center">d(00)</td><td align="center"><strong>d(10)</strong></td><td align="center">d(10)</td><td align="center"><em>d(00)</em></td><td align="center"><em>d(00)</em></td><td align="center"><em>d(00)</em></td><td align="center"><em>d(00)</em></td><td align="center"><strong>c(10)</strong></td><td align="center"><em>c(00)</em></td></tr>
+<tr><td align="center">Page Fault</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">√</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">√</td><td align="center">√</td></tr>
+</tbody></table>
+</center>
+<h4 id="lfu"><a class="header" href="#lfu">LFU</a></h4>
+<p>Notice that a<sup>x</sup> means a has been referenced for x times.</p>
+<center>
+<table><thead><tr><th align="center">Time</th><th align="center">0</th><th align="center">1</th><th align="center">2</th><th align="center">3</th><th align="center">4</th><th align="center">5</th><th align="center">6</th><th align="center">7</th><th align="center">8</th><th align="center">9</th><th align="center">10</th></tr></thead><tbody>
+<tr><td align="center">Request</td><td align="center"></td><td align="center">c<sup>7</sup></td><td align="center">a<sup>1</sup></td><td align="center">d<sup>14</sup></td><td align="center">b<sup>5</sup></td><td align="center">e<sup>18</sup></td><td align="center">b<sup>1</sup></td><td align="center">a<sup>19</sup></td><td align="center">b<sup>20</sup></td><td align="center">c<sup>20</sup></td><td align="center">d<sup>17</sup></td></tr>
+<tr><td align="center">Frame 0</td><td align="center">a<sup>8</sup></td><td align="center">a<sup>8</sup></td><td align="center"><strong>a<sup>9</sup></strong></td><td align="center">a<sup>9</sup></td><td align="center">a<sup>9</sup></td><td align="center"><strong>e<sup>18</sup></strong></td><td align="center">e<sup>18</sup></td><td align="center">e<sup>18</sup></td><td align="center">e<sup>18</sup></td><td align="center">e<sup>18</sup></td><td align="center"><strong>d<sup>17</sup></strong></td></tr>
+<tr><td align="center">Frame 1</td><td align="center">b<sup>5</sup></td><td align="center">b<sup>5</sup></td><td align="center">b<sup>5</sup></td><td align="center">b<sup>5</sup></td><td align="center"><strong>b<sup>10</sup></strong></td><td align="center">b<sup>10</sup></td><td align="center"><strong>b<sup>11</sup></strong></td><td align="center"><strong>a<sup>19</sup></strong></td><td align="center">a<sup>19</sup></td><td align="center">a<sup>19</sup></td><td align="center">a<sup>19</sup></td></tr>
+<tr><td align="center">Frame 2</td><td align="center">c<sup>6</sup></td><td align="center"><strong>c<sup>13</sup></strong></td><td align="center">c<sup>13</sup></td><td align="center">c<sup>13</sup></td><td align="center">c<sup>13</sup></td><td align="center">c<sup>13</sup></td><td align="center">c<sup>13</sup></td><td align="center">c<sup>13</sup></td><td align="center"><strong>b<sup>20</sup></strong></td><td align="center">b<sup>20</sup></td><td align="center">b<sup>20</sup></td></tr>
+<tr><td align="center">Frame 3</td><td align="center">d<sup>2</sup></td><td align="center">d<sup>2</sup></td><td align="center">d<sup>2</sup></td><td align="center"><strong>d<sup>16</sup></strong></td><td align="center">d<sup>16</sup></td><td align="center">d<sup>16</sup></td><td align="center">d<sup>16</sup></td><td align="center">d<sup>16</sup></td><td align="center">d<sup>16</sup></td><td align="center"><strong>c<sup>20</sup></strong></td><td align="center">c<sup>20</sup></td></tr>
+<tr><td align="center">Page Fault</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">√</td><td align="center"></td><td align="center">√</td><td align="center">√</td><td align="center">√</td><td align="center">√</td></tr>
+</tbody></table>
+</center>
 <h2 id="belady-anomaly"><a class="header" href="#belady-anomaly">Belady Anomaly</a></h2>
-<p>Conflicts between the FIFO algorithm and the memory dynamic feature.</p>
+<p>Belady anomaly is the phenomenon in which <strong>increasing the number of page frames</strong> results in <strong>an increase in the number of page faults</strong> for certain memory access patterns. This phenomenon is commonly experienced when using the first-in first-out (FIFO) page replacement algorithm.</p>
+<p>In <strong>FIFO</strong>, the page fault <strong>may or may not increase</strong> as the page frames increase, but in <strong>Optimal and stack-based algorithms like LRU</strong>, as the page frames increase the page fault <strong>decreases</strong>.</p>
 
                     </main>
 

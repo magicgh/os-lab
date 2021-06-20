@@ -43,13 +43,7 @@
 
 操作系统用 PCB 来进程的基本状态，每个进程都在操作系统中有一个唯一对应的PCB
 
-### 基本状态
-
-包含：
-
-* 进程的标识信息
-* 处理机现场保存
-* 进程的控制信息
+### Structure
 
 At any given point in time, while the program is executing, this process can be uniquely characterized by a number of elements, including the following:
 
@@ -62,8 +56,9 @@ with this process, plus any memory blocks shared with other processes.
 * Context data: These are data that are present in registers in the processor while the process is executing.
 * I/O status information: Includes outstanding I/O requests, I/O devices assigned to this process, a list of files in use by the process, and so on.
 * Accounting information: May include the amount of processor time and clock time used, time limits, account numbers, and so on.
+![Simplified Process Control Block](./assets/simplified_process_control_block.png)
 
-### 控制信息
+### Control Information
 
 * 调度和状态信息： 调度进程和处理及使用情况
 
@@ -75,74 +70,106 @@ with this process, plus any memory blocks shared with other processes.
 
 * 有关数据结构的连接信息
 
-### 组织形式
+### Implementation
 
 * 链表：同一状态进程的 PCB 组成链表
 * 索引表：统一状态进程的 PCB 被同一索引指向
 
 ## Process States
 
-### Creation
+### Life-cycle
 
-When a new process is to be added to those currently being managed, the OS builds the data structures used to manage the process, and allocates address space in main memory to the process.
-
-#### Reasons
-
-* New batch job
-* Created by OS to provide a service
-* Interactive log-on
-* Spawned by existing process
-
-### Ready
-
-### Blocked/Waiting
-
-A process that cannot execute until some event occurs, such as the completion of an I/O operation.
-
-#### Reasons
-
-* 请求并等 待系统服务
-* 启动某种操作无法马上完成
-* 需要的数据没有到达
-
-### 强占
-
-高优先级进程就绪
-进程运行时间已结束
-
-### 唤醒
-
-### 结束
-
-正常/错误/致命错误/被其他进程所杀
+* 进程创建
+  * 系统初始化时
+  * 用户请求创建一个新进程
+  * 被其他进程调用
+* 进程执行
+  * 内核选择一个就绪进程，让其占用处理机并执行
+* 进程等待
+  * 请求并等待系统服务，无法马上完成
+  * 启动某种无法马上完成的操作
+  * 需要的资源没有达到
+* 进程抢占
+  * 被高优先级进程抢占
+  * 在规定时间内未完成
+* 进程唤醒
+  * 被阻塞进程需要的资源可被满足
+  * 被阻塞进程等待的时间到达
+  * 被阻塞的进程只能被别的进程或操作系统唤醒
+* 进程结束
+  * 自愿结束
+    * 正常退出
+    * 错误退出
+  * 非自愿结束
+    * 致命错误
+    * 被其他进程所杀
 
 操作系统在 **中断** 中处理进程  
 以 *Sleep()* 为例，创建 -> 就绪 -> 运行 -> 等待 -> 操作系统时钟中断 ...
 
-Running, ready and blocked states are three basic states.  
-Five-state Process Module: New, ready, running, blocked and exit.
+### Process Creation  
 
-等待状态结束后重新回到就绪队列。
+### Processes Switching
+
+![Processes Switching](./assets/processes_switching.png)
+
+### Processes Termination
+
+### A Two-State Process Model
+
+![Two-state Process Model](./assets/two_state_process_model.png)
+
+### A Five-State Model
+
+Split the Not Running state of the two-state process model into two states: Ready and Blocked and add two additional states for good measure, we can get a five-state model as follows:
+
+1. Running: The process that is currently being executed.
+2. Ready: A process that is prepared to execute when given the opportunity.
+3. Blocked/Waiting: A process that cannot execute until some event occurs, such as the completion of an I/O operation.
+4. New: A process that has just been created but has not yet been admitted to the pool of executable processes by the OS. Typically, a new process has not yet been loaded into main memory, although its process control block has been created.
+5. Exit: A process that has been released from the pool of executable processes by the OS, either because it halted or because it aborted for some reason.
+
+![Five-state Process Model](./assets/five_state_process_model.png)
+
+Figure above indicates the types of events that lead to each state transition for a process; the possible transitions are as follows:
+
+* Null -> New: A new process is created to execute a program.
+* New -> Ready: The OS will move a process from the New state to the **Ready state** when it is prepared to take on an additional process.
+* Ready -> Running: When it is time to select a process to run, the OS chooses one of the processes in the Ready state.
+* Running -> Exit: The currently running process is terminated by the OS if the process indicates that it has completed or if it aborts.
+* Running -> Ready
+  * The running process has reached the maximum allowable time for uninterrupted execution;
+  * The OS preempted a process if there is another process with higher priority level being blocked.
+* Running -> Blocked: A process is put in the **Blocked state** if it requests something for which it must wait. For example, a process may request a service from OS that OS is not prepared to perform immediately or a process may initiate that must be completed before the process can continue.
+* Blocked -> Ready: A process in the Blocked state is moved to the Ready state when the event for which it has been waiting occurs.
+* Ready -> Exit: For clarity, this transition is not shown on the state diagram. In some systems, a parent may terminate a child process at any time. Also, if a parent terminates, all child processes associated with that parent may be terminated.
+* Blocked -> Exit: The comments under the preceding item apply.
 
 ## Suspended Processes
 
-把一个进程从内存转到外存，低优先级让位高优先级。
+There are two independent concepts here: whether a process is waiting on an event (blocked or not), and whether a process has been swapped out of main memory (suspended or not). To accommodate this $2 \times 2$ combination, we need four states:
 
-* 等待挂起 (Block-suspend)
-* 就绪挂起 (Ready-suspend)
+1. Ready: The process is in main memory and available for execution.
+2. Blocked: The process is in main memory and awaiting an event.
+3. Blocked/Suspend: The process is in **secondary memory** and **awaiting** an event.
+4. Ready/Suspend: The process is in **secondary memory** but is **available** for execution
+as soon as it is loaded into main memory.
 
-## Activated Processes
+![Two Suspended States](./assets/two_suspended_states.png)
 
-把一个进程从外存转到内存
+Important new transitions are the following:
 
-就绪挂起 -> 就绪：没有就绪进程或挂起或有高优先级的挂起进程  
-等待挂起 -> 等待
+* Blocked -> Blocked/Suspend:
+* Blocked/Suspend -> Ready/Suspend:
+* Ready/Suspend -> Ready:
+* Ready -> Ready/Suspend:
+* Blocked/Suspend -> Blocked:
 
-## State Queue
+## Queueing Model
 
-根据不同优先级，就绪队列和等待队列可能有多个。
+![Queueing Model](./assets/queueing_model.png)
 
-## Control
+##  
 
 ### Switch Processes
 

@@ -102,6 +102,22 @@ step 2. This time, a frame will be found for the replacement.
 
 </center>
 
+#### LFU
+
+Notice that a<sup>x</sup> means a has been referenced for x times.
+<center>
+
+|Time|0|1|2|3|4|5|6|7|8|9|10|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|Request||c<sup>7</sup>|a<sup>1</sup>|d<sup>14</sup>|b<sup>5</sup>|e<sup>18</sup>|b<sup>1</sup>|a<sup>19</sup>|b<sup>20</sup>|c<sup>20</sup>|d<sup>17</sup>|
+|Frame 0|a<sup>8</sup>|a<sup>8</sup>|**a<sup>9</sup>**|a<sup>9</sup>|a<sup>9</sup>|**e<sup>18</sup>**|e<sup>18</sup>|e<sup>18</sup>|e<sup>18</sup>|e<sup>18</sup>|**d<sup>17</sup>**|
+|Frame 1|b<sup>5</sup>|b<sup>5</sup>|b<sup>5</sup>|b<sup>5</sup>|**b<sup>10</sup>**|b<sup>10</sup>|**b<sup>11</sup>**|**a<sup>19</sup>**|a<sup>19</sup>|a<sup>19</sup>|a<sup>19</sup>|
+|Frame 2|c<sup>6</sup>|**c<sup>13</sup>**|c<sup>13</sup>|c<sup>13</sup>|c<sup>13</sup>|c<sup>13</sup>|c<sup>13</sup>|c<sup>13</sup>|**b<sup>20</sup>**|b<sup>20</sup>|b<sup>20</sup>|
+|Frame 3|d<sup>2</sup>|d<sup>2</sup>|d<sup>2</sup>|**d<sup>16</sup>**|d<sup>16</sup>|d<sup>16</sup>|d<sup>16</sup>|d<sup>16</sup>|d<sup>16</sup>|**c<sup>20</sup>**|c<sup>20</sup>|
+|Page Fault||||||√||√|√|√|√|
+
+</center>
+
 ## Belady Anomaly
 
 Belady anomaly is the phenomenon in which **increasing the number of page frames** results in **an increase in the number of page faults** for certain memory access patterns. This phenomenon is commonly experienced when using the first-in first-out (FIFO) page replacement algorithm.  

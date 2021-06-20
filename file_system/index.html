@@ -165,6 +165,67 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="file-system"><a class="header" href="#file-system">File System</a></h1>
+<h2 id="files-and-file-systems"><a class="header" href="#files-and-file-systems">Files and File Systems</a></h2>
+<p>From the user’s point of view, one of the most important parts of an operating system is the file system. The file system permits users to create data collections, called files, with desirable properties, such as:</p>
+<ul>
+<li>
+<p>Long-term existence: Files are stored on disk or other secondary storage and do not disappear when a user logs off.</p>
+</li>
+<li>
+<p>Sharable between processes: Files have names and can have associated access
+permissions that permit controlled sharing.</p>
+</li>
+<li>
+<p>Structure: Depending on the file system, a file can have an internal structure that is convenient for particular applications. In addition, files can be organized into a hierarchical or more complex structure to reflect the relationships among files.</p>
+</li>
+</ul>
+<p>Any file system provides not only a means to store data organized as files, but
+a collection of functions that can be performed on files. Typical operations include the following:</p>
+<ul>
+<li>Create</li>
+<li>Delete</li>
+<li>Open</li>
+<li>Close</li>
+<li>Read</li>
+<li>Write</li>
+</ul>
+<h2 id="file-structure"><a class="header" href="#file-structure">File Structure</a></h2>
+<p>Four terms are in common use when discussing files:</p>
+<h3 id="field"><a class="header" href="#field">Field</a></h3>
+<p>A <strong>field</strong> is the basic element of data. Depending on the file design, fields may be fixed length or variable length. In the latter case, the field often consists of fwo or three subfields: the actual value to be stored, the name of the fields, and in some cases, the length of the field. In other cases of variable-length fields, the length of the field is indicated by the use of special demarcation (boundary) symbols between fields.</p>
+<h3 id="record"><a class="header" href="#record">Record</a></h3>
+<p>A <strong>record</strong> is a collection of related fields that can be treated as a unit by some application program. A record will
+be of variable length if some of its fields are of variable length or if the number of fields may vary. In the latter case, each field is usually accompanied by a field name. In either case, the entire record usually includes a length field.</p>
+<h3 id="file"><a class="header" href="#file">File</a></h3>
+<p>A <strong>file</strong> is a collection of similar records. The file is treated as a single entity by users and applications and may be referenced by name. Files have file names and may be created and deleted.</p>
+<h3 id="database"><a class="header" href="#database">Database</a></h3>
+<p>A <strong>database</strong> is a collection of related data. The essential aspects of a database are that the relationships that exist among elements of data are explicit.</p>
+<h2 id="file-management-systems"><a class="header" href="#file-management-systems">File Management Systems</a></h2>
+<p>A file management system is that set of system software that provides services to users and applications in the use of files. Typically, the only way a user or application may access files is through the file management system.<br />
+The following objectives for a file management system are as follows:</p>
+<ul>
+<li>To meet the data management needs and requirements of the user, which include storage of data and the ability to perform the aforementioned operations</li>
+<li>To guarantee, to the extend possible, that the data in the file are valid</li>
+<li>To optimize performance, both from the system point of view in terms of overall throughput, and from the user’s point of view in terms of response time</li>
+<li>To provide I/O support for a variety of storage device types</li>
+<li>To minimize or eliminate the potential for lost or destroyed data</li>
+<li>To provide a standardized set of I/O interface routines to user processes</li>
+<li>To provide I/O support for multiple users, in the case of multiple-user systems</li>
+</ul>
+<p>With respect to the first point, meeting user requirements, the extent of such requirements depends on the variety of applications and the environment in which the computer system will be used. For an interactive, general-purpose system, the following constitute a minimal set of requirements:</p>
+<ol>
+<li>Each user should be able to create, delete, read, write, and modify files.</li>
+<li>Each user may have controlled access to other users’ files.</li>
+<li>Each user may control what types of accesses are allowed to the user’s files</li>
+<li>Each user should be able to move data between files.</li>
+<li>Each user should be able to back up and recover the user’s files in case of
+damage.</li>
+<li>Each user should be able to access his or her files by name rather than by
+numeric identifier.</li>
+</ol>
+<h3 id="file-system-architecture"><a class="header" href="#file-system-architecture">File System Architecture</a></h3>
+<h3 id="file-management-functions"><a class="header" href="#file-management-functions">File Management Functions</a></h3>
+<h2 id="file-organization-and-access"><a class="header" href="#file-organization-and-access">File Organization and Access</a></h2>
 
                     </main>
 

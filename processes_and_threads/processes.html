@@ -212,13 +212,7 @@
 </ul>
 <h2 id="process-control-block"><a class="header" href="#process-control-block">Process Control Block</a></h2>
 <p>操作系统用 PCB 来进程的基本状态，每个进程都在操作系统中有一个唯一对应的PCB</p>
-<h3 id="基本状态"><a class="header" href="#基本状态">基本状态</a></h3>
-<p>包含：</p>
-<ul>
-<li>进程的标识信息</li>
-<li>处理机现场保存</li>
-<li>进程的控制信息</li>
-</ul>
+<h3 id="structure"><a class="header" href="#structure">Structure</a></h3>
 <p>At any given point in time, while the program is executing, this process can be uniquely characterized by a number of elements, including the following:</p>
 <ul>
 <li>Identifier: A unique identifier associated with this process, to distinguish it from all other processes.</li>
@@ -229,9 +223,10 @@
 with this process, plus any memory blocks shared with other processes.</li>
 <li>Context data: These are data that are present in registers in the processor while the process is executing.</li>
 <li>I/O status information: Includes outstanding I/O requests, I/O devices assigned to this process, a list of files in use by the process, and so on.</li>
-<li>Accounting information: May include the amount of processor time and clock time used, time limits, account numbers, and so on.</li>
+<li>Accounting information: May include the amount of processor time and clock time used, time limits, account numbers, and so on.
+<img src="./assets/simplified_process_control_block.png" alt="Simplified Process Control Block" /></li>
 </ul>
-<h3 id="控制信息"><a class="header" href="#控制信息">控制信息</a></h3>
+<h3 id="control-information"><a class="header" href="#control-information">Control Information</a></h3>
 <ul>
 <li>
 <p>调度和状态信息： 调度进程和处理及使用情况</p>
@@ -249,54 +244,119 @@ with this process, plus any memory blocks shared with other processes.</li>
 <p>有关数据结构的连接信息</p>
 </li>
 </ul>
-<h3 id="组织形式"><a class="header" href="#组织形式">组织形式</a></h3>
+<h3 id="implementation"><a class="header" href="#implementation">Implementation</a></h3>
 <ul>
 <li>链表：同一状态进程的 PCB 组成链表</li>
 <li>索引表：统一状态进程的 PCB 被同一索引指向</li>
 </ul>
 <h2 id="process-states"><a class="header" href="#process-states">Process States</a></h2>
-<h3 id="creation"><a class="header" href="#creation">Creation</a></h3>
-<p>When a new process is to be added to those currently being managed, the OS builds the data structures used to manage the process, and allocates address space in main memory to the process.</p>
-<h4 id="reasons"><a class="header" href="#reasons">Reasons</a></h4>
+<h3 id="life-cycle"><a class="header" href="#life-cycle">Life-cycle</a></h3>
 <ul>
-<li>New batch job</li>
-<li>Created by OS to provide a service</li>
-<li>Interactive log-on</li>
-<li>Spawned by existing process</li>
-</ul>
-<h3 id="ready"><a class="header" href="#ready">Ready</a></h3>
-<h3 id="blockedwaiting"><a class="header" href="#blockedwaiting">Blocked/Waiting</a></h3>
-<p>A process that cannot execute until some event occurs, such as the completion of an I/O operation.</p>
-<h4 id="reasons-1"><a class="header" href="#reasons-1">Reasons</a></h4>
+<li>进程创建
 <ul>
-<li>请求并等 待系统服务</li>
-<li>启动某种操作无法马上完成</li>
-<li>需要的数据没有到达</li>
+<li>系统初始化时</li>
+<li>用户请求创建一个新进程</li>
+<li>被其他进程调用</li>
 </ul>
-<h3 id="强占"><a class="header" href="#强占">强占</a></h3>
-<p>高优先级进程就绪
-进程运行时间已结束</p>
-<h3 id="唤醒"><a class="header" href="#唤醒">唤醒</a></h3>
-<h3 id="结束"><a class="header" href="#结束">结束</a></h3>
-<p>正常/错误/致命错误/被其他进程所杀</p>
+</li>
+<li>进程执行
+<ul>
+<li>内核选择一个就绪进程，让其占用处理机并执行</li>
+</ul>
+</li>
+<li>进程等待
+<ul>
+<li>请求并等待系统服务，无法马上完成</li>
+<li>启动某种无法马上完成的操作</li>
+<li>需要的资源没有达到</li>
+</ul>
+</li>
+<li>进程抢占
+<ul>
+<li>被高优先级进程抢占</li>
+<li>在规定时间内未完成</li>
+</ul>
+</li>
+<li>进程唤醒
+<ul>
+<li>被阻塞进程需要的资源可被满足</li>
+<li>被阻塞进程等待的时间到达</li>
+<li>被阻塞的进程只能被别的进程或操作系统唤醒</li>
+</ul>
+</li>
+<li>进程结束
+<ul>
+<li>自愿结束
+<ul>
+<li>正常退出</li>
+<li>错误退出</li>
+</ul>
+</li>
+<li>非自愿结束
+<ul>
+<li>致命错误</li>
+<li>被其他进程所杀</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <p>操作系统在 <strong>中断</strong> 中处理进程<br />
 以 <em>Sleep()</em> 为例，创建 -&gt; 就绪 -&gt; 运行 -&gt; 等待 -&gt; 操作系统时钟中断 ...</p>
-<p>Running, ready and blocked states are three basic states.<br />
-Five-state Process Module: New, ready, running, blocked and exit.</p>
-<p>等待状态结束后重新回到就绪队列。</p>
-<h2 id="suspended-processes"><a class="header" href="#suspended-processes">Suspended Processes</a></h2>
-<p>把一个进程从内存转到外存，低优先级让位高优先级。</p>
+<h3 id="process-creation"><a class="header" href="#process-creation">Process Creation</a></h3>
+<h3 id="processes-switching"><a class="header" href="#processes-switching">Processes Switching</a></h3>
+<p><img src="./assets/processes_switching.png" alt="Processes Switching" /></p>
+<h3 id="processes-termination"><a class="header" href="#processes-termination">Processes Termination</a></h3>
+<h3 id="a-two-state-process-model"><a class="header" href="#a-two-state-process-model">A Two-State Process Model</a></h3>
+<p><img src="./assets/two_state_process_model.png" alt="Two-state Process Model" /></p>
+<h3 id="a-five-state-model"><a class="header" href="#a-five-state-model">A Five-State Model</a></h3>
+<p>Split the Not Running state of the two-state process model into two states: Ready and Blocked and add two additional states for good measure, we can get a five-state model as follows:</p>
+<ol>
+<li>Running: The process that is currently being executed.</li>
+<li>Ready: A process that is prepared to execute when given the opportunity.</li>
+<li>Blocked/Waiting: A process that cannot execute until some event occurs, such as the completion of an I/O operation.</li>
+<li>New: A process that has just been created but has not yet been admitted to the pool of executable processes by the OS. Typically, a new process has not yet been loaded into main memory, although its process control block has been created.</li>
+<li>Exit: A process that has been released from the pool of executable processes by the OS, either because it halted or because it aborted for some reason.</li>
+</ol>
+<p><img src="./assets/five_state_process_model.png" alt="Five-state Process Model" /></p>
+<p>Figure above indicates the types of events that lead to each state transition for a process; the possible transitions are as follows:</p>
 <ul>
-<li>等待挂起 (Block-suspend)</li>
-<li>就绪挂起 (Ready-suspend)</li>
+<li>Null -&gt; New: A new process is created to execute a program.</li>
+<li>New -&gt; Ready: The OS will move a process from the New state to the <strong>Ready state</strong> when it is prepared to take on an additional process.</li>
+<li>Ready -&gt; Running: When it is time to select a process to run, the OS chooses one of the processes in the Ready state.</li>
+<li>Running -&gt; Exit: The currently running process is terminated by the OS if the process indicates that it has completed or if it aborts.</li>
+<li>Running -&gt; Ready
+<ul>
+<li>The running process has reached the maximum allowable time for uninterrupted execution;</li>
+<li>The OS preempted a process if there is another process with higher priority level being blocked.</li>
 </ul>
-<h2 id="activated-processes"><a class="header" href="#activated-processes">Activated Processes</a></h2>
-<p>把一个进程从外存转到内存</p>
-<p>就绪挂起 -&gt; 就绪：没有就绪进程或挂起或有高优先级的挂起进程<br />
-等待挂起 -&gt; 等待</p>
-<h2 id="state-queue"><a class="header" href="#state-queue">State Queue</a></h2>
-<p>根据不同优先级，就绪队列和等待队列可能有多个。</p>
-<h2 id="control"><a class="header" href="#control">Control</a></h2>
+</li>
+<li>Running -&gt; Blocked: A process is put in the <strong>Blocked state</strong> if it requests something for which it must wait. For example, a process may request a service from OS that OS is not prepared to perform immediately or a process may initiate that must be completed before the process can continue.</li>
+<li>Blocked -&gt; Ready: A process in the Blocked state is moved to the Ready state when the event for which it has been waiting occurs.</li>
+<li>Ready -&gt; Exit: For clarity, this transition is not shown on the state diagram. In some systems, a parent may terminate a child process at any time. Also, if a parent terminates, all child processes associated with that parent may be terminated.</li>
+<li>Blocked -&gt; Exit: The comments under the preceding item apply.</li>
+</ul>
+<h2 id="suspended-processes"><a class="header" href="#suspended-processes">Suspended Processes</a></h2>
+<p>There are two independent concepts here: whether a process is waiting on an event (blocked or not), and whether a process has been swapped out of main memory (suspended or not). To accommodate this <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> combination, we need four states:</p>
+<ol>
+<li>Ready: The process is in main memory and available for execution.</li>
+<li>Blocked: The process is in main memory and awaiting an event.</li>
+<li>Blocked/Suspend: The process is in <strong>secondary memory</strong> and <strong>awaiting</strong> an event.</li>
+<li>Ready/Suspend: The process is in <strong>secondary memory</strong> but is <strong>available</strong> for execution
+as soon as it is loaded into main memory.</li>
+</ol>
+<p><img src="./assets/two_suspended_states.png" alt="Two Suspended States" /></p>
+<p>Important new transitions are the following:</p>
+<ul>
+<li>Blocked -&gt; Blocked/Suspend:</li>
+<li>Blocked/Suspend -&gt; Ready/Suspend:</li>
+<li>Ready/Suspend -&gt; Ready:</li>
+<li>Ready -&gt; Ready/Suspend:</li>
+<li>Blocked/Suspend -&gt; Blocked:</li>
+</ul>
+<h2 id="queueing-model"><a class="header" href="#queueing-model">Queueing Model</a></h2>
+<p><img src="./assets/queueing_model.png" alt="Queueing Model" /></p>
+<h2 id=""><a class="header" href="#"></a></h2>
 <h3 id="switch-processes"><a class="header" href="#switch-processes">Switch Processes</a></h3>
 <ul>
 <li>暂停当前运行进程，从运行状态变为其他状态</li>

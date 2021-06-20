@@ -1,32 +1,47 @@
 # Processes
 
-## Concepts
+## Definition
 
-### Structure
+进程是指一个具有一定独立功能的程序在一个数据集合上的一次动态执行过程。
+
+## Composition
 
 * 代码
 * 数据
 * 状态寄存器：CR0, IP
 * 通用寄存器：AX, BX, CX
-* An associated set of system resources
+* 进程占用系统资源
 
-### Feature
+### Features
 
-* 动态性
-* 并发性
-* 独立性
-* 制约性
+* 动态性：可动态地创建、结束进程
+* 并发性：进程可以被独立调度并占用处理机运行
+* 独立性：不同进程的工作不相互影响
+* 制约性：因访问共享数据/资源或进程间同步而产生制约
 
-### Relation between programs
+### Relations and Discrepancies between programs
 
-Abstract of Programs in executive states  
-Program = Static executive file  
-Process = Program + executive states  
-A program may own different process  
+#### Relations
+
+* Processes are the abstract of Programs in executive states  
+  * Program = Static executive file  
+  * Process = Program + executive states  
+* Multiple executions of the some program are regarded as different processes.
+* Necessary resources in executing processes: Memory and CPU
+
+#### Discrepancies
+
+* 进程时动态的，程序时静态的
+  * 程序是有序代码的集合
+  * 进程是程序的执行
+* 进程是暂时的，程序时永久的
+  * 进程是一个状态变化的过程
+  * 程序可长久保存
+* 进程与程序的组成不同：进程的组成包括程序、数据和进程控制块
 
 ## Process Control Block
 
-操作系统用 PCB 来进程的基本状态
+操作系统用 PCB 来进程的基本状态，每个进程都在操作系统中有一个唯一对应的PCB
 
 ### 基本状态
 
@@ -126,3 +141,35 @@ Five-state Process Module: New, ready, running, blocked and exit.
 ## State Queue
 
 根据不同优先级，就绪队列和等待队列可能有多个。
+
+## Control
+
+### Switch Processes
+
+* 暂停当前运行进程，从运行状态变为其他状态
+* 调度另一个进程从就绪状态变为运行状态
+
+When to Switch Processes:
+
+* Clock interrupt
+* I/O interrupt
+* Memory fault
+
+#### 要求
+
+* 切换前，保存进程上下文（保存至 PCB）
+* 切换后，恢复进程上下文
+* 快速切换
+
+#### 进程生命周期的信息
+
+* 代码
+* 数据
+* 状态寄存器：CR0, IP
+* 通用寄存器：AX, BX, CX
+* An associated set of system resources
+
+#### 上下文切换
+
+以进程 P0、进程 P1 为例：  
+P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统调用 -- P1 保存 -- P0 恢复 -- P0

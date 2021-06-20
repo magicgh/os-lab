@@ -16,11 +16,14 @@
   - [Global Replacement](./virtual_memory/global_replacement.md)
   
 - [Processes and Threads](./processes_and_threads/README.md)
-  - [Process](./processes_and_threads/processes.md)
+  - [Processes](./processes_and_threads/processes.md)
   - [Threads](./processes_and_threads/threads.md)
-  - [Control](./processes_and_threads/control.md)
-  - [Schedule and Dispatch](./processes_and_threads/schedule_and_dispatch.md)
-  - [Multiple Cores](./processes_and_threads/multiple_cores.md)
-  - [Communication](./processes_and_threads/communication.md)
-  - [Semaphore](./processes_and_threads/semaphore.md)
-  - [Monitor](./processes_and_threads/monitor.md)
+  - [Scheduling](./processes_and_threads/scheduling.md)
+
+- [Concurrency](./concurrency/README.md)
+  - [Mutual Exclusion and Synchronization](./concurrency/mutual_exclusion_and_synchronization.md)
+  - [Semaphore](./concurrency/semaphore.md)
+  - [Deadlock and Starvation](./concurrency/deadlock_and_starvation.md)
+  - [Interprocess Communication](./concurrency/interprocess_communication.md)
+
+- [File System](./file_system/README.md)

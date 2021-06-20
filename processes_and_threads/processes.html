@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Process</title>
+        <title>Processes</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="../memory_management/noncontiguous_memory_allocation.html"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/local_replacement.html"><strong aria-hidden="true">4.2.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/global_replacement.html"><strong aria-hidden="true">4.3.</strong> Global Replacement</a></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html" class="active"><strong aria-hidden="true">5.1.</strong> Process</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/control.html"><strong aria-hidden="true">5.3.</strong> Control</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/schedule_and_dispatch.html"><strong aria-hidden="true">5.4.</strong> Schedule and Dispatch</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/multiple_cores.html"><strong aria-hidden="true">5.5.</strong> Multiple Cores</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/communication.html"><strong aria-hidden="true">5.6.</strong> Communication</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/semaphore.html"><strong aria-hidden="true">5.7.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/monitor.html"><strong aria-hidden="true">5.8.</strong> Monitor</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="../memory_management/noncontiguous_memory_allocation.html"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/local_replacement.html"><strong aria-hidden="true">4.2.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/global_replacement.html"><strong aria-hidden="true">4.3.</strong> Global Replacement</a></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html" class="active"><strong aria-hidden="true">5.1.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/scheduling.html"><strong aria-hidden="true">5.3.</strong> Scheduling</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency/index.html"><strong aria-hidden="true">6.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concurrency/mutual_exclusion_and_synchronization.html"><strong aria-hidden="true">6.1.</strong> Mutual Exclusion and Synchronization</a></li><li class="chapter-item expanded "><a href="../concurrency/semaphore.html"><strong aria-hidden="true">6.2.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="../concurrency/deadlock_and_starvation.html"><strong aria-hidden="true">6.3.</strong> Deadlock and Starvation</a></li><li class="chapter-item expanded "><a href="../concurrency/interprocess_communication.html"><strong aria-hidden="true">6.4.</strong> Interprocess Communication</a></li></ol></li><li class="chapter-item expanded "><a href="../file_system/index.html"><strong aria-hidden="true">7.</strong> File System</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -165,29 +165,53 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
-<h2 id="concepts"><a class="header" href="#concepts">Concepts</a></h2>
-<h3 id="structure"><a class="header" href="#structure">Structure</a></h3>
+<h2 id="definition"><a class="header" href="#definition">Definition</a></h2>
+<p>进程是指一个具有一定独立功能的程序在一个数据集合上的一次动态执行过程。</p>
+<h2 id="composition"><a class="header" href="#composition">Composition</a></h2>
 <ul>
 <li>代码</li>
 <li>数据</li>
 <li>状态寄存器：CR0, IP</li>
 <li>通用寄存器：AX, BX, CX</li>
-<li>An associated set of system resources</li>
+<li>进程占用系统资源</li>
 </ul>
-<h3 id="feature"><a class="header" href="#feature">Feature</a></h3>
+<h3 id="features"><a class="header" href="#features">Features</a></h3>
 <ul>
-<li>动态性</li>
-<li>并发性</li>
-<li>独立性</li>
-<li>制约性</li>
+<li>动态性：可动态地创建、结束进程</li>
+<li>并发性：进程可以被独立调度并占用处理机运行</li>
+<li>独立性：不同进程的工作不相互影响</li>
+<li>制约性：因访问共享数据/资源或进程间同步而产生制约</li>
 </ul>
-<h3 id="relation-between-programs"><a class="header" href="#relation-between-programs">Relation between programs</a></h3>
-<p>Abstract of Programs in executive states<br />
-Program = Static executive file<br />
-Process = Program + executive states<br />
-A program may own different process</p>
+<h3 id="relations-and-discrepancies-between-programs"><a class="header" href="#relations-and-discrepancies-between-programs">Relations and Discrepancies between programs</a></h3>
+<h4 id="relations"><a class="header" href="#relations">Relations</a></h4>
+<ul>
+<li>Processes are the abstract of Programs in executive states
+<ul>
+<li>Program = Static executive file</li>
+<li>Process = Program + executive states</li>
+</ul>
+</li>
+<li>Multiple executions of the some program are regarded as different processes.</li>
+<li>Necessary resources in executing processes: Memory and CPU</li>
+</ul>
+<h4 id="discrepancies"><a class="header" href="#discrepancies">Discrepancies</a></h4>
+<ul>
+<li>进程时动态的，程序时静态的
+<ul>
+<li>程序是有序代码的集合</li>
+<li>进程是程序的执行</li>
+</ul>
+</li>
+<li>进程是暂时的，程序时永久的
+<ul>
+<li>进程是一个状态变化的过程</li>
+<li>程序可长久保存</li>
+</ul>
+</li>
+<li>进程与程序的组成不同：进程的组成包括程序、数据和进程控制块</li>
+</ul>
 <h2 id="process-control-block"><a class="header" href="#process-control-block">Process Control Block</a></h2>
-<p>操作系统用 PCB 来进程的基本状态</p>
+<p>操作系统用 PCB 来进程的基本状态，每个进程都在操作系统中有一个唯一对应的PCB</p>
 <h3 id="基本状态"><a class="header" href="#基本状态">基本状态</a></h3>
 <p>包含：</p>
 <ul>
@@ -272,6 +296,35 @@ Five-state Process Module: New, ready, running, blocked and exit.</p>
 等待挂起 -&gt; 等待</p>
 <h2 id="state-queue"><a class="header" href="#state-queue">State Queue</a></h2>
 <p>根据不同优先级，就绪队列和等待队列可能有多个。</p>
+<h2 id="control"><a class="header" href="#control">Control</a></h2>
+<h3 id="switch-processes"><a class="header" href="#switch-processes">Switch Processes</a></h3>
+<ul>
+<li>暂停当前运行进程，从运行状态变为其他状态</li>
+<li>调度另一个进程从就绪状态变为运行状态</li>
+</ul>
+<p>When to Switch Processes:</p>
+<ul>
+<li>Clock interrupt</li>
+<li>I/O interrupt</li>
+<li>Memory fault</li>
+</ul>
+<h4 id="要求"><a class="header" href="#要求">要求</a></h4>
+<ul>
+<li>切换前，保存进程上下文（保存至 PCB）</li>
+<li>切换后，恢复进程上下文</li>
+<li>快速切换</li>
+</ul>
+<h4 id="进程生命周期的信息"><a class="header" href="#进程生命周期的信息">进程生命周期的信息</a></h4>
+<ul>
+<li>代码</li>
+<li>数据</li>
+<li>状态寄存器：CR0, IP</li>
+<li>通用寄存器：AX, BX, CX</li>
+<li>An associated set of system resources</li>
+</ul>
+<h4 id="上下文切换"><a class="header" href="#上下文切换">上下文切换</a></h4>
+<p>以进程 P0、进程 P1 为例：<br />
+P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统调用 -- P1 保存 -- P0 恢复 -- P0</p>
 
                     </main>
 

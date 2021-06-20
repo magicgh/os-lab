@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Control</title>
+        <title>Mutual Exclusion and Synchronization</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="../memory_management/noncontiguous_memory_allocation.html"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/local_replacement.html"><strong aria-hidden="true">4.2.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/global_replacement.html"><strong aria-hidden="true">4.3.</strong> Global Replacement</a></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Process</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/control.html" class="active"><strong aria-hidden="true">5.3.</strong> Control</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/schedule_and_dispatch.html"><strong aria-hidden="true">5.4.</strong> Schedule and Dispatch</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/multiple_cores.html"><strong aria-hidden="true">5.5.</strong> Multiple Cores</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/communication.html"><strong aria-hidden="true">5.6.</strong> Communication</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/semaphore.html"><strong aria-hidden="true">5.7.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/monitor.html"><strong aria-hidden="true">5.8.</strong> Monitor</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Overview</a></li><li class="chapter-item expanded "><a href="../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="../memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="../memory_management/noncontiguous_memory_allocation.html"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="../virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="../virtual_memory/local_replacement.html"><strong aria-hidden="true">4.2.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="../virtual_memory/global_replacement.html"><strong aria-hidden="true">4.3.</strong> Global Replacement</a></li></ol></li><li class="chapter-item expanded "><a href="../processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../processes_and_threads/scheduling.html"><strong aria-hidden="true">5.3.</strong> Scheduling</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency/index.html"><strong aria-hidden="true">6.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concurrency/mutual_exclusion_and_synchronization.html" class="active"><strong aria-hidden="true">6.1.</strong> Mutual Exclusion and Synchronization</a></li><li class="chapter-item expanded "><a href="../concurrency/semaphore.html"><strong aria-hidden="true">6.2.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="../concurrency/deadlock_and_starvation.html"><strong aria-hidden="true">6.3.</strong> Deadlock and Starvation</a></li><li class="chapter-item expanded "><a href="../concurrency/interprocess_communication.html"><strong aria-hidden="true">6.4.</strong> Interprocess Communication</a></li></ol></li><li class="chapter-item expanded "><a href="../file_system/index.html"><strong aria-hidden="true">7.</strong> File System</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -164,48 +164,20 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="control"><a class="header" href="#control">Control</a></h1>
-<h2 id="switch-processes"><a class="header" href="#switch-processes">Switch Processes</a></h2>
-<ul>
-<li>暂停当前运行进程，从运行状态变为其他状态</li>
-<li>调度另一个进程从就绪状态变为运行状态</li>
-</ul>
-<p>When to Switch Processes:</p>
-<ul>
-<li>Clock interrupt</li>
-<li>I/O interrupt</li>
-<li>Memory fault</li>
-</ul>
-<h3 id="要求"><a class="header" href="#要求">要求</a></h3>
-<ul>
-<li>切换前，保存进程上下文（保存至 PCB）</li>
-<li>切换后，恢复进程上下文</li>
-<li>快速切换</li>
-</ul>
-<h3 id="进程生命周期的信息"><a class="header" href="#进程生命周期的信息">进程生命周期的信息</a></h3>
-<ul>
-<li>代码</li>
-<li>数据</li>
-<li>状态寄存器：CR0, IP</li>
-<li>通用寄存器：AX, BX, CX</li>
-<li>An associated set of system resources</li>
-</ul>
-<h3 id="上下文切换"><a class="header" href="#上下文切换">上下文切换</a></h3>
-<p>以进程 P0、进程 P1 为例：<br />
-P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统调用 -- P1 保存 -- P0 恢复 -- P0</p>
+<h1 id="mutual-exclusion-and-synchronization"><a class="header" href="#mutual-exclusion-and-synchronization">Mutual Exclusion and Synchronization</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../processes_and_threads/threads.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../concurrency/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../processes_and_threads/schedule_and_dispatch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../concurrency/semaphore.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -217,13 +189,13 @@ P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统�
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../processes_and_threads/threads.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../concurrency/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../processes_and_threads/schedule_and_dispatch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../concurrency/semaphore.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

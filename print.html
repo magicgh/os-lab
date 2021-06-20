@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Overview</a></li><li class="chapter-item expanded "><a href="introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="memory_management/noncontiguous_memory_allocation.html"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="virtual_memory/local_replacement.html"><strong aria-hidden="true">4.2.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="virtual_memory/global_replacement.html"><strong aria-hidden="true">4.3.</strong> Global Replacement</a></li></ol></li><li class="chapter-item expanded "><a href="processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Process</a></li><li class="chapter-item expanded "><a href="processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="processes_and_threads/control.html"><strong aria-hidden="true">5.3.</strong> Control</a></li><li class="chapter-item expanded "><a href="processes_and_threads/schedule_and_dispatch.html"><strong aria-hidden="true">5.4.</strong> Schedule and Dispatch</a></li><li class="chapter-item expanded "><a href="processes_and_threads/multiple_cores.html"><strong aria-hidden="true">5.5.</strong> Multiple Cores</a></li><li class="chapter-item expanded "><a href="processes_and_threads/communication.html"><strong aria-hidden="true">5.6.</strong> Communication</a></li><li class="chapter-item expanded "><a href="processes_and_threads/semaphore.html"><strong aria-hidden="true">5.7.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="processes_and_threads/monitor.html"><strong aria-hidden="true">5.8.</strong> Monitor</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Overview</a></li><li class="chapter-item expanded "><a href="introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="exception_handling/index.html"><strong aria-hidden="true">2.</strong> Exception Handling</a></li><li class="chapter-item expanded "><a href="memory_management/index.html"><strong aria-hidden="true">3.</strong> Memory Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_management/contiguous_memory_allocation.html"><strong aria-hidden="true">3.1.</strong> Contiguous Memory Allocation</a></li><li class="chapter-item expanded "><a href="memory_management/noncontiguous_memory_allocation.html"><strong aria-hidden="true">3.2.</strong> Non-contiguous Memory Allocation</a></li></ol></li><li class="chapter-item expanded "><a href="virtual_memory/index.html"><strong aria-hidden="true">4.</strong> Virtual Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="virtual_memory/preliminary_concepts.html"><strong aria-hidden="true">4.1.</strong> Preliminary Concepts</a></li><li class="chapter-item expanded "><a href="virtual_memory/local_replacement.html"><strong aria-hidden="true">4.2.</strong> Local Replacement</a></li><li class="chapter-item expanded "><a href="virtual_memory/global_replacement.html"><strong aria-hidden="true">4.3.</strong> Global Replacement</a></li></ol></li><li class="chapter-item expanded "><a href="processes_and_threads/index.html"><strong aria-hidden="true">5.</strong> Processes and Threads</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="processes_and_threads/processes.html"><strong aria-hidden="true">5.1.</strong> Processes</a></li><li class="chapter-item expanded "><a href="processes_and_threads/threads.html"><strong aria-hidden="true">5.2.</strong> Threads</a></li><li class="chapter-item expanded "><a href="processes_and_threads/scheduling.html"><strong aria-hidden="true">5.3.</strong> Scheduling</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency/index.html"><strong aria-hidden="true">6.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="concurrency/mutual_exclusion_and_synchronization.html"><strong aria-hidden="true">6.1.</strong> Mutual Exclusion and Synchronization</a></li><li class="chapter-item expanded "><a href="concurrency/semaphore.html"><strong aria-hidden="true">6.2.</strong> Semaphore</a></li><li class="chapter-item expanded "><a href="concurrency/deadlock_and_starvation.html"><strong aria-hidden="true">6.3.</strong> Deadlock and Starvation</a></li><li class="chapter-item expanded "><a href="concurrency/interprocess_communication.html"><strong aria-hidden="true">6.4.</strong> Interprocess Communication</a></li></ol></li><li class="chapter-item expanded "><a href="file_system/index.html"><strong aria-hidden="true">7.</strong> File System</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1008,6 +1008,9 @@ step 2. This time, a frame will be found for the replacement.</li>
 <li>could be implemented by associating a counter with each block.</li>
 <li>When a block is brought in, it is assigned a count of 1; with each reference to the block, its count is incremented by 1. When replacement is required, <strong>the block with the smallest count is selected</strong>.</li>
 <li>Make poor replacement choices when certain blocks are referenced relatively infrequently overall, but frequently in some short intervals of repeated references due to locality, thus building up high reference counts.</li>
+</ul>
+<h4 id="fbr"><a class="header" href="#fbr">FBR</a></h4>
+<ul>
 <li>To overcome this difficulty with LFU, a technique known as <strong>frequency-based replacement</strong> is proposed.
 <ul>
 <li>A simple version in the Figure (a): The blocks are organized in a stack and the top part of the stack is designated for the new section, which means the referenced block is moved to the top of the new section if there is a cache hit. Besides, if the block is not in the new section (i.e. the old section), its reference count increments by 1.</li>
@@ -1049,47 +1052,167 @@ step 2. This time, a frame will be found for the replacement.</li>
 <p>In <strong>FIFO</strong>, the page fault <strong>may or may not increase</strong> as the page frames increase, but in <strong>Optimal and stack-based algorithms like LRU</strong>, as the page frames increase the page fault <strong>decreases</strong>.</p>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="global-replacement"><a class="header" href="#global-replacement">Global Replacement</a></h1>
-<p>A global replacement policy considers all unlocked pages in main memory as candidates for replacement, regardless of which process owns a particular page.</p>
-<h2 id="working-set-strategy"><a class="header" href="#working-set-strategy">Working Set Strategy</a></h2>
+<p>A global replacement policy considers <strong>all unlocked pages</strong> in main memory as candidates for replacement, regardless of which process owns a particular page.</p>
 <ul>
 <li>
-<p>Working Set: The working set with parameter <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> for a process at virtual time <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span>, which we designate as <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mclose">)</span></span></span></span>, is the set of pages of that process that have been referenced in the last <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> virtual time units.</p>
+<p>全局置换算法要解决的问题</p>
+<ul>
+<li>进程在不同阶段的内存需求是变化的</li>
+<li>分配给进程的内存也需要在不同阶段有所变化</li>
+<li>全局置换算法需要确定分配给进程的物理页面数</li>
+</ul>
 </li>
 <li>
-<p>Resident Set:</p>
-</li>
-<li>
-<p>Algorithm</p>
+<p>CPU 利用率与并发进程数的关系</p>
+<ul>
+<li>进程数少时，提高并发进程数可提高 CPU 利用率</li>
+<li>并发进程导致内存访问增加</li>
+<li>并发进程的内存访问降低了访存的局部性特征</li>
+<li>局部性特征的下降会导致缺页率上升和 CPU 利用率下降</li>
+</ul>
 </li>
 </ul>
-<h2 id="relation-between-page-size-and-page"><a class="header" href="#relation-between-page-size-and-page">Relation between Page Size and Page</a></h2>
+<h2 id="working-set-strategy"><a class="header" href="#working-set-strategy">Working Set Strategy</a></h2>
+<h3 id="working-set"><a class="header" href="#working-set">Working Set</a></h3>
+<p>The working set with parameter <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> for a process at virtual time <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span>, which we designate as <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mclose">)</span></span></span></span>, is <strong>the set of pages of that process that have been referenced in the last <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> virtual time units</strong>.<strong>The variable <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> is a window of
+virtual time over which the process is observed</strong>. （当前时刻 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> 前的 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> 时间窗口中的所有访问页面所组成的集合）</p>
+<p>The working set size will be a non-decreasing function of the window size. The result is illustrated in Figure below, which shows a sequence of page references for a process.</p>
+<p><img src="virtual_memory/./assets/working_set_defined_by_window_size.png" alt="Working Set Defined by Window Size" /></p>
+<p>Note that the larger the window size, the larger is the working set, which can be expressed in the following
+relationship:
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">W</span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⊇</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">W</span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mclose">)</span></span></span></span></span>
+The working set is also a function of time. If a process executes over <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> time units and uses only a single page, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mclose">)</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>. A working set can also grow as large as the number of pages N of the process, if many different pages are rapidly
+addressed and if the window size allows. Thus,
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">W</span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mclose">)</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">(</span><span class="mord">Δ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span></span></p>
+<p><img src="virtual_memory/./assets/typical_graph_of_working_set_size.png" alt="Typical Graph of Working Set Size" /></p>
+<p>Figure above indicates the way in which the working set size can vary over time for a fixed value of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span>. For many programs, periods of relatively stable working set sizes alternate with periods of rapid change.</p>
+<ul>
+<li>When a process first begins executing, it gradually builds up to a working set as it references new pages.</li>
+<li>Eventually by the principle of locality, the process should stabilize on a certain set of pages.</li>
+<li>Subsequent transient periods reflect a shift of the program to a new locality.</li>
+<li>During the transition phase, <strong>some of the pages from the old locality remain with the window, causing a surge in the size of the working as new pages are referenced</strong>.</li>
+<li>As the window slides past these page references, the working set size declines until it contains only those pages from the new locality.</li>
+</ul>
+<h3 id="resident-set"><a class="header" href="#resident-set">Resident Set</a></h3>
+<p>That portion of a process that is <strong>actually in main memory</strong> at a given
+time. （在当前时刻，进程实际驻留在内存当中的页面集合）</p>
+<ul>
+<li>Resident Set 和 Working Set  的关系
+<ul>
+<li>Working Set 是进程在运行过程中<strong>固有性质</strong></li>
+<li>Resident Set 取决于系统分配给进程物理页面的数目和页面置换算法</li>
+</ul>
+</li>
+<li>Resident Set 与 <a href="virtual_memory/global_replacement.html#page-fault-rate">Page Fault Rate</a> 的关系
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord"><span class="mord mathrm">R</span><span class="mord mathrm">e</span><span class="mord mathrm">s</span><span class="mord mathrm">i</span><span class="mord mathrm">d</span><span class="mord mathrm">e</span><span class="mord mathrm">n</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">S</span><span class="mord mathrm">e</span><span class="mord mathrm">t</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⊇</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">W</span><span class="mord mathrm">o</span><span class="mord mathrm">r</span><span class="mord mathrm">k</span><span class="mord mathrm">i</span><span class="mord mathrm">n</span><span class="mord mathrm" style="margin-right:0.01389em;">g</span><span class="mspace"> </span><span class="mord mathrm">S</span><span class="mord mathrm">e</span><span class="mord mathrm">t</span></span></span></span></span>，缺页较少</li>
+<li>Working Set 发生剧烈抖动时，缺页较多</li>
+<li>进程 Resident Set 大小达到一定数目后，PFF 不会显著下降</li>
+</ul>
+</li>
+</ul>
+<h3 id="algorithm"><a class="header" href="#algorithm">Algorithm</a></h3>
+<h4 id="basic-idea"><a class="header" href="#basic-idea">Basic Idea</a></h4>
+<ol>
+<li>Monitor the working set of each process.</li>
+<li>Periodically remove from the resident set of a process those pages that are not in its working set. This is essentially an LRU policy.</li>
+<li>A process may execute only if its working set is in main memory (i.e., if its
+resident set includes its working set).</li>
+</ol>
+<h4 id="implementation-1"><a class="header" href="#implementation-1">Implementation</a></h4>
+<ul>
+<li>窗口大小<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span>：当前时刻前 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span> 个访问页面</li>
+<li>访存链表
+<ul>
+<li>访存时，换出不在工作集的页面，更新访存链表</li>
+<li>缺页时，换入页面，更新访存链表</li>
+</ul>
+</li>
+</ul>
+<h4 id="example-3"><a class="header" href="#example-3">Example</a></h4>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>
+<img src="virtual_memory/./assets/working_set_algorithm_example.png" alt="Working Set Algorithm Example" /></p>
+<h2 id="page-fault-frequency-strategy"><a class="header" href="#page-fault-frequency-strategy">Page Fault Frequency Strategy</a></h2>
+<h3 id="page-fault-rate-pfr"><a class="header" href="#page-fault-rate-pfr">Page Fault Rate (PFR)</a></h3>
+<p>The reciprocal of time between page faults is the page fault rate.</p>
+<ul>
+<li>影响 PFR 的因素
+<ul>
+<li>页面置换算法</li>
+<li>分配给进程的物理页面数目</li>
+<li>页面大小</li>
+<li>程序写法</li>
+</ul>
+</li>
+</ul>
+<h3 id="algorithm-1"><a class="header" href="#algorithm-1">Algorithm</a></h3>
+<h4 id="basic-idea-1"><a class="header" href="#basic-idea-1">Basic Idea</a></h4>
+<ul>
+<li>It requires <strong>a use bit</strong> to be associated with each page in memory. <strong>The bit is set to 1 when that page is accessed</strong>. When a page fault occurs, the OS notes the virtual time since the last page fault for that process; this could be done by maintaining a counter of page references.</li>
+<li>A threshold F is defined. If <strong>the amount of time since the last page fault is less than F</strong>, <strong>then a page is added to the resident set</strong> of the process.</li>
+<li>Otherwise, <strong>discard all pages with a use bit of 0, and shrink the resident set accordingly</strong>. At the same time, <em>reset the use bit on the remaining pages of the process to 0</em>.</li>
+</ul>
+<h4 id="example-4"><a class="header" href="#example-4">Example</a></h4>
+<p>The threshold F=2
+<img src="virtual_memory/./assets/pfr_example.png" alt="PBR Example" /></p>
+<h2 id="thrashing"><a class="header" href="#thrashing">Thrashing</a></h2>
+<p>A phenomenon in virtual memory schemes, in which the processor <strong>spends most of its time swapping pieces rather than executing instructions</strong>.</p>
+<ul>
+<li>产生原因：随着驻留内存进程数的增加，由于页面数有限，导致缺页现象频繁发生。</li>
+<li>操作系统需要在并发水平和缺页率间达到一个平衡，即选择一个适当进程数目和进程需要的页面数</li>
+</ul>
+<h2 id="a-hrefvirtual_memorylocal_replacementhtmlfbrfbra"><a class="header" href="#a-hrefvirtual_memorylocal_replacementhtmlfbrfbra"><a href="virtual_memory/./local_replacement.html#fbr">FBR</a></a></h2>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="processes-and-threads"><a class="header" href="#processes-and-threads">Processes and Threads</a></h1>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
-<h2 id="concepts"><a class="header" href="#concepts">Concepts</a></h2>
-<h3 id="structure"><a class="header" href="#structure">Structure</a></h3>
+<h2 id="definition"><a class="header" href="#definition">Definition</a></h2>
+<p>进程是指一个具有一定独立功能的程序在一个数据集合上的一次动态执行过程。</p>
+<h2 id="composition"><a class="header" href="#composition">Composition</a></h2>
 <ul>
 <li>代码</li>
 <li>数据</li>
 <li>状态寄存器：CR0, IP</li>
 <li>通用寄存器：AX, BX, CX</li>
-<li>An associated set of system resources</li>
+<li>进程占用系统资源</li>
 </ul>
-<h3 id="feature"><a class="header" href="#feature">Feature</a></h3>
+<h3 id="features"><a class="header" href="#features">Features</a></h3>
 <ul>
-<li>动态性</li>
-<li>并发性</li>
-<li>独立性</li>
-<li>制约性</li>
+<li>动态性：可动态地创建、结束进程</li>
+<li>并发性：进程可以被独立调度并占用处理机运行</li>
+<li>独立性：不同进程的工作不相互影响</li>
+<li>制约性：因访问共享数据/资源或进程间同步而产生制约</li>
 </ul>
-<h3 id="relation-between-programs"><a class="header" href="#relation-between-programs">Relation between programs</a></h3>
-<p>Abstract of Programs in executive states<br />
-Program = Static executive file<br />
-Process = Program + executive states<br />
-A program may own different process</p>
+<h3 id="relations-and-discrepancies-between-programs"><a class="header" href="#relations-and-discrepancies-between-programs">Relations and Discrepancies between programs</a></h3>
+<h4 id="relations"><a class="header" href="#relations">Relations</a></h4>
+<ul>
+<li>Processes are the abstract of Programs in executive states
+<ul>
+<li>Program = Static executive file</li>
+<li>Process = Program + executive states</li>
+</ul>
+</li>
+<li>Multiple executions of the some program are regarded as different processes.</li>
+<li>Necessary resources in executing processes: Memory and CPU</li>
+</ul>
+<h4 id="discrepancies"><a class="header" href="#discrepancies">Discrepancies</a></h4>
+<ul>
+<li>进程时动态的，程序时静态的
+<ul>
+<li>程序是有序代码的集合</li>
+<li>进程是程序的执行</li>
+</ul>
+</li>
+<li>进程是暂时的，程序时永久的
+<ul>
+<li>进程是一个状态变化的过程</li>
+<li>程序可长久保存</li>
+</ul>
+</li>
+<li>进程与程序的组成不同：进程的组成包括程序、数据和进程控制块</li>
+</ul>
 <h2 id="process-control-block"><a class="header" href="#process-control-block">Process Control Block</a></h2>
-<p>操作系统用 PCB 来进程的基本状态</p>
+<p>操作系统用 PCB 来进程的基本状态，每个进程都在操作系统中有一个唯一对应的PCB</p>
 <h3 id="基本状态"><a class="header" href="#基本状态">基本状态</a></h3>
 <p>包含：</p>
 <ul>
@@ -1174,6 +1297,35 @@ Five-state Process Module: New, ready, running, blocked and exit.</p>
 等待挂起 -&gt; 等待</p>
 <h2 id="state-queue"><a class="header" href="#state-queue">State Queue</a></h2>
 <p>根据不同优先级，就绪队列和等待队列可能有多个。</p>
+<h2 id="control"><a class="header" href="#control">Control</a></h2>
+<h3 id="switch-processes"><a class="header" href="#switch-processes">Switch Processes</a></h3>
+<ul>
+<li>暂停当前运行进程，从运行状态变为其他状态</li>
+<li>调度另一个进程从就绪状态变为运行状态</li>
+</ul>
+<p>When to Switch Processes:</p>
+<ul>
+<li>Clock interrupt</li>
+<li>I/O interrupt</li>
+<li>Memory fault</li>
+</ul>
+<h4 id="要求"><a class="header" href="#要求">要求</a></h4>
+<ul>
+<li>切换前，保存进程上下文（保存至 PCB）</li>
+<li>切换后，恢复进程上下文</li>
+<li>快速切换</li>
+</ul>
+<h4 id="进程生命周期的信息"><a class="header" href="#进程生命周期的信息">进程生命周期的信息</a></h4>
+<ul>
+<li>代码</li>
+<li>数据</li>
+<li>状态寄存器：CR0, IP</li>
+<li>通用寄存器：AX, BX, CX</li>
+<li>An associated set of system resources</li>
+</ul>
+<h4 id="上下文切换"><a class="header" href="#上下文切换">上下文切换</a></h4>
+<p>以进程 P0、进程 P1 为例：<br />
+P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统调用 -- P1 保存 -- P0 恢复 -- P0</p>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="threads"><a class="header" href="#threads">Threads</a></h1>
 <p>多进程的问题：</p>
@@ -1181,11 +1333,11 @@ Five-state Process Module: New, ready, running, blocked and exit.</p>
 <li>如何通信、如何共享数据</li>
 <li>系统开销较大，涉及进程的创建、进程的终止等</li>
 </ol>
-<h2 id="concepts-1"><a class="header" href="#concepts-1">Concepts</a></h2>
+<h2 id="concepts"><a class="header" href="#concepts">Concepts</a></h2>
 <p>线程是进程的一部分，描述指令流执行状态，它是进程中指令执行流的最小单位，是 CPU 调度的基本单位。
 <strong>堆栈 (Heap) 资源不能共享</strong>
 线程是资源调度的基本单位，因此同一个进程内的线程共享其资源。</p>
-<h2 id="features"><a class="header" href="#features">Features</a></h2>
+<h2 id="features-1"><a class="header" href="#features-1">Features</a></h2>
 <ol>
 <li>Resource ownership: A process includes a virtual address space to hold the process image; The process image is the collection of program, data, stack, and attributes defined in the process control block. From time to time, a process may be allocated control or ownership of resources,such as main memory, I/O channels, I/O devices, and files. The OS performs a protection function to prevent unwanted interference between processes with respect to resources.</li>
 <li><strong>Scheduling/execution</strong>: The execution of a process follows an execution path (trace) through one or more programs. This execution maybe interleaved with that of other processes. Thus, a process has an execution state (Running, Ready, etc.) and a dispatching priority, and is the entity that is scheduled and dispatched by the OS.</li>
@@ -1232,37 +1384,7 @@ Five-state Process Module: New, ready, running, blocked and exit.</p>
 <h3 id="lightweight-process"><a class="header" href="#lightweight-process">Lightweight Process</a></h3>
 <p>内核支持的用户线程，一个进程可有一个或多个轻量级进程，每个 Lightweight 进程由一个<strong>单独的内核进程</strong>（即内核线程池）来支持，线程由内核线程池（独立内核进程）执行，但线程与内核线程池之间未绑定。</p>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="control"><a class="header" href="#control">Control</a></h1>
-<h2 id="switch-processes"><a class="header" href="#switch-processes">Switch Processes</a></h2>
-<ul>
-<li>暂停当前运行进程，从运行状态变为其他状态</li>
-<li>调度另一个进程从就绪状态变为运行状态</li>
-</ul>
-<p>When to Switch Processes:</p>
-<ul>
-<li>Clock interrupt</li>
-<li>I/O interrupt</li>
-<li>Memory fault</li>
-</ul>
-<h3 id="要求"><a class="header" href="#要求">要求</a></h3>
-<ul>
-<li>切换前，保存进程上下文（保存至 PCB）</li>
-<li>切换后，恢复进程上下文</li>
-<li>快速切换</li>
-</ul>
-<h3 id="进程生命周期的信息"><a class="header" href="#进程生命周期的信息">进程生命周期的信息</a></h3>
-<ul>
-<li>代码</li>
-<li>数据</li>
-<li>状态寄存器：CR0, IP</li>
-<li>通用寄存器：AX, BX, CX</li>
-<li>An associated set of system resources</li>
-</ul>
-<h3 id="上下文切换"><a class="header" href="#上下文切换">上下文切换</a></h3>
-<p>以进程 P0、进程 P1 为例：<br />
-P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统调用 -- P1 保存 -- P0 恢复 -- P0</p>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="schedule-and-dispatch"><a class="header" href="#schedule-and-dispatch">Schedule and Dispatch</a></h1>
+<h1 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h1>
 <h2 id="调度"><a class="header" href="#调度">调度</a></h2>
 <ul>
 <li>进程切换： CPU 资源占用者的切换</li>
@@ -1444,8 +1566,7 @@ P3 145-153 （P3已结束）<br />
 </ul>
 </li>
 </ul>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="multiple-cores"><a class="header" href="#multiple-cores">Multiple Cores</a></h1>
+<h2 id="multiple-cores"><a class="header" href="#multiple-cores">Multiple Cores</a></h2>
 <h2 id="cache-coherence"><a class="header" href="#cache-coherence">Cache Coherence</a></h2>
 <ul>
 <li>
@@ -1502,12 +1623,20 @@ Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。<
 <p>问题：新进程的 vruntime 为 0，则在相当长时间内都会保持抢占 CPU 的优势，因此应该设定一个最小值从而与老进程保持在一个合理的差距范围内。</p>
 <p>休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。</p>
 <p>进程从一个 CPU 迁移到另一个 CPU 上时 vruntime 会不会变？
-当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。 </p>
+当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。</p>
 <p>同时 vrumtime 可能会溢出，因此在比较 vruntime 的时候应该先减去 min_vruntime。</p>
 <h2 id="bfs-brain-fuck-scheduler"><a class="header" href="#bfs-brain-fuck-scheduler">(BFS) Brain Fuck Scheduler</a></h2>
 <p>一种时间片轮转算法的变种，在多处理机情况的但就绪队列选择，增加了队列互斥访问的开销。</p>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="communication"><a class="header" href="#communication">Communication</a></h1>
+<h1 id="concurrency"><a class="header" href="#concurrency">Concurrency</a></h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="mutual-exclusion-and-synchronization"><a class="header" href="#mutual-exclusion-and-synchronization">Mutual Exclusion and Synchronization</a></h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="semaphore"><a class="header" href="#semaphore">Semaphore</a></h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="deadlock-and-starvation"><a class="header" href="#deadlock-and-starvation">Deadlock and Starvation</a></h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="interprocess-communication"><a class="header" href="#interprocess-communication">Interprocess Communication</a></h1>
 <h2 id="并发进程的正确性"><a class="header" href="#并发进程的正确性">并发进程的正确性</a></h2>
 <h3 id="独立进程"><a class="header" href="#独立进程">独立进程</a></h3>
 <ul>
@@ -1651,14 +1780,7 @@ Lock::Release() {
 </li>
 </ul>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="semaphore"><a class="header" href="#semaphore">Semaphore</a></h1>
-<p>程序员需要能应用信号量机制，比较繁琐。</p>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="monitor"><a class="header" href="#monitor">Monitor</a></h1>
-<p>管程是一种用于多线程互斥访问共享资源的程序结构</p>
-<ul>
-<li>采用面向对象的方法，简化</li>
-</ul>
+<h1 id="file-system"><a class="header" href="#file-system">File System</a></h1>
 
                     </main>
 

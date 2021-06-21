@@ -67,6 +67,28 @@ numeric identifier.
 
 ### File System Architecture
 
+![File System Software Architecture](./assets/file_system_software_architecture.png)
+
 ### File Management Functions
 
+![Element of File Management](./assets/elements_of_file_management.png)
+
 ## File Organization and Access
+
+In choosing a file organization, several criteria are important:
+
+* Short access time
+* Ease of update
+* Economy of storage
+* Simple maintenance
+* Reliability
+
+### Five Fundamental Organizations
+
+1. The pile
+2. The sequential file
+3. The indexed sequential file
+4. The indexed file
+5. The direct, or hashed, file
+
+![Common File Organization](./assets/common_file_organization.png)

@@ -169,34 +169,49 @@ Important new transitions are the following:
 
 ![Queueing Model](./assets/queueing_model.png)
 
-##  
+## Process Switching
 
-### Switch Processes
+On the face of it, the function of process switching would seem to be straightforward. At some time, a running process is interrupted, and the OS assigns another process to the Running state and turns control over to that process. However, several design issues are raised.
 
-* 暂停当前运行进程，从运行状态变为其他状态
-* 调度另一个进程从就绪状态变为运行状态
+* First, what events trigger a process switch?
+* Another issue is that we must recognize the distinction between mode switching and process switching.
+* Finally, what must the OS do to the various data structures under its control to achieve a process switch?
 
 When to Switch Processes:
 
-* Clock interrupt
-* I/O interrupt
-* Memory fault
+* Interrupt
+  * Clock interrupt
+  * I/O interrupt
+  * Memory fault
+* Trap
+* Supervisor call
 
-#### 要求
+进程切换的要求：
 
-* 切换前，保存进程上下文（保存至 PCB）
+* 切换前，保存进程上下文
 * 切换后，恢复进程上下文
 * 快速切换
 
-#### 进程生命周期的信息
+进程生命周期的信息：
 
-* 代码
-* 数据
-* 状态寄存器：CR0, IP
-* 通用寄存器：AX, BX, CX
-* An associated set of system resources
+* 寄存器
+* CPU 状态
+* 内存地址空间
 
-#### 上下文切换
+### Example
 
 以进程 P0、进程 P1 为例：  
-P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统调用 -- P1 保存 -- P0 恢复 -- P0
+P0 执行 --> 中断或系统调用 --> P0 保存 --> P1 恢复 --> P1 执行 --> 中断或系统调用 --> P1 保存 --> P0 恢复 --> P0 执行  
+图示：
+![Context Switch](./assets/context_switching.png)
+在进程切换的过程中，内核为每一个进程维护了一个对应的进程控制块（PCB），内核将相同状态进程的 PCB 放在同一队列。
+
+### Instructions in Linux
+
+* 创建进程：`fork` or `exec`
+* 父进程等待子进程：`wait`
+* 进程的有序终止：`exit`
+* 优先级控制：`nice`
+* 进程调试支持：`ptrace`
+* 定时：`sleep`  
+![Instruction and State](./assets/instruction_and_state.png)

@@ -51,7 +51,7 @@ time. （在当前时刻，进程实际驻留在内存当中的页面集合）
 * Resident Set 和 Working Set  的关系
   * Working Set 是进程在运行过程中**固有性质**
   * Resident Set 取决于系统分配给进程物理页面的数目和页面置换算法
-* Resident Set 与 [Page Fault Rate](#page-fault-rate) 的关系
+* Resident Set 与 [Page Fault Rate](#page-fault-rate-pfr) 的关系
   * $\mathrm{Resident \space Set} \supseteq \mathrm{Working \space Set}$，缺页较少
   * Working Set 发生剧烈抖动时，缺页较多
   * 进程 Resident Set 大小达到一定数目后，PFF 不会显著下降

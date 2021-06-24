@@ -172,15 +172,13 @@
 <p>Long-term existence: Files are stored on disk or other secondary storage and do not disappear when a user logs off.</p>
 </li>
 <li>
-<p>Sharable between processes: Files have names and can have associated access
-permissions that permit controlled sharing.</p>
+<p>Sharable between processes: Files have names and can have associated access permissions that permit controlled sharing.</p>
 </li>
 <li>
 <p>Structure: Depending on the file system, a file can have an internal structure that is convenient for particular applications. In addition, files can be organized into a hierarchical or more complex structure to reflect the relationships among files.</p>
 </li>
 </ul>
-<p>Any file system provides not only a means to store data organized as files, but
-a collection of functions that can be performed on files. Typical operations include the following:</p>
+<p>Any file system provides not only a means to store data organized as files, but a collection of functions that can be performed on files. Typical operations include the following:</p>
 <ul>
 <li>Create</li>
 <li>Delete</li>
@@ -218,10 +216,8 @@ The following objectives for a file management system are as follows:</p>
 <li>Each user may have controlled access to other users’ files.</li>
 <li>Each user may control what types of accesses are allowed to the user’s files</li>
 <li>Each user should be able to move data between files.</li>
-<li>Each user should be able to back up and recover the user’s files in case of
-damage.</li>
-<li>Each user should be able to access his or her files by name rather than by
-numeric identifier.</li>
+<li>Each user should be able to back up and recover the user’s files in case of damage.</li>
+<li>Each user should be able to access his or her files by name rather than by numeric identifier.</li>
 </ol>
 <h3 id="file-system-architecture"><a class="header" href="#file-system-architecture">File System Architecture</a></h3>
 <p><img src="./assets/file_system_software_architecture.png" alt="File System Software Architecture" /></p>
@@ -244,7 +240,53 @@ numeric identifier.</li>
 <li>The indexed file</li>
 <li>The direct, or hashed, file</li>
 </ol>
+<center>
 <p><img src="./assets/common_file_organization.png" alt="Common File Organization" /></p>
+</center>
+<h2 id="file-directories"><a class="header" href="#file-directories">File Directories</a></h2>
+<h3 id="contents"><a class="header" href="#contents">Contents</a></h3>
+<p>Associated with any file management system and collection of files is a file directory. The directory contains information about the files, including attributes, location,
+and ownership. Much of this information, especially that concerned with storage, is managed by the operating system. The directory is itself a file, accessible by various
+file management routines. Although some of the information in directories is available to users and applications, this is generally provided indirectly by system routines.</p>
+<h3 id="structure"><a class="header" href="#structure">Structure</a></h3>
+<p>To understand the requirements for a file structure, it is helpful to consider the types of operations that may be performed on the directory:</p>
+<ul>
+<li>Search: When a user or application references a file, the directory must be searched to find the entry corresponding to that file.</li>
+<li>Create file: When a new file is created, an entry must be added to the directory.</li>
+<li>Delete file: When a file is deleted, an entry must be removed from the directory.</li>
+<li>List directory: All or a portion of the directory may be requested. Generally, this request is made by a user and results in a listing of all files owned by that user, plus some of the attributes of each file (e.g., type, access control information,
+usage information).</li>
+<li>Update directory: Because some file attributes are stored in the directory, a change in one of these attributes requires a change in the corresponding directory entry.</li>
+</ul>
+<h3 id="naming"><a class="header" href="#naming">Naming</a></h3>
+<p>Users need to be able to refer to a file by a symbolic name. Clearly, each file in the system must have a unique name in order that file references be unambiguous. On the other hand, it is an unacceptable burden on users to require they provide unique names, especially in a shared system.</p>
+<p>The use of a tree-structured directory minimizes the difficulty in assigning unique names. Any file in the system can be located by following a path from the root or master directory down various branches until the file is reached. The series of directory names, culminating in the file name itself, constitutes a pathname for the file.</p>
+<center>
+<p><img src="./assets/tree_structured_directory.png" alt="Tree-structured Directory" /></p>
+</center>
+<h2 id="file-sharing"><a class="header" href="#file-sharing">File Sharing</a></h2>
+<p>In a multi-user system, there is almost always a requirement for allowing files to be shared among a number of users. Two issues arise: access rights and the management of simultaneous access.</p>
+<h3 id="access-rights"><a class="header" href="#access-rights">Access Rights</a></h3>
+<p>The following list is representative of access rights that can be assigned to a particular user for a particular file:</p>
+<ul>
+<li>None: The user may not even learn of the existence of the file, much less access it. To enforce this restriction, the user would not be allowed to read the user directory that includes this file.</li>
+<li>Knowledge: The user can determine that the file exists and who its owner is. The user is then able to petition the owner for additional access rights.</li>
+<li>Execution: The user can load and execute a program but cannot copy it. Proprietary programs are often made accessible with this restriction.</li>
+<li>Reading: The user can read the file for any purpose, including copying and execution. Some systems are able to enforce a distinction between viewing and copying. In the former case, the contents of the file can be displayed to the user, but the user has no means for making a copy.</li>
+<li>Appending: The user can add data to the file, often only at the end, but cannot modify or delete any of the file’s contents. This right is useful in collecting data from a number of sources.</li>
+<li>Updating: The user can modify, delete, and add to the file’s data. This normally includes writing the file initially, rewriting it completely or in part, and removing all or a portion of the data. Some systems distinguish among different degrees of updating.</li>
+<li>Changing protection: The user can change the access rights granted to other users. Typically, this right is held only by the owner of the file. In some systems, the owner can extend this right to others. To prevent abuse of this mechanism, the file owner will typically be able to specify which rights can be changed by the holder of this right.</li>
+<li>Deletion: The user can delete the file from the file system.</li>
+</ul>
+<p>One user is designated as the owner of a given file, usually the person who initially created the file. The owner has all of the access rights listed previously and may grant rights to others. Access can be provided to different classes of users:</p>
+<ul>
+<li>Specific user: Individual users who are designated by user ID</li>
+<li>User groups: A set of users who are not individually defined. The system must have some way of keeping track of the membership of user groups.</li>
+<li>All: All users who have access to this system. These are public files.</li>
+</ul>
+<h3 id="simultaneous-access"><a class="header" href="#simultaneous-access">Simultaneous Access</a></h3>
+<p>When access is granted to append or update a file to more than one user, the operating system or file management system must enforce discipline. A brute-force approach is to allow a user to lock the entire file when it is to be updated. A finer grain of control is to lock individual records during update. Essentially, this is the readers/writers problem. Issues of mutual exclusion and deadlock must be addressed in designing the shared access capability.</p>
+<h2 id="record-blocking"><a class="header" href="#record-blocking">Record Blocking</a></h2>
 
                     </main>
 

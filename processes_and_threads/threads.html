@@ -165,61 +165,135 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="threads"><a class="header" href="#threads">Threads</a></h1>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <p>多进程的问题：</p>
 <ol>
 <li>如何通信、如何共享数据</li>
 <li>系统开销较大，涉及进程的创建、进程的终止等</li>
 </ol>
-<h2 id="concepts"><a class="header" href="#concepts">Concepts</a></h2>
-<p>线程是进程的一部分，描述指令流执行状态，它是进程中指令执行流的最小单位，是 CPU 调度的基本单位。
-<strong>堆栈 (Heap) 资源不能共享</strong>
-线程是资源调度的基本单位，因此同一个进程内的线程共享其资源。</p>
-<h2 id="features"><a class="header" href="#features">Features</a></h2>
+<p>解决思路即在进程内部增加一类实体，满足以下特性：</p>
 <ol>
-<li>Resource ownership: A process includes a virtual address space to hold the process image; The process image is the collection of program, data, stack, and attributes defined in the process control block. From time to time, a process may be allocated control or ownership of resources,such as main memory, I/O channels, I/O devices, and files. The OS performs a protection function to prevent unwanted interference between processes with respect to resources.</li>
-<li><strong>Scheduling/execution</strong>: The execution of a process follows an execution path (trace) through one or more programs. This execution maybe interleaved with that of other processes. Thus, a process has an execution state (Running, Ready, etc.) and a dispatching priority, and is the entity that is scheduled and dispatched by the OS.</li>
+<li>实体之间可以并发执行</li>
+<li>实体之间共享相同的地址空间</li>
 </ol>
-<h2 id="pros-and-cons"><a class="header" href="#pros-and-cons">Pros and Cons</a></h2>
-<p>优点：</p>
-<ol>
-<li>一个进程同时存在线程。</li>
-<li>多线程之间可以并发。</li>
-<li>线程间共享地址空间和文件等资源。</li>
-</ol>
-<p>缺点：一个进程崩溃，其他进程也会崩溃。</p>
+<h2 id="definition"><a class="header" href="#definition">Definition</a></h2>
+<p>线程是进程的一部分，描述指令流执行状态，它是进程中<strong>指令执行流</strong>的最小单位，是 <strong>CPU 调度</strong>的基本单位。
+线程间的堆栈 (Heap) 资源<strong>不能共享</strong>。<br />
+线程是资源调度的基本单位，即线程描述在进程资源环境中指令流的执行状态。因此同一个进程内的线程共享其资源。</p>
+<h2 id="multithreading"><a class="header" href="#multithreading">Multithreading</a></h2>
+<p>Multithreading refers to the ability of an OS to support <strong>multiple, concurrent</strong> paths of execution within a single process.</p>
 <center>
 <p><img src="./assets/multithreading.png" alt="multithreading" /></p>
 </center>
-<h2 id="implementation-methods"><a class="header" href="#implementation-methods">Implementation Methods</a></h2>
+<p>The left half of Figure depicts single-threaded approaches.</p>
 <ul>
-<li>User-Level threads: 用户级的线程库函数来完成线程的管理</li>
-<li>Kernel-Level threads</li>
-<li>Lightweight Process</li>
+<li>MS-DOS is an example of an OS that supports a single-user process and a single thread.</li>
+<li>Other operating systems, such as some variants of UNIX, support multiple user processes, but only support one thread per process.</li>
 </ul>
-<h3 id="user-level-threads"><a class="header" href="#user-level-threads">User-Level Threads</a></h3>
+<p>The right half part of Figure states two multithreaded approaches.</p>
+<ul>
+<li>A Java runtime environment is an example of a system of one process with multiple threads.</li>
+<li>Windows, Solaris, and many modern versions of UNIX use multiple processes, each of which supports multiple threads.</li>
+</ul>
+<p>In a multithreaded environment, a process is defined as the <strong>unit of resource allocation</strong> and <strong>a unit of protection</strong>. The following are associated with processes:</p>
+<ul>
+<li>A virtual address space that holds the process image.</li>
+<li>Protected access to processors, other processors, files, and I/O resources.</li>
+</ul>
+<p>With a process, there may be one or more threads, each with following:</p>
+<ul>
+<li>A thread execution state (Running, Ready, etc.)</li>
+<li>A saved thread context when not running; one way to review a thread is as an independent program counter operating within a process</li>
+<li>An execution stack</li>
+<li>Some per-thread static storage for local variables</li>
+<li>Access to the memory and resources of its process, shared with all other threads in that process.</li>
+</ul>
+<p>The Figure below illustrates the distinction between threads and processes from the point of view of process management.</p>
+<p><img src="./assets/single_threaded_and_multithreaded_process_models.png" alt="Single Threaded and Multithreaded Process Models" /></p>
+<p>The key benefits of threads derive from the performance implications:</p>
+<ol>
+<li>
+<p>It takes <strong>far less time</strong> to create a new thread in an existing process, than to create a brand-new process.</p>
+</li>
+<li>
+<p>It takes <strong>less time</strong> to terminate a thread than a process.</p>
+</li>
+<li>
+<p>It takes <strong>less time</strong> to switch between two thread s within the same process than to switch between processes.</p>
+</li>
+<li>
+<p>Threads <strong>enhance efficiency</strong> in communication between different executing programs.</p>
+</li>
+</ol>
+<ul>
+<li>多线程的优点
+<ul>
+<li>一个进程中可以同时存在多个线程</li>
+<li>多线程之间可以并发</li>
+<li>线程间共享地址空间和文件等资源</li>
+</ul>
+</li>
+<li>多线程的缺点
+<ul>
+<li>一个线程崩溃，会导致同属一个进程下的其他线程崩溃</li>
+</ul>
+</li>
+</ul>
+<h2 id="types-of-threads"><a class="header" href="#types-of-threads">Types of Threads</a></h2>
+<p>There are two broad categories of thread implementation: <strong>user-level threads (ULTs)</strong>
+and <strong>kernel-level threads (KLTs)</strong>. The latter are also referred to in the literature as
+kernel-supported threads or <strong>lightweight processes</strong>.</p>
+<h3 id="user-level-threads"><a class="header" href="#user-level-threads">User-level Threads</a></h3>
+<p>由一组用户级的线程库函数来完成线程的管理，包括线程的创建、终止、同步和调度等。</p>
+<p><img src="./assets/user_level_threads.png" alt="User-level Threads" /></p>
+<ul>
+<li>
+<p>优点</p>
 <ul>
 <li>不依赖于操作系统</li>
-<li>在用户空间实现线程机制</li>
+<li>在<strong>用户空间</strong>实现线程机制
+<ul>
+<li>每个进程有私有的线程控制块（TCB）列表</li>
+<li>TCB 列表又线程库函数维护</li>
+</ul>
+</li>
 <li>同一进程内的用户线程切换速度快</li>
 <li>允许每个进程拥有自己的线程调度算法</li>
 </ul>
-<p>不足：</p>
+</li>
+<li>
+<p>不足</p>
 <ul>
-<li>线程发起系统调用而阻塞时，整个线程进入等待。</li>
-<li>不支持基于线程的<em>处理机</em>抢占，除非当前运行线程主动放弃</li>
-<li>只能按进程分配 CPU 时间</li>
+<li>线程发起系统调用而阻塞时，整个线程进入等待。
+<ul>
+<li>除非当前运行线程主动放弃，否则其所在进程的其他线程无法抢占 CPU</li>
 </ul>
-<h2 id="kernel-level-threads"><a class="header" href="#kernel-level-threads">Kernel-Level Threads</a></h2>
+</li>
+<li>不支持基于线程的<em>处理机</em>抢占，除非当前运行线程主动放弃</li>
+<li>只能按进程分配 CPU 时间，即在多线程的多进程中，每个线程分配的时间片较少</li>
+</ul>
+</li>
+</ul>
+<h2 id="kernel-level-threads"><a class="header" href="#kernel-level-threads">Kernel-level Threads</a></h2>
 <p>由<strong>内核</strong>通过系统调用实现的线程机制，由<strong>内核</strong>实现线程的创建、终止和管理。</p>
-<p>特点：</p>
+<p><img src="./assets/kernel_level_threads.png" alt="Kernel-level Threads" /></p>
+<p>优点：</p>
 <ul>
 <li>由内核维护 PCB 和 TCB</li>
 <li>线程执行系统调用而被阻塞不影响其他线程</li>
-<li>线程的创建、终止和切换相对较大：因为在内核中实现</li>
+<li>线程的创建、终止和切换相对较大：因为通过系统调用或内核函数，在内核中实现</li>
 <li>基于线程数量的时间分配：线程数量多的进程 CPU 执行时间多</li>
 </ul>
 <h3 id="lightweight-process"><a class="header" href="#lightweight-process">Lightweight Process</a></h3>
-<p>内核支持的用户线程，一个进程可有一个或多个轻量级进程，每个 Lightweight 进程由一个<strong>单独的内核进程</strong>（即内核线程池）来支持，线程由内核线程池（独立内核进程）执行，但线程与内核线程池之间未绑定。</p>
+<p>内核支持的用户线程，一个进程可有一个或多个轻量级进程，每个 Lightweight 进程由一个<strong>单独的内核进程</strong>（即内核线程池）来支持，线程由内核线程池（独立内核进程）执行，但线程与内核线程池之间未绑定。
+<img src="./assets/lightweight_process.png" alt="Lightweight Process" /></p>
+<h2 id="relationship-between-threads-and-processes"><a class="header" href="#relationship-between-threads-and-processes">Relationship between Threads and Processes</a></h2>
+<table><thead><tr><th align="center">Threads: Processes</th><th align="center">Description</th><th align="center">Example Systems</th></tr></thead><tbody>
+<tr><td align="center">1:1</td><td align="center">Each thread of execution is a unique process with its own address space and resources.</td><td align="center">Traditional UNIX implementations</td></tr>
+<tr><td align="center">M:1</td><td align="center">A process defines an address space and dynamic resource ownership. Multiple threads may be created and executed within that process.</td><td align="center">Windows NT, Solaris, Linux, OS/2, OS/390, MACH</td></tr>
+<tr><td align="center">1:M</td><td align="center">A thread may migrate from one process environment to another. This allows a thread to be easily moved among distinct systems.</td><td align="center">Ra (Clouds), Emerald</td></tr>
+<tr><td align="center">M:N</td><td align="center">It combines attributes of M:1 and 1:M cases.</td><td align="center">TRIX</td></tr>
+</tbody></table>
 
                     </main>
 

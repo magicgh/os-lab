@@ -356,35 +356,53 @@ as soon as it is loaded into main memory.</li>
 </ul>
 <h2 id="queueing-model"><a class="header" href="#queueing-model">Queueing Model</a></h2>
 <p><img src="./assets/queueing_model.png" alt="Queueing Model" /></p>
-<h2 id=""><a class="header" href="#"></a></h2>
-<h3 id="switch-processes"><a class="header" href="#switch-processes">Switch Processes</a></h3>
+<h2 id="process-switching"><a class="header" href="#process-switching">Process Switching</a></h2>
+<p>On the face of it, the function of process switching would seem to be straightforward. At some time, a running process is interrupted, and the OS assigns another process to the Running state and turns control over to that process. However, several design issues are raised.</p>
 <ul>
-<li>暂停当前运行进程，从运行状态变为其他状态</li>
-<li>调度另一个进程从就绪状态变为运行状态</li>
+<li>First, what events trigger a process switch?</li>
+<li>Another issue is that we must recognize the distinction between mode switching and process switching.</li>
+<li>Finally, what must the OS do to the various data structures under its control to achieve a process switch?</li>
 </ul>
 <p>When to Switch Processes:</p>
+<ul>
+<li>Interrupt
 <ul>
 <li>Clock interrupt</li>
 <li>I/O interrupt</li>
 <li>Memory fault</li>
 </ul>
-<h4 id="要求"><a class="header" href="#要求">要求</a></h4>
+</li>
+<li>Trap</li>
+<li>Supervisor call</li>
+</ul>
+<p>进程切换的要求：</p>
 <ul>
-<li>切换前，保存进程上下文（保存至 PCB）</li>
+<li>切换前，保存进程上下文</li>
 <li>切换后，恢复进程上下文</li>
 <li>快速切换</li>
 </ul>
-<h4 id="进程生命周期的信息"><a class="header" href="#进程生命周期的信息">进程生命周期的信息</a></h4>
+<p>进程生命周期的信息：</p>
 <ul>
-<li>代码</li>
-<li>数据</li>
-<li>状态寄存器：CR0, IP</li>
-<li>通用寄存器：AX, BX, CX</li>
-<li>An associated set of system resources</li>
+<li>寄存器</li>
+<li>CPU 状态</li>
+<li>内存地址空间</li>
 </ul>
-<h4 id="上下文切换"><a class="header" href="#上下文切换">上下文切换</a></h4>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
 <p>以进程 P0、进程 P1 为例：<br />
-P0 -- 中断或系统调用 -- P0 保存 -- P1 恢复 -- P1 -- 中断或系统调用 -- P1 保存 -- P0 恢复 -- P0</p>
+P0 执行 --&gt; 中断或系统调用 --&gt; P0 保存 --&gt; P1 恢复 --&gt; P1 执行 --&gt; 中断或系统调用 --&gt; P1 保存 --&gt; P0 恢复 --&gt; P0 执行<br />
+图示：
+<img src="./assets/context_switching.png" alt="Context Switch" />
+在进程切换的过程中，内核为每一个进程维护了一个对应的进程控制块（PCB），内核将相同状态进程的 PCB 放在同一队列。</p>
+<h3 id="instructions-in-linux"><a class="header" href="#instructions-in-linux">Instructions in Linux</a></h3>
+<ul>
+<li>创建进程：<code>fork</code> or <code>exec</code></li>
+<li>父进程等待子进程：<code>wait</code></li>
+<li>进程的有序终止：<code>exit</code></li>
+<li>优先级控制：<code>nice</code></li>
+<li>进程调试支持：<code>ptrace</code></li>
+<li>定时：<code>sleep</code><br />
+<img src="./assets/instruction_and_state.png" alt="Instruction and State" /></li>
+</ul>
 
                     </main>
 

@@ -1537,6 +1537,8 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </tbody></table>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h1>
+<p>In a multiprogramming system, multiple processes exist concurrently in main memory. Each process alternates between using a processor and waiting for some event to occur, such as the completion of an I/O operation. The processor or processors are kept busy by executing one process while the others processes wait.</p>
+<h2 id="types-of-processor-scheduling"><a class="header" href="#types-of-processor-scheduling">Types of Processor Scheduling</a></h2>
 <h2 id="调度"><a class="header" href="#调度">调度</a></h2>
 <ul>
 <li>进程切换： CPU 资源占用者的切换</li>
@@ -2055,6 +2057,137 @@ usage information).</li>
 <h3 id="simultaneous-access"><a class="header" href="#simultaneous-access">Simultaneous Access</a></h3>
 <p>When access is granted to append or update a file to more than one user, the operating system or file management system must enforce discipline. A brute-force approach is to allow a user to lock the entire file when it is to be updated. A finer grain of control is to lock individual records during update. Essentially, this is the readers/writers problem. Issues of mutual exclusion and deadlock must be addressed in designing the shared access capability.</p>
 <h2 id="record-blocking"><a class="header" href="#record-blocking">Record Blocking</a></h2>
+<p>Given the size of a block, there are three methods of blocking that can be used:</p>
+<ol>
+<li>Fixed blocking: Fixed-length records are used, and an integral number of records are stored in a block. There may be unused space at the end of each block. This is referred to as internal fragmentation.</li>
+<li>Variable-length spanned blocking: Variable-length records are used and are packed into blocks with no unused space. Thus, some records must span two blocks, with the continuation indicated by a pointer to the successor block.</li>
+<li>Variable-length unspanned blocking: Variable-length records are used, but panning is not employed. There is wasted space in most blocks because of the inability to use the remainder of a block if the next record is larger than the remaining unused space.
+Fixed blocking is the common mode for sequential files with fixed-length records. Variable-length spanned blocking is efficient of storage and does not limit the size of records. However, this technique is difficult to implement. Records that span two blocks require two I/O operations, and files are difficult to update, regardless of the organization. Variable-length unspanned blocking results in wasted space and limits record size to the size of a block. The record-blocking technique may interact with the virtual memory hardware, if such is employed. In a virtual memory environment, it is desirable to make the page the basic unit of transfer. Pages are generally quite small, so it is impractical to treat a page as a block for unspanned blocking. Accordingly, some systems combine multiple
+pages to create a larger block for file I/O purposes. This approach is used for VSAM files on IBM mainframes.</li>
+</ol>
+<h2 id="secondary-storage-management"><a class="header" href="#secondary-storage-management">Secondary Storage Management</a></h2>
+<p>On secondary storage, a file consists of a collection of blocks. The operating system or file management system is responsible for allocating blocks to files. This raises two management issues. First, space on secondary storage must be allocated to files, and second, it is necessary to keep track of the space available for allocation. We will see that these two tasks are related; that is, the approach taken for file allocation may influence the approach taken for free space management. Further, we will see that there is an interaction between file structure and allocation policy.</p>
+<h3 id="file-allocation"><a class="header" href="#file-allocation">File Allocation</a></h3>
+<p><img src="file_system/./assets/file_system_methods.png" alt="File System Methods" /></p>
+<h3 id="volumes"><a class="header" href="#volumes">Volumes</a></h3>
+<blockquote>
+<p>Volume: A collection of addressable sectors in secondary memory that an OS or
+application can use for data storage. The sectors in a volume need not be consecutive
+on a physical storage  device; instead, they need only appear that way to the
+OS or application. A volume may be the result of assembling and merging smaller
+volumes.</p>
+</blockquote>
+<h3 id="reliability"><a class="header" href="#reliability">Reliability</a></h3>
+<p>Consider the following scenario:</p>
+<ol>
+<li>User A requests a file allocation to add to an existing file.</li>
+<li>The request is granted and the disk and file allocation tables are updated in main memory but not yet on disk.</li>
+<li>The system crashes and subsequently restarts.</li>
+<li>User B requests a file allocation and is allocated space on disk that overlaps the last allocation to user A.</li>
+<li>User A accesses the overlapped portion via a reference that is stored inside A’s file.</li>
+</ol>
+<p>This difficulty arose because the system maintained a copy of the disk allocation table and file allocation table in main memory for efficiency. To prevent this type of error, the following steps could be performed when a file allocation is requested:</p>
+<ol>
+<li>Lock the disk allocation table on disk. This prevents another user from causing alterations to the table until this allocation is completed.</li>
+<li>Search the disk allocation table for available space. This assumes a copy of the disk allocation table is always kept in main memory. If not, it must first be read in.</li>
+<li>Allocate space, update the disk allocation table, and update the disk. Updating the disk involves writing the disk allocation table back onto disk. For chained disk allocation, it also involves updating some pointers on disk.</li>
+<li>Update the file allocation table and update the disk.</li>
+<li>Unlock the disk allocation table.</li>
+</ol>
+<h2 id="unix-file-management"><a class="header" href="#unix-file-management">Unix File Management</a></h2>
+<p>In the UNIX file system, six types of files are distinguish:</p>
+<ol>
+<li>Regular, or ordinary: Contains arbitrary data in zero or more data blocks. Regular files contain information entered in them by a user, an application program, or a system utility program. The file system does not impose any internal structure to a regular file, but treats it as stream of bytes.</li>
+<li>Directory: Contains a list of file names plus pointers to associated <strong>inodes</strong> (index nodes), described later. Directories are hierarchically organized. Directory files are actually ordinary files with special write protection privileges on only the file system can write into them, while read access is available to user programs.</li>
+<li>Special: Contains no data but provides a mechanism to map physical devices to file names. The file names are used to access peripheral devices, such as terminals and printers. Each I/O device is associated with a special file.</li>
+<li>Named pipes: A pipe is an interprocess communications facility. A pipe file buffers data received in its input so a process that reads from the pipe's output receives the data on a first-in-first-out basis.</li>
+<li>Links: In essence, a link is an alternative file name for an existing file.</li>
+<li>Symbolic Links: This is a data file that contains the name of the file to which it is linked.</li>
+</ol>
+<h3 id="inodes"><a class="header" href="#inodes">Inodes</a></h3>
+<p>Modern UNIX operating systems support multiple file systems but map all of these into a uniform underlying system for supporting file systems and allocating disk space to files. All types of UNIX files are administered by the OS by means of inodes. An inode is a control structure that contains the key information needed by the operating system for a particular file. Several file names may be associated with a single inode, but an active inode is associated with exactly one file, and each file is controlled by exactly on inode.<br />
+The FreeBSD inode structure includes the following data elements:</p>
+<ul>
+<li>The type and access mode of the file</li>
+<li>The file's owner and group-access identifiers</li>
+<li>The time when the file was created, when it was most recently read and written, and when its inode was most recently updated by the system</li>
+<li>The size of the file by bytes</li>
+<li>A sequence of block pointers, explained in the next subsection</li>
+<li>The number of physical blocks used by the file, including blocks used to hold indirect pointers and attributes</li>
+<li>The number of directory entries that reference the file</li>
+<li>The kernel and user-settable flags that describe the characteristics of the file</li>
+<li>The generation number of teh file (a random selected number assigned to the inode each time that the latter is allocated to a new file ; the generation number is use dto detect references to delete files)</li>
+<li>The blocksize of the data blocks references by the inode (typically the same as, but sometimes larger than, the file system blocksize)</li>
+<li>The size of the extended attribute information</li>
+<li>Zero or more extended attribute entries</li>
+</ul>
+<p><img src="file_system/./assets/structure_of_freebsd_inode_and_file.png" alt="Structure of FreeBSD Inode and File" /></p>
+<h3 id="file-allocation-1"><a class="header" href="#file-allocation-1">File Allocation</a></h3>
+<p>File allocation is done on a block basis. Allocation is dynamic, as needed, rather than using preallocation. Hence the blocks of a file on disk are not necessarily contiguous. An indexed method is used to keep track of each file, with part of the index stored in the inode for the file. In all UNIX implementations, the inode includes a number of direct pointers and three indirect pointers (single, double, triple).</p>
+<h3 id="directories"><a class="header" href="#directories">Directories</a></h3>
+<p>Directories are structured in a hierarchical tree. Each directory can contains file and/or other directories. A directory inside another directory is referred to as a subdirectory. As was mentioned, a directory is simply a file that contains a list of file names plus pointers to associated inodes. Each directory entry (dentry) contains a name for the associated file or subdirectory plus an integer called the i-number (index number). When the file or directory is accessed, its i-number is used as an index into the inode table.</p>
+<h3 id="volume-structure"><a class="header" href="#volume-structure">Volume Structure</a></h3>
+<p>A UNIX file system resides on a single logical disk or disk partition and is laid out with the following elements:</p>
+<ul>
+<li>Boot block: Contains code required to boot the operating system</li>
+<li>Superblock: Contains attributes and information about the file system, such as partition size, and inode table size</li>
+<li>Inode table: The collection of inodes for each file</li>
+<li>Data block: Storage space available for data files and subdirectories</li>
+</ul>
+<h2 id="linux-virtual-file-system"><a class="header" href="#linux-virtual-file-system">Linux Virtual File System</a></h2>
+<p>Linux includes a versatile and powerful file-handling facility, designed to support a wide variety of file management systems and file structures. The approach taken in Linux is to make use of a <strong>virtual file system (VFS)</strong>, which presents a single, uniform file system interface to user processes. The VFS defines a common file model that is capable of representing any conceivable file system’s general feature and behavior.</p>
+<p><img src="file_system/./assets/linux_virtual_file_system_context.png" alt="Linux Virtual File System Context" /></p>
+<p><img src="file_system/./assets/linux_virtual_file_system_concept.png" alt="Linux Virtual File System Concept" /></p>
+<p>VFS is an object-oriented scheme. Because it is written in C, rather than a language that supports object programming (such as C++ or Java), VFS objects are implemented simply as C data structures. Each object contains both data and pointers
+to file-system-implemented functions that operate on data. The four primary object types in VFS are as follows:</p>
+<ul>
+<li>Superblock object: Represents a specific mounted file system</li>
+<li>Inode object: Represents a specific file</li>
+<li>Dentry object: Represents a specific directory entry</li>
+<li>File object: Represents an open file associated with a process</li>
+</ul>
+<h3 id="the-superblock-object"><a class="header" href="#the-superblock-object">The Superblock Object</a></h3>
+<p>The superblock object stores information describing file system. Typically, the superblock corresponds to the file system superblock or file system control block, which is stored in a special sector on disk.<br />
+The superblock object consists of a number of data items. Examples include the following:</p>
+<ul>
+<li>The device this file system is mounted on</li>
+<li>The basic block size of the file system</li>
+<li>Dirty flag, to indicate that the superblock has been changed but not written back to disk</li>
+<li>File system type</li>
+<li>Flags, such as a read-only flag</li>
+<li>Pointer to the root of the file system directory</li>
+<li>List of open files</li>
+<li>Semaphore for controlling access to the file system</li>
+<li>List of superblock operations</li>
+</ul>
+<h3 id="the-inode-object"><a class="header" href="#the-inode-object">The Inode Object</a></h3>
+<p>An inode is associated with each file. The inode object holds all the information about a named file except its name and the actual data contents of the file. Items contained in an inode object include owner, group, permissions, access times for a file, size of data it holds, and number of links.<br />
+The inode object also includes an inode operations object that describes the file system’s implemented functions that the VFS can invoke on an inode. The methods defined for the inode object include the following:</p>
+<ul>
+<li>create: Creates a new inode for a regular file associated with a dentry object in some directory</li>
+<li>lookup: Searches a directory for an inode corresponding to a file name</li>
+<li>mkdir: Creates a new inode for a directory associated with a dentry object in some directory</li>
+</ul>
+<h3 id="the-dentry-object"><a class="header" href="#the-dentry-object">The Dentry Object</a></h3>
+<p>A dentry (directory entry) is a specific component in a path. The component may be either a directory or a file name. Dentry objects facilitate quick lookups to files and directories, and are used in a dentry cache for that purpose. The dentry object includes a pointer to the inode and superblock. It also includes a pointer to the parent dentry and pointers to any subordinate dentrys.</p>
+<h3 id="the-file-object"><a class="header" href="#the-file-object">The File Object</a></h3>
+<p>The file object is used to represent a file opened by a process. The object is created in response to the <code>open()</code> system call, and destroyed in response to the <code>close()</code> system call. The file object consists of a numbers of items, including the following:</p>
+<ul>
+<li>Dentry object associated with the file</li>
+<li>File system containing the file</li>
+<li>File objects usage counter</li>
+<li>User's user ID</li>
+<li>User's group ID</li>
+<li>File pointer, which is the current position in the file from which the current position in the file from which the next operation will take place</li>
+</ul>
+<p>The file object also includes an inode operations object that describes the file system's implemented functions that the VFS can invoke on a file object. The methods defined for the file object include read, write, open, release, and lock.</p>
+<h3 id="caches"><a class="header" href="#caches">Caches</a></h3>
+<p>The VFS employs three caches to improve performance:</p>
+<ol>
+<li>Inode cache: Because every file and directory is represented by a VFS inode, a directory listing command or a file access command causes a number of inodes to be accessed. The inode cache stores recently visited inodes to make access quicker.</li>
+<li>Directory cache: The directory cache stores the mapping between the full directory names and their inode numbers. This speeds up the process of listing a directory.</li>
+<li>Buffer cache: The buffer cache is independent of the file systems and it integrated into the mechanisms that the Linux kernel uses to allocate and read and write data buffers. As the real life systems read data from the underlying physical disks, this results in requests to the block device drivers to read physical blocks from the device that they control. So, if the same data is needed often, it will be retrieved from the buffer cache rather than read from the disk.</li>
+</ol>
 
                     </main>
 

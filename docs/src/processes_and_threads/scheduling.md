@@ -4,11 +4,20 @@ In a multiprogramming system, multiple processes exist concurrently in main memo
 
 ## Types of Processor Scheduling
 
-## 调度
+* Long-term scheduling: The decision to add to the pool of processes to be executed.
+* Medium-term scheduling: The decision to add to the number of processes that are partially or fully in main memory.
+* I/O scheduling: The decision as to which process's pending I/O request shall be handled by an available I/O device.
+
+## Time Division Multiplexing
 
 * 进程切换： CPU 资源占用者的切换
-* 处理机调度：从就绪队列中挑选下个占用 CPU 资源的 **进程**，从多个 CPU 中挑选就绪进程可用的 CPU 资源
-* 调度形式：非抢占式系统、可抢占系统
+  * 保存当前进程在 PCB 的上下文
+  * 恢复下一个进程的执行上下文
+* 处理机调度：从就绪队列中**挑选**下个占用 CPU 资源的 **进程**，从多个 CPU 中**挑选**就绪进程可用的 CPU **资源**
+* 调度程序：挑选就绪进程的内核函数
+* 调度形式
+  * 非抢占系统：当前进程主动放弃 CPU
+  * 可抢占系统：中断请求被服务例程响应完成时或当前进程被抢占
 * 调度策略：如何从就绪队列中选择下一个执行进程
 
 ## Principles of Scheduling Algorithms
@@ -16,79 +25,142 @@ In a multiprogramming system, multiple processes exist concurrently in main memo
 * CPU 使用率：处于忙状态的**时间百分比**
 * 吞吐量：单位时间完成的**进程数量**
 * 周转时间：进程从初始化到结束的**总时间**
-* 等待时间：进程在就绪队列的总时间
-* 响应时间：从提交请求到产生相应所花费的时间
-*带宽和延迟不可兼得*
+* 等待时间：进程在就绪队列的**总时间**
+* 响应时间：从提交请求到产生相应所花费的**总时间**  
 
-## 处理机调度策略的相应时间目标
+调度算法需要得到**更快**的服务，也需要得到**高吞吐量**，而***带宽和延迟不可兼得***。
 
-* 减少响应时间
-* 减少平均响应时间的波动（操作系统的计算延迟）
+* 处理机调度策略的相应时间目标
+  * 减少响应时间
+  * 减少平均响应时间的波动（操作系统的计算延迟）
+* 处理机调度策略的吞吐量目标
+  * 增加吞吐量：减少开销、系统资源的高效开销
+  * 减少等待时间，即减少每个进程的等待时间
+  * 操作系统需要保证吞吐量不受用户交互的影响
 
-## 处理机调度策略的吞吐量目标
+* 处理机调度的公平性目标
+  * *公平不等于公正（例如：富人和穷人缴同等额度的税）*
 
-* 增加吞吐量：
-  * 减少开销
-  * 系统资源的高效开销
-* 减少等待时间
-  * 减少每个进程的等待时间
-* 操作系统需要保证吞吐量不受用户交互的影响
+  * 公平性即保证每个进程占用相同的 CPU 的时间、保证每个进程的等待时间相同
+  * 公平通常会增加平均响应时间，降低效率
 
-## 处理机调度的公平性目标
+## Scheduling Criteria
 
-*公平不等于公正（例如：富人和穷人缴同等额度的税）*
+* User Oriented, Performance Related
+  * Turnaround time（周转时间）：waiting time plus service time
+  * Response time（响应时间）：from the submission of a request until the response begins to be received
+  * Deadlines
+* User Oriented, Other
+  * Predictability
+* System Oriented, Performance Related
+  * Throughput
+  * Processor utilization
+* System Oriented, Other
+  * Fairness
+  * Enforcing priorities
+  * Balancing resources
 
-* 保证每个进程占用相同的 CPU 的时间
-* 保证每个进程的等待时间相同
-* 公平通常会增加平均响应时间，降低效率
+## Scheduling Algorithms
 
-## 调度算法
+Table below presents some summary information about the various scheduling policies that are examined in this subsection. **The selection function determines which process, among ready processes, is selected next for execution**. The function may be based on priority, resource requirements, or the execution characteristics of the process. In the latter case, three quantities are significant:  
 
-* 先来先服务算法：依据进程进入就绪状态的先后顺序排列（超市结账排队）
-  * 优点：简单
-  * 缺点：
-    * 平均等待时间波动较大：短进程可能排在长进程后面；
-    * I/O 和 CPU 资源利用较低：CPU 密集进程不使用 I/O，I/O 密集进程不使用 CPU
-* 短进程优先算法：选择就绪队列中执行时间最短的进程占用 CPU 进入运行状态
-  * 就绪队列按预期的执行时间来排序
-  * 具有最优平均周转时间
-  * 连续的段进程流会使长进程无法获得 CPU 资源，对长进程不公平
-  * 需要预估下一个 CPU 计算的持续时间（问用户），欺骗就杀死 or 基于历史的记录学习（动量梯度下降） $t_i = \alpha t_i + (1-\alpha)\tau_{i-1}$
-* 最高响应比优先算法  
-    选择就绪队列中相应比 R 值最高的进程
-    $$R = (w+s)/s$$
-  * w: waiting time
-  * s: service time  
+$w = $ time spent in system so far, **waiting**
+$e = $ time spent in **execution** ***so far***
+$s = $ total **service** time required ***by the process***
 
-  在短进程有限的基础上进行改进；不可抢占；关注进程的等待时间；防止无限期推迟
-* 时间片轮转算法
-  * 时间片： 分配处理及资源的基本时间单位
-  * 算法思路：时间片结束后，按 FCFS (First come, first service) 算法切换到下一个就绪进程；每隔 $n-1$ 个时间片进程执行一个时间片 q
-  * 举例：P1-53, P2-8, P3-68, P4-24 （时间片为20）  
-        P1 0-20，P2 20-28，P3 28-48，P4 48-68（P2 已结束）  
-        P1 68-88，P3 88-108，P4 108-112 （P4 已结束）  
-        P1 112-125，P3 125-145 （P1 已结束）  
-        P3 145-153 （P3已结束）  
-        等待时间 $\begin{aligned}
+The decision mode specifies the instants in time at which the selection function is exercised. There are two general categories:
+
+* Nonpreemptive: Once a process is in the Running state, it continues to execute until it terminates or it blocks itself to wait for I/O or to request some OS service.
+
+* Preemptive: The current running process may be interrupted and move to the Ready state by the OS, which happens when a new process arrives, when an interrupt occurs that places a blocked process in the Ready state, or periodically, based on a clock interrupt.
+
+||FCFS|SPN|HRRN|RR|Feedback|
+|:--:|:--:|:--:|:--:|:--:|:--:|
+|Selection Function|$\max[w]$|
+
+### First Come First Served, FCFS
+
+先来先服务算法：依据进程进入就绪状态的先后顺序排列（超市结账排队）
+
+* 优点：简单
+* 缺点：
+  * **平均等待时间波动较大**：短进程可能排在长进程后面；
+  * **I/O 和 CPU 资源利用较低**：CPU 密集进程不使用 I/O，I/O 密集进程不使用 CPU
+* 示例：3 个进程，计算时间分别为 12, 3, 3
+  * 任务到达顺序：P<sub>1</sub>, P<sub>2</sub>, P<sub>3</sub>，周转时间 (Turnaround Time)为$(12+15+18)/3=15$
+  * 任务到达顺序：P<sub>2</sub>, P<sub>3</sub>, P<sub>1</sub>，周转时间为$(3+6+18)/3=9$
+
+### Shortest Process Next, SPN
+
+短进程优先算法：选择就绪队列中**执行时间最短**的进程占用 CPU 进入运行状态
+
+* 就绪队列按预期的执行时间来排序
+* 具有最优平均周转时间
+* 连续的短进程流会使长进程无法获得 CPU 资源，对长进程不公平
+* 需要预估下一个 CPU 计算的持续时间
+  * 通过问用户的方式。用户欺骗就杀死进程
+  * 基于历史的记录学习（类似于动量梯度下降，即 $t_i = \alpha t_i + (1-\alpha)\tau_{i-1}$）
+
+#### How to Estimate Processing Time
+
+* The simplest calculation of estimating the processing time of each process would be $$ S_{n+1} = \frac{1}{n}\sum \limits_{i=1}^nT_i$$ where $T_i$ is processor execution time for the *i*th instance of process, $S_i$ is predicted value for the *i*th instance
+* To avoid recalculating the entire summation each time, we can get $$ S_{n+1} = \frac{1}{n}T_n+\frac{n-1}{n}S_n$$ Typically,we would like to give greater weight to more recent instances, because these are more likely to reflect future behavior.
+
+* A common technique for predicting a future value on the basis of a time series of past values is **exponential averaging**:
+$$S_{n+1} = \alpha T_n+(1 - \alpha)S_n  $$ where $\alpha$ is a constant weighting factor ($0 < \alpha < 1$) that determines the relative weight given to more recent observations relative to older observations. To see this more clearly, consider an expansion
+$$
+S_{n+1}=\alpha T_{n}+(1-\alpha) \alpha T_{n-1}+\ldots+(1-\alpha)^{i} \alpha T_{n-i}+\ldots+(1-\alpha)^{n} S_{1}
+$$
+
+### Highest Response Ratio Next, HRRN
+
+最高响应比优先算法：选择就绪队列中相应比 R 值最高的进程
+$$R = (w+s)/s$$
+
+where
+$R = $ response ratio
+$w = $ time spent waiting for the processor
+$s = $ expected service time  
+
+特点：在短进程优先算法的基础上进行改进；不可抢占；关注进程的等待时间；防止无限期推迟
+
+## Round Robin, RR
+
+时间片轮转算法：A straightforward way to reduce the penalty that **short jobs** suffer with FCFS is to use **preemption** based on a clock.
+
+* 时间片 (slices of time)： 分配处理及资源的基本时间单位
+* 算法思路：时间片结束后，按 FCFS (First come, first service) 算法切换到下一个就绪进程；每隔 $n-1$ 个时间片进程执行一个时间片 q。(When the interrupt occurs, the currently running process is placed in the ready queue, and the next ready job is selected on a FCFS basis.)
+* 示例：
+  * P1-53, P2-8, P3-68, P4-24 （时间片为20）  
+  * P1 0-20，P2 20-28，P3 28-48，P4 48-68（P2 已结束）  
+  * P1 68-88，P3 88-108，P4 108-112 （P4 已结束）  
+  * P1 112-125，P3 125-145 （P1 已结束）  
+  * P3 145-153 （P3已结束）  
+  * 等待时间 $\begin{aligned}
             P1 &= (68-20) + (112-88) = 72 \\
             P2 &= (20-0) = 20 \\
             P3 &= (28-0)+(88-48)+(125-108)+(145-145) = 85 \\
             P4 &= (48-0)+(108-68)=88 \\
         \end{aligned}$  
-        平均等待时间：$(72+20+85+88)/4 = 66.25$  
-  * 时间片太大：等待时间太长
-  * 时间片太小：开销太大
-  
+  * 平均等待时间：$(72+20+85+88)/4 = 66.25$  
+* 时间片太大：等待时间太长
+* 时间片太小：开销太大
+
+### Multiple Queues, MQ
+
 * 多级队列调度算法
   * 就绪队列被划分为几个对立的子队列，是上述几种算法的综合
   * 每个队列都有自己的调度策略
   * 队列之间的调度：
     * 固定优先级
     * 时间片轮转
-  * 多级反馈队列算法
-    * 进程可在不同队列间移动的多级队列算法
-    * CPU 密集型进程优先级下降得很快
-    * 对 I/O 密集型进程有利
+
+### Multilevel Feedback Queues, MLFQ
+
+* 多级反馈队列算法
+  * 进程可在不同队列间移动的多级队列算法
+  * CPU 密集型进程优先级下降得很快
+  * 对 I/O 密集型进程有利
 * 公平共享调度算法
   * 公平共享调度控制用户对系统资源的访问
 
@@ -175,6 +247,6 @@ Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。
 
 同时 vrumtime 可能会溢出，因此在比较 vruntime 的时候应该先减去 min_vruntime。
 
-## (BFS) Brain Fuck Scheduler
+## Brain Fuck Scheduler, BFS
 
 一种时间片轮转算法的变种，在多处理机情况的但就绪队列选择，增加了队列互斥访问的开销。

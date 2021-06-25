@@ -1,5 +1,9 @@
 # Scheduling
 
+In a multiprogramming system, multiple processes exist concurrently in main memory. Each process alternates between using a processor and waiting for some event to occur, such as the completion of an I/O operation. The processor or processors are kept busy by executing one process while the others processes wait.
+
+## Types of Processor Scheduling
+
 ## 调度
 
 * 进程切换： CPU 资源占用者的切换
@@ -115,7 +119,6 @@
     * 动态进程分配
   * 优先级反置: 操作系统中出现高优先级进程长时间等待低优先级进程所占用资源的现象
     * 解决方法: 优先级继承、优先级天花板协议
-
 
 ## Multiple Cores
 

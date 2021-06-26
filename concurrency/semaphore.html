@@ -334,6 +334,7 @@ condition -&gt; V();
 <li>The system is to be constrained to prevent the overlap of buffer operations, that is only one agent (producer or consumer) may access the buffer at any one time.（系统限制同时访问）</li>
 </ul>
 <p>The problem is to make sure that the producer won’t try to add data into the buffer if it’s full, and that the consumer won’t try to remove data from an empty buffer.</p>
+<p>Note that variable n is the number of items in the buffer and semaphore s is used to enforce mutual exclusion.</p>
 <pre><code class="language-c++">/* program producerconsumer */
 semaphore n = 0, s = 1;
 void producer() {
@@ -358,6 +359,243 @@ void main() {
   parbegin (producer, consumer);
 }
 </code></pre>
+<p>Now suppose the semWait (n) and semWait (s) operations are accidentally reversed. This produces a serious, indeed a fatal, flaw. If the consumer ever enters its critical section when the buffer is empty (n.count = 0), then no producer can ever append to the buffer and the system is deadlocked. This is a good example of the subtlety of semaphores and the difficulty of producing correct designs.</p>
+<p>Finally, let us add a new and realistic restriction to the producer/consumer problem: namely, that the buffer is finite. The buffer is treated as a circular storage and pointer values must be expressed modulo the size of the buffer. The following relationships hold:
+|Block on:|Unblock on:|
+|:--:|:--:|
+|Producer: insert in full buffer |Consumer: item inserted|
+|Consumer: remove from empty buffer| Producer: item removed|
+The producer and consumer functions can be expressed as follows (variable in and out are initialized to 0 and n is the size of the buffer):
+<img src="assets/producer_and_consumer_with_finite_buffer.png" alt="Producer and Consumer with Finite Buffer" /></p>
+<pre><code class="language-c++">/* program boundedbuffer */
+const int sizeofbuffer = /* buffer size */;
+semaphore s = 1, n = 0, e = sizeofbuffer;
+void producer() {
+  while (true) {
+    produce();
+    semWait(e);
+    semWait(s);
+    append();
+    semSignal(s);
+    semSignal(n);
+  }
+}
+void consumer() {
+  while (true) {
+    semWait(n);
+    semWait(s);
+    take();
+    semSignal(s);
+    semSignal(e);
+    consume();
+  }
+}
+void main() {
+  parbegin (producer, consumer);
+}
+</code></pre>
+<h4 id="implementation-of-semaphores"><a class="header" href="#implementation-of-semaphores">Implementation of Semaphores</a></h4>
+<p><img src="./assets/implementation_of_semaphores.png" alt="Implementation of Semaphores" /></p>
+<h3 id="monitor"><a class="header" href="#monitor">Monitor</a></h3>
+<p><img src="assets/monitor_outline.png" alt="Monitor Outline" />
+A monitor is a software module consisting of <strong>one or more procedures, an initialization sequence, and local data</strong>. The chief characteristics of a monitor are the following:</p>
+<ol>
+<li>The local data variables are accessible <strong>only by the monitor’s procedures</strong> and not by any external procedure</li>
+<li>A process <strong>enters the monitor by invoking one of its procedures</strong>.</li>
+<li><strong>Only one process may be executing in the monitor at a time</strong>; any other processes that have invoked the monitor are blocked, waiting for the monitor to become available.</li>
+</ol>
+<p>管程是一种用于多线程互斥访问共享资源的程序结构，任一时刻最多只有一个线程执行管程代码。</p>
+<h4 id="condition-variable"><a class="header" href="#condition-variable">Condition Variable</a></h4>
+<p>A monitor supports synchronization by the use of condition variables that are <strong>contained within the monitor and accessible only within the monitor</strong>. Condition variables are a special data type in monitors, which are operated on by two functions:</p>
+<ul>
+<li><code>cwait (c)</code>: Suspend execution of the calling process on condition c. The monitor is now available for use by another process.</li>
+<li><code>csignal (c)</code>: Resume execution of some process blocked after a cwait on
+the same condition. If there are several such processes, choose one of them; if there is no such process, do nothing.</li>
+</ul>
+<p>Structure of Monitor:</p>
+<p><img src="./assets/structure_of_monitor.png" alt="Structure of Monitor" />
+Although a process can enter the monitor by invoking any of its procedures, we can think of the monitor as having <strong>a single entry point</strong> that is guarded so <strong>only one process may be in the monitor at a time</strong>. Other processes that attempt to enter the monitor join a queue of processes blocked waiting for monitor availability.</p>
+<p>Once a process is in the monitor, it may temporarily block itself on condition x by issuing cwait (x); it is then placed in a queue of processes waiting to reenter the monitor when the condition changes, and resume execution at the point in its program following the cwait (x) call. If a process that is executing in the monitor detects a change in the condition variable x, it issues csignal (x), which alerts the corresponding condition queue that the condition has changed.</p>
+<p>Implementation:</p>
+<pre><code class="language-c++">class Condition {
+    int numWaiting = 0;
+    WaitQueue q;
+}
+Condition::Wait(lock){
+    numWaiting++;
+    Add this thread t to q;
+    release(lock);
+    schedule(); //need mutex
+    require(lock);
+}
+Condition::Signal(){
+    if (numWaiting &gt; 0) {
+        Remove a thread t from q;
+        wakeup(t); //need mutex
+        numWaiting--;
+    }
+}
+
+</code></pre>
+<h4 id="the-producerconsumer-problem-implemented-in-monitor"><a class="header" href="#the-producerconsumer-problem-implemented-in-monitor">The Producer/Consumer Problem Implemented in Monitor</a></h4>
+<pre><code class="language-c++">/* program producerconsumer */
+monitor boundedbuffer;
+char buffer [N]; /* space for N items */
+int nextin, nextout; /* buffer pointers */
+int count; /* number of items in buffer */
+cond notfull, notempty; /* condition variables for synchronization */
+
+void append (char x) {
+  if (count == N) cwait(notfull); /* buffer is full; avoid overflow */
+  buffer[nextin] = x;
+  nextin = (nextin + 1) % N;
+  count++;
+  /* one more item in buffer */
+  csignal (notempty); /*resume any waiting consumer */
+}
+void take (char x) {
+  if (count == 0) cwait(notempty); /* buffer is empty; avoid underflow */
+  x = buffer[nextout];
+  nextout = (nextout + 1) % N;
+  count--; /* one fewer item in buffer */
+  csignal (notfull); /* resume any waiting producer */
+}
+
+monitor()
+{ /* monitor body */
+  nextin = 0; nextout = 0; count = 0; /* buffer initially empty */
+}
+
+void producer() {
+  char x;
+  while (true) {
+    produce(x);
+    append(x);
+  }
+}
+void consumer() {
+  char x;
+  while (true) {
+    take(x);
+    consume(x);
+  }
+}
+void main() {
+  parbegin (producer, consumer);
+}
+</code></pre>
+<h3 id="readerswritters-problem"><a class="header" href="#readerswritters-problem">Readers/Writters Problem</a></h3>
+<p>The readers/writers problem is defined as follows: There is a data area shared among a number of processes. The data area could be a file, a block of main memory, or even a bank of processor registers. There are a number of processes that only read the data area (readers) and a number that only write to the data area (writers). The conditions that must be satisfied are as follows:</p>
+<ol>
+<li>Any number of readers may simultaneously read the file.</li>
+<li>Only one writer at a time may write to the file.</li>
+<li>If a writer is writing to the file, no reader may read it.</li>
+</ol>
+<p>Thus, readers are processes that are not required to exclude one another, and writers are processes that are required to exclude all other processes, readers and writers alike.</p>
+<h4 id="writers-have-priority"><a class="header" href="#writers-have-priority">Writers Have Priority</a></h4>
+<pre><code class="language-c++">/* program readersandwriters */
+int readcount,writecount; semaphore x = 1, y = 1, z = 1, wsem = 1, rsem = 1;
+void reader() {
+  while (true) {
+    semWait (z);
+    semWait (rsem);
+    semWait (x);
+    readcount++;
+    if (readcount == 1) semWait (wsem);
+    semSignal (x);
+    semSignal (rsem);
+    semSignal (z);
+    READUNIT();
+    semWait (x);
+    readcount--;
+    if (readcount == 0) semSignal (wsem);
+    semSignal (x);
+  }
+}
+void writer () {
+  while (true) {
+    semWait (y);
+    writecount++;
+    if (writecount == 1) semWait (rsem);
+    semSignal (y);
+    semWait (wsem);
+    WRITEUNIT();
+    semSignal (wsem);
+    semWait (y);
+    writecount--;
+    if (writecount == 0) semSignal (rsem);
+    semSignal (y);
+  }
+}
+void main() {
+  readcount = writecount = 0;
+  parbegin (reader, writer);
+}
+</code></pre>
+<p>State of the Process Queues for Program:</p>
+<ul>
+<li>Readers only in the system
+<ul>
+<li>wsem set</li>
+<li>no queues</li>
+</ul>
+</li>
+<li>Writers only in the system
+<ul>
+<li>wsem and rsem set</li>
+<li>writers queue on wsem</li>
+</ul>
+</li>
+<li>Both readers and writers with read first
+<ul>
+<li>wsem set by reader</li>
+<li>rsem set by writer</li>
+<li>all writers queue on wsem</li>
+<li>one reader queues on rsem</li>
+<li>other readers queue on z</li>
+</ul>
+</li>
+<li>Both readers and writers with write first
+<ul>
+<li>wsem set by writer</li>
+<li>rsem set by writer</li>
+<li>writers queue on wsem</li>
+<li>one reader queues on rsem</li>
+<li>other readers queue on z</li>
+</ul>
+</li>
+</ul>
+<p><img src="assets/writer_have_priority.png" alt="Writers Have Priority" /></p>
+<h4 id="readers-have-priority"><a class="header" href="#readers-have-priority">Readers Have Priority</a></h4>
+<pre><code class="language-c++">/* program readersandwriters */
+int readcount;
+semaphore x = 1,wsem = 1;
+void reader() {
+  while (true) {
+    semWait (x);
+    readcount++;
+    if(readcount == 1) semWait (wsem);
+    semSignal (x);
+    READUNIT();
+    semWait (x);
+    readcount--;
+    if(readcount == 0) semSignal (wsem);
+    semSignal (x);
+  }
+}
+void writer() {
+  while (true){
+    semWait (wsem);
+    WRITEUNIT();
+    semSignal (wsem);
+  }
+}
+void main() {
+  readcount = 0;
+  parbegin (reader,writer);
+}
+</code></pre>
+<p><img src="assets/reader_have_priority.png" alt="Readers Have Priority" /></p>
 
                     </main>
 

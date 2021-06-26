@@ -481,7 +481,7 @@ void main() {
 </code></pre>
 <p>忙等待锁 (Busy Waiting Lock)：</p>
 <pre><code class="language-c++">Lock::Acquire() {
-   while (test-and-set(bolt));
+   while (test_and_set(bolt));
      //spin
 }
 Lock::Release() {

@@ -185,12 +185,12 @@
 <p>段的概念</p>
 <ul>
 <li>段表示访问方式和储存数据等属性相同的一段地址空间。</li>
-<li>对应一个连续的内存块</li>
+<li>段地址在逻辑空间上连续，在物理空间上不连续</li>
 <li>若干个段组成逻辑地址空间</li>
 </ul>
 </li>
 <li>
-<p>段访问： 逻辑地址由段基址+段内偏移组成的二元组<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">s</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathrm">a</span><span class="mord mathrm">d</span><span class="mord mathrm">d</span><span class="mord mathrm">r</span></span><span class="mclose">)</span></span></span></span>构成</p>
+<p>段访问： 逻辑地址由段基址和段内偏移组成的二元组<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">s</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathrm">a</span><span class="mord mathrm">d</span><span class="mord mathrm">d</span><span class="mord mathrm">r</span></span><span class="mclose">)</span></span></span></span>构成</p>
 </li>
 </ul>
 <h2 id="paging"><a class="header" href="#paging">Paging</a></h2>
@@ -243,6 +243,8 @@
 <h2 id="translation-lookaside-buffer"><a class="header" href="#translation-lookaside-buffer">Translation Lookaside Buffer</a></h2>
 <p>Translation lookaside buffer (TLB) functions in the same way as a memory cache and contains those page table entries that have been most recently used. The organization of the resulting paging hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number from the page table entry to form the real address. The processor also updates the TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.</p>
 <p><img src="./assets/use_of_a_tlb.png" alt="Use of a Translation Lookaside Buffer" /></p>
+<h3 id="comparison-between-paging-and-segmentation"><a class="header" href="#comparison-between-paging-and-segmentation">Comparison between Paging and Segmentation</a></h3>
+<p><img src="./assets/logical_addresses.png" alt="Logical Addresses" /></p>
 <h3 id="hierarchical-page-table"><a class="header" href="#hierarchical-page-table">Hierarchical Page Table</a></h3>
 <p>Take a two-level hierarchical page table as an example:</p>
 <p><img src="./assets/a_two_level_hierarchical_page_table.png" alt="A Two-Level Hierarchical Page Table" /></p>

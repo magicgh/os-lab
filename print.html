@@ -497,7 +497,7 @@ example of logical address, in which the address is expressed as a location rela
 <h4 id="weaknesses"><a class="header" href="#weaknesses">Weaknesses</a></h4>
 <p>Inefficient use of memory due to internal fragmentation; maximum number of active processes is fixed.</p>
 <p><img src="memory_management/./assets/example_of_fixed_partitioning.png" alt="Example of Fixed Partitioning" /></p>
-<p>With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition</p>
+<p>With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition.</p>
 <h3 id="internal-fragmentation"><a class="header" href="#internal-fragmentation">Internal Fragmentation</a></h3>
 <p>Occurs when memory is divided into fixed-size partitions (e.g., page frames in main memory, physical blocks on disk). If a block of data is assigned to one or more partitions, then there may be wasted space in the last partition. This will occur if the last portion of data is smaller than the last partition.</p>
 <h3 id="external-fragmentation"><a class="header" href="#external-fragmentation">External Fragmentation</a></h3>
@@ -591,6 +591,10 @@ example of logical address, in which the address is expressed as a location rela
 </ul>
 </li>
 </ul>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<p>Allocation of 16-Mbyte Block:
+<img src="memory_management/./assets/example_of_memory_configuration.png" alt="Example of Memory Configuration" />
+Worst-fit: 36M</p>
 <h3 id="defragmentation"><a class="header" href="#defragmentation">Defragmentation</a></h3>
 <p>通过调整进程占用的分区位置来减少或避免分区碎片。</p>
 <h4 id="compaction"><a class="header" href="#compaction">Compaction</a></h4>
@@ -622,7 +626,7 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 </li>
 <li>分配过程
 <ul>
-<li>由小到大在空闲块数组中找最小的可用空闲块</li>
+<li><strong>由小到大</strong>在空闲块数组中找最小的可用空闲块</li>
 <li>如空闲块过大，对可用空闲块进行二等分，直到得到合适的可用空闲块</li>
 </ul>
 </li>
@@ -662,12 +666,12 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 <p>段的概念</p>
 <ul>
 <li>段表示访问方式和储存数据等属性相同的一段地址空间。</li>
-<li>对应一个连续的内存块</li>
+<li>段地址在逻辑空间上连续，在物理空间上不连续</li>
 <li>若干个段组成逻辑地址空间</li>
 </ul>
 </li>
 <li>
-<p>段访问： 逻辑地址由段基址+段内偏移组成的二元组<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">s</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathrm">a</span><span class="mord mathrm">d</span><span class="mord mathrm">d</span><span class="mord mathrm">r</span></span><span class="mclose">)</span></span></span></span>构成</p>
+<p>段访问： 逻辑地址由段基址和段内偏移组成的二元组<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">s</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathrm">a</span><span class="mord mathrm">d</span><span class="mord mathrm">d</span><span class="mord mathrm">r</span></span><span class="mclose">)</span></span></span></span>构成</p>
 </li>
 </ul>
 <h2 id="paging"><a class="header" href="#paging">Paging</a></h2>
@@ -720,6 +724,8 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 <h2 id="translation-lookaside-buffer"><a class="header" href="#translation-lookaside-buffer">Translation Lookaside Buffer</a></h2>
 <p>Translation lookaside buffer (TLB) functions in the same way as a memory cache and contains those page table entries that have been most recently used. The organization of the resulting paging hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number from the page table entry to form the real address. The processor also updates the TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.</p>
 <p><img src="memory_management/./assets/use_of_a_tlb.png" alt="Use of a Translation Lookaside Buffer" /></p>
+<h3 id="comparison-between-paging-and-segmentation"><a class="header" href="#comparison-between-paging-and-segmentation">Comparison between Paging and Segmentation</a></h3>
+<p><img src="memory_management/./assets/logical_addresses.png" alt="Logical Addresses" /></p>
 <h3 id="hierarchical-page-table"><a class="header" href="#hierarchical-page-table">Hierarchical Page Table</a></h3>
 <p>Take a two-level hierarchical page table as an example:</p>
 <p><img src="memory_management/./assets/a_two_level_hierarchical_page_table.png" alt="A Two-Level Hierarchical Page Table" /></p>
@@ -825,7 +831,7 @@ confined to a small contiguous portion of a program.</p>
 </li>
 </ol>
 <p>To summarize, the principle of locality states that program and data references within a process tend to cluster. Hence, the assumption that only a few pieces of a process will be needed over a short period of time is valid. Also, it should be possible to make intelligent guesses about which pieces of a process will be needed in the near future, which avoids thrashing.</p>
-<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<h3 id="example-1"><a class="header" href="#example-1">Example</a></h3>
 <pre><code class="language-c++">for (int j = 0; j &lt; 1024; j++)
   for (int i = 0; i &lt; 1024; i++) A[i][j] = 0;
 
@@ -919,7 +925,7 @@ for (int i = 0; i &lt; 1024; i++)
 </li>
 </ul>
 <p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0000000000000004em;vertical-align:-1.2500000000000002em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7500000000000002em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">E</span><span class="mord mathrm">A</span><span class="mord mathrm">T</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2500000000000002em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7500000000000002em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">m</span><span class="mord mathrm">i</span><span class="mord mathrm">s</span><span class="mord mathrm">s</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">s</span><span class="mord mathrm">e</span><span class="mord mathrm">a</span><span class="mord mathrm">r</span><span class="mord mathrm">c</span><span class="mord mathrm">h</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">e</span><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">r</span><span class="mord mathrm" style="margin-right:0.01389em;">y</span><span class="mspace"> </span><span class="mord mathrm">a</span><span class="mord mathrm">c</span><span class="mord mathrm">c</span><span class="mord mathrm">e</span><span class="mord mathrm">s</span><span class="mord mathrm">s</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">L</span><span class="mord mathrm">B</span><span class="mspace"> </span><span class="mord mathrm">s</span><span class="mord mathrm">e</span><span class="mord mathrm">a</span><span class="mord mathrm">r</span><span class="mord mathrm">c</span><span class="mord mathrm">h</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">e</span><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">r</span><span class="mord mathrm" style="margin-right:0.01389em;">y</span><span class="mspace"> </span><span class="mord mathrm">a</span><span class="mord mathrm">c</span><span class="mord mathrm">c</span><span class="mord mathrm">e</span><span class="mord mathrm">s</span><span class="mord mathrm">s</span><span class="mspace"> </span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">m</span><span class="mord mathrm">e</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathrm">h</span><span class="mord mathrm">i</span><span class="mord mathrm">t</span><span class="mspace"> </span><span class="mord mathrm">r</span><span class="mord mathrm">a</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2500000000000002em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
-<h4 id="example-1"><a class="header" href="#example-1">Example</a></h4>
+<h4 id="example-2"><a class="header" href="#example-2">Example</a></h4>
 <ul>
 <li>TLB lookup takes 5 nano sec.</li>
 <li>Memory access time is 100 nano sec.</li>
@@ -1021,7 +1027,7 @@ step 2. This time, a frame will be found for the replacement.</li>
 <div align="center">
 <p><img src="virtual_memory/./assets/frequency_based_replacement.png" alt="Frequency-Based Replacement" /></p>
 </div>
-<h3 id="example-2"><a class="header" href="#example-2">Example</a></h3>
+<h3 id="example-3"><a class="header" href="#example-3">Example</a></h3>
 <h4 id="optlrufifoclock"><a class="header" href="#optlrufifoclock">OPT/LRU/FIFO/CLOCK</a></h4>
 <p><img src="virtual_memory/./assets/algorithm_compare.png" alt="Algorithm Compare" /></p>
 <h4 id="improved-clock-1"><a class="header" href="#improved-clock-1">Improved Clock</a></h4>
@@ -1129,7 +1135,7 @@ resident set includes its working set).</li>
 </ul>
 </li>
 </ul>
-<h4 id="example-3"><a class="header" href="#example-3">Example</a></h4>
+<h4 id="example-4"><a class="header" href="#example-4">Example</a></h4>
 <p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>
 <img src="virtual_memory/./assets/working_set_algorithm_example.png" alt="Working Set Algorithm Example" /></p>
 <h2 id="page-fault-frequency-strategy"><a class="header" href="#page-fault-frequency-strategy">Page Fault Frequency Strategy</a></h2>
@@ -1152,7 +1158,7 @@ resident set includes its working set).</li>
 <li>A threshold F is defined. If <strong>the amount of time since the last page fault is less than F</strong>, <strong>then a page is added to the resident set</strong> of the process.</li>
 <li>Otherwise, <strong>discard all pages with a use bit of 0, and shrink the resident set accordingly</strong>. At the same time, <em>reset the use bit on the remaining pages of the process to 0</em>.</li>
 </ul>
-<h4 id="example-4"><a class="header" href="#example-4">Example</a></h4>
+<h4 id="example-5"><a class="header" href="#example-5">Example</a></h4>
 <p>The threshold F=2
 <img src="virtual_memory/./assets/pfr_example.png" alt="PBR Example" /></p>
 <h2 id="thrashing"><a class="header" href="#thrashing">Thrashing</a></h2>
@@ -1388,7 +1394,7 @@ as soon as it is loaded into main memory.</li>
 <li>CPU 状态</li>
 <li>内存地址空间</li>
 </ul>
-<h3 id="example-5"><a class="header" href="#example-5">Example</a></h3>
+<h3 id="example-6"><a class="header" href="#example-6">Example</a></h3>
 <p>以进程 P0、进程 P1 为例：<br />
 P0 执行 --&gt; 中断或系统调用 --&gt; P0 保存 --&gt; P1 恢复 --&gt; P1 执行 --&gt; 中断或系统调用 --&gt; P1 保存 --&gt; P0 恢复 --&gt; P0 执行<br />
 图示：
@@ -1537,14 +1543,15 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </tbody></table>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h1>
+<h2 id="uniprocessor-schduling"><a class="header" href="#uniprocessor-schduling">Uniprocessor Schduling</a></h2>
 <p>In a multiprogramming system, multiple processes exist concurrently in main memory. Each process alternates between using a processor and waiting for some event to occur, such as the completion of an I/O operation. The processor or processors are kept busy by executing one process while the others processes wait.</p>
-<h2 id="types-of-processor-scheduling"><a class="header" href="#types-of-processor-scheduling">Types of Processor Scheduling</a></h2>
+<h3 id="types-of-processor-scheduling"><a class="header" href="#types-of-processor-scheduling">Types of Processor Scheduling</a></h3>
 <ul>
 <li>Long-term scheduling: The decision to add to the pool of processes to be executed.</li>
 <li>Medium-term scheduling: The decision to add to the number of processes that are partially or fully in main memory.</li>
 <li>I/O scheduling: The decision as to which process's pending I/O request shall be handled by an available I/O device.</li>
 </ul>
-<h2 id="time-division-multiplexing"><a class="header" href="#time-division-multiplexing">Time Division Multiplexing</a></h2>
+<h3 id="time-division-multiplexing"><a class="header" href="#time-division-multiplexing">Time Division Multiplexing</a></h3>
 <ul>
 <li>进程切换： CPU 资源占用者的切换
 <ul>
@@ -1562,7 +1569,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </li>
 <li>调度策略：如何从就绪队列中选择下一个执行进程</li>
 </ul>
-<h2 id="principles-of-scheduling-algorithms"><a class="header" href="#principles-of-scheduling-algorithms">Principles of Scheduling Algorithms</a></h2>
+<h3 id="principles-of-scheduling-algorithms"><a class="header" href="#principles-of-scheduling-algorithms">Principles of Scheduling Algorithms</a></h3>
 <ul>
 <li>CPU 使用率：处于忙状态的<strong>时间百分比</strong></li>
 <li>吞吐量 (Throughput)：单位时间完成的<strong>进程数量</strong></li>
@@ -1602,7 +1609,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </ul>
 </li>
 </ul>
-<h2 id="scheduling-criteria"><a class="header" href="#scheduling-criteria">Scheduling Criteria</a></h2>
+<h3 id="scheduling-criteria"><a class="header" href="#scheduling-criteria">Scheduling Criteria</a></h3>
 <ul>
 <li>User Oriented, Performance Related
 <ul>
@@ -1630,7 +1637,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </ul>
 </li>
 </ul>
-<h2 id="scheduling-algorithms"><a class="header" href="#scheduling-algorithms">Scheduling Algorithms</a></h2>
+<h3 id="scheduling-algorithms"><a class="header" href="#scheduling-algorithms">Scheduling Algorithms</a></h3>
 <p>Table below presents some summary information about the various scheduling policies that are examined in this subsection. <strong>The selection function determines which process, among ready processes, is selected next for execution</strong>. The function may be based on priority, resource requirements, or the execution characteristics of the process. In the latter case, three quantities are significant:</p>
 <p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> time spent in system so far, <strong>waiting</strong>
 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> time spent in <strong>execution</strong> <em><strong>so far</strong></em>
@@ -1652,7 +1659,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 |Response Time|May be high Provides good response time for short processes|Provides good response time for short processes|Provides good response time|Provides good response time for short processes|
 |Overhead|Penalizes short processes; penalizes I/O-bound processes|Penalizes long processes|Good balance|Fair treatment|
 |Starvation|No|Possible|No|No|</p>
-<h3 id="first-come-first-served-fcfs"><a class="header" href="#first-come-first-served-fcfs">First Come First Served, FCFS</a></h3>
+<h4 id="first-come-first-served-fcfs"><a class="header" href="#first-come-first-served-fcfs">First Come First Served, FCFS</a></h4>
 <p>先来先服务算法：依据进程进入就绪状态的先后顺序排列（超市结账排队）</p>
 <ul>
 <li>优点：简单</li>
@@ -1669,20 +1676,27 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </ul>
 </li>
 </ul>
-<h3 id="shortest-process-next-spn"><a class="header" href="#shortest-process-next-spn">Shortest Process Next, SPN</a></h3>
+<h4 id="shortest-process-next-spn"><a class="header" href="#shortest-process-next-spn">Shortest Process Next, SPN</a></h4>
 <p>短进程优先算法：选择就绪队列中<strong>执行时间最短</strong>的进程占用 CPU 进入运行状态</p>
 <ul>
-<li>就绪队列按预期的执行时间来排序</li>
-<li>具有最优平均周转时间</li>
-<li>连续的短进程流会使长进程无法获得 CPU 资源，对长进程不公平</li>
-<li>需要预估下一个 CPU 计算的持续时间
+<li>
+<p>就绪队列按预期的执行时间来排序</p>
+</li>
+<li>
+<p>具有最优平均周转时间</p>
+</li>
+<li>
+<p>连续的短进程流会使长进程无法获得 CPU 资源，对长进程不公平</p>
+</li>
+<li>
+<p>需要预估下一个 CPU 计算的持续时间</p>
 <ul>
 <li>通过问用户的方式。用户欺骗就杀死进程</li>
 <li>基于历史的记录学习（类似于动量梯度下降，即 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>）</li>
 </ul>
 </li>
-</ul>
-<h4 id="how-to-estimate-processing-time"><a class="header" href="#how-to-estimate-processing-time">How to Estimate Processing Time</a></h4>
+<li>
+<p>How to Estimate Processing Time</p>
 <ul>
 <li>
 <p>The simplest calculation of estimating the processing time of each process would be <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span> where <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is processor execution time for the <em>i</em>th instance of process, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is predicted value for the <em>i</em>th instance</p>
@@ -1696,7 +1710,9 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8746639999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
 </li>
 </ul>
-<h3 id="highest-response-ratio-next-hrrn"><a class="header" href="#highest-response-ratio-next-hrrn">Highest Response Ratio Next, HRRN</a></h3>
+</li>
+</ul>
+<h4 id="highest-response-ratio-next-hrrn"><a class="header" href="#highest-response-ratio-next-hrrn">Highest Response Ratio Next, HRRN</a></h4>
 <p>最高响应比优先算法：选择就绪队列中相应比 R 值最高的进程
 <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal">s</span></span></span></span></span></p>
 <p>where
@@ -1704,7 +1720,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> time spent waiting for the processor
 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> expected service time</p>
 <p>特点：在短进程优先算法的基础上进行改进；不可抢占；关注进程的等待时间；防止无限期推迟</p>
-<h2 id="round-robin-rr"><a class="header" href="#round-robin-rr">Round Robin, RR</a></h2>
+<h4 id="round-robin-rr"><a class="header" href="#round-robin-rr">Round Robin, RR</a></h4>
 <p>时间片轮转算法：A straightforward way to reduce the penalty that <strong>short jobs</strong> suffer with FCFS is to use <strong>preemption</strong> based on a clock.</p>
 <ul>
 <li>时间片 (slices of time)： 分配处理及资源的基本时间单位</li>
@@ -1724,7 +1740,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>时间片太小：产生大量上下文切换且开销太大</li>
 <li>经验规则：维持上下文切换开销处于 1% 以内</li>
 </ul>
-<h3 id="multiple-queues-mq"><a class="header" href="#multiple-queues-mq">Multiple Queues, MQ</a></h3>
+<h4 id="multiple-queues-mq"><a class="header" href="#multiple-queues-mq">Multiple Queues, MQ</a></h4>
 <ul>
 <li>多级队列调度算法
 <ul>
@@ -1739,7 +1755,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </ul>
 </li>
 </ul>
-<h3 id="multilevel-feedback-queues-mlfq"><a class="header" href="#multilevel-feedback-queues-mlfq">Multilevel Feedback Queues, MLFQ</a></h3>
+<h4 id="multilevel-feedback-queues-mlfq"><a class="header" href="#multilevel-feedback-queues-mlfq">Multilevel Feedback Queues, MLFQ</a></h4>
 <ul>
 <li>多级反馈队列算法
 <ul>
@@ -1749,7 +1765,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </ul>
 </li>
 </ul>
-<h3 id="fair-share-scheduling"><a class="header" href="#fair-share-scheduling">Fair-Share Scheduling</a></h3>
+<h4 id="fair-share-scheduling"><a class="header" href="#fair-share-scheduling">Fair-Share Scheduling</a></h4>
 <p>公平共享调度算法:公平共享调度控制用户对系统资源的访问</p>
 <ul>
 <li>一些用户组比其他用户组更重要</li>
@@ -1757,9 +1773,9 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>未使用的资源按比例分配</li>
 <li>没有达到资源使用率目标的组获得更高的优先级</li>
 </ul>
-<h3 id="a-comparison-of-scheduling-policies"><a class="header" href="#a-comparison-of-scheduling-policies">A Comparison of Scheduling Policies</a></h3>
+<h4 id="a-comparison-of-scheduling-policies"><a class="header" href="#a-comparison-of-scheduling-policies">A Comparison of Scheduling Policies</a></h4>
 <p><img src="processes_and_threads/./assets/a_comparison_of_scheduling_policies.png" alt="A Comparison of Scheduling Polices" /></p>
-<h2 id="real-time-scheduling"><a class="header" href="#real-time-scheduling">Real-time Scheduling</a></h2>
+<h3 id="real-time-scheduling"><a class="header" href="#real-time-scheduling">Real-time Scheduling</a></h3>
 <ul>
 <li>
 <p>定义:正确性依赖于其 <strong>时间</strong> 和 <strong>功能</strong> 两方面的操作系统</p>
@@ -1790,7 +1806,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <p>Hard Deadline: 错过任务实现会导致灾难性后果;必须验证,在最坏的情况下能够满足实现</p>
 </li>
 <li>
-<p>Soft deadline: 通常能满足任务时限;尽力保证满足任务时限</p>
+<p>Soft deadline: 通常能满足任务时限，尽力保证满足任务时限；若不能满足则降低要求</p>
 </li>
 <li>
 <p>可调度性: 表示一个实时操作系统能够满足任务时限要求</p>
@@ -1798,12 +1814,18 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>
 <p>实时调度算法</p>
 <ul>
-<li>速率单调调度算法: 通过 <strong>周期</strong> 安排优先级,周期越短优先级越高</li>
-<li>最早截止时间优先算法: 截止时间越早优先级越高</li>
+<li>速率单调调度算法 (Rate Monotonic Scheduling): 通过 <strong>周期</strong> 安排优先级,周期越短优先级越高，执行周期最短的任务
+<ul>
+<li>示例：<img src="processes_and_threads/../memory_management/assets/rate_monotonic_scheduling.png" alt="Rate Monotonic Scheduling" /></li>
 </ul>
 </li>
-<li>
-<p>多处理器调度</p>
+<li>最早截止时间优先算法 (Earliest Deadline First, EDF): 截止时间越早优先级越高，执行截止时间最早的任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="multicore-scheduling"><a class="header" href="#multicore-scheduling">Multicore Scheduling</a></h2>
+<ul>
+<li>多处理器调度
 <ul>
 <li>多个处理机组成一个多处理器系统</li>
 <li>处理机间可负载共享</li>
@@ -1813,26 +1835,16 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>动态进程分配</li>
 </ul>
 </li>
-<li>优先级反置: 操作系统中出现高优先级进程长时间等待低优先级进程所占用资源的现象
+<li>优先级反置 (Priority Inversion): 操作系统中出现高优先级进程长时间等待低优先级进程所占用资源的现象
 <ul>
-<li>解决方法: 优先级继承、优先级天花板协议</li>
+<li>解决方法: 优先级继承 (Priority Inheritance)、优先级天花板协议  (Priority Ceiling Protocol)</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="multiple-cores"><a class="header" href="#multiple-cores">Multiple Cores</a></h2>
-<h2 id="cache-coherence"><a class="header" href="#cache-coherence">Cache Coherence</a></h2>
-<ul>
-<li>
-<p>Broadcast</p>
-</li>
-<li>
-<p>Flashing</p>
-</li>
-</ul>
-<h2 id="algorithms-1"><a class="header" href="#algorithms-1">Algorithms</a></h2>
-<h3 id="sqms-single-queue-multiprocessor-schedule"><a class="header" href="#sqms-single-queue-multiprocessor-schedule">SQMS (Single Queue Multiprocessor Schedule)</a></h3>
+<h3 id="algorithms-1"><a class="header" href="#algorithms-1">Algorithms</a></h3>
+<h4 id="sqms-single-queue-multiprocessor-schedule"><a class="header" href="#sqms-single-queue-multiprocessor-schedule">SQMS (Single Queue Multiprocessor Schedule)</a></h4>
 <ul>
 <li>
 <p>Lack of scalability.</p>
@@ -1847,7 +1859,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <p>Thus either assure the cache affinity or load balance.</p>
 </li>
 </ul>
-<h3 id="mqms-multi-queue-multiprocessor-scheduling"><a class="header" href="#mqms-multi-queue-multiprocessor-scheduling">MQMS (Multi-Queue Multiprocessor Scheduling)</a></h3>
+<h4 id="mqms-multi-queue-multiprocessor-scheduling"><a class="header" href="#mqms-multi-queue-multiprocessor-scheduling">MQMS (Multi-Queue Multiprocessor Scheduling)</a></h4>
 <ul>
 <li>
 <p>Queues assign to different CPUs, and the scheduling algorithms can be different.</p>
@@ -1869,23 +1881,406 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <ul>
 <li>Work stealing: 进程、页表基址等需要迁移。</li>
 </ul>
-<h2 id="smp-and-linux-kernel"><a class="header" href="#smp-and-linux-kernel">SMP and Linux Kernel</a></h2>
+<h3 id="smp-and-linux-kernel"><a class="header" href="#smp-and-linux-kernel">SMP and Linux Kernel</a></h3>
 <p>Linux Kernel 2.4 的 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span> 调度算法：<em>initial queue</em> 和 <em>expired queue</em>， 单队列机制。</p>
 <p>Linux Kernel 2.6 的 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 调度算法：由 Ingo Molnar 设计，由于 Linux 系统有 140 中优先级，因此用一个 140 维的数组存放。在 active bitarray 中寻找 left-most bit 的位置，并在 APA 中寻找 APA[x]， 从 APA[x] 中 dequeue 一个 process，对于当前执行完的 process，重新计算 priority 再 enqueue 到 expired priority array 相应的队列 EPA[x] 中。在一定时间间隔后，要进行 load balance 分析。</p>
 <p><strong>操作系统内核和驱动程序属于动态链接库。</strong></p>
-<p>CPS 算法：通过计算进程消耗的 CPU 时间而不是优先级来进行调度。占用的资源越少，优先级就越高。但有些进程相比于其他进程更加重要即使执行的时间很长，因此会对每个进程进行赋权。分配给进程的运行时间 = 调度周期 × 进程权重/总权重之和。
-Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。</p>
+<h4 id="completely-fair-scheduler-cfs"><a class="header" href="#completely-fair-scheduler-cfs">Completely Fair Scheduler, CFS</a></h4>
+<p>通过<strong>计算进程消耗的 CPU 时间</strong>而不是优先级来进行调度。占用的资源越少，优先级就越高，但这种做法不一定公平，因为有些进程相比于其他进程更加重要即使执行的时间很长，因此会对每个进程进行赋权，即维护相对公平性。</p>
+<p>分配给进程的运行时间 = 调度周期 × 进程权重/总权重之和。调度周期即指把所有 TASK_RUNNING 态进程都调度一遍的时间。
+Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重，vruntime 越小表示以前占用 CPU 时间较短，受到了不公平待遇。
+例如：系统中只有两个权重为 1 和 2 的进程，假设跳读周期为 30ms</p>
+<ul>
+<li>A 的 CPU 时间为 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">/</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">s</span></span></span></span></span></li>
+<li>B 的 CPU 时间为 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mord">/</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">s</span></span></span></span></span></li>
+</ul>
+<p>则在这 30 ms 中 A 运行 10 ms，B 运行 20 ms。</p>
 <p>问题：新进程的 vruntime 为 0，则在相当长时间内都会保持抢占 CPU 的优势，因此应该设定一个最小值从而与老进程保持在一个合理的差距范围内。</p>
+<ul>
+<li>
 <p>休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。</p>
+</li>
+<li>
 <p>进程从一个 CPU 迁移到另一个 CPU 上时 vruntime 会不会变？
 当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。</p>
-<p>同时 vrumtime 可能会溢出，因此在比较 vruntime 的时候应该先减去 min_vruntime。</p>
-<h2 id="brain-fuck-scheduler-bfs"><a class="header" href="#brain-fuck-scheduler-bfs">Brain Fuck Scheduler, BFS</a></h2>
+</li>
+<li>
+<p>同时 vrumtime 可能会溢出（因为类型是 <code>unsigned long</code>，因此在比较 vruntime 的时候应该先减去 min_vruntime。</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre><code class="language-c++">unsigned char a = 251, b = 254;
+b += 5;
+signed char c = a - 250, d = b - 250;
+// b 比 a 大 8
+
+</code></pre>
+</li>
+</ul>
+<h3 id="brain-fuck-scheduler-bfs"><a class="header" href="#brain-fuck-scheduler-bfs">Brain Fuck Scheduler, BFS</a></h3>
 <p>一种时间片轮转算法的变种，在多处理机情况的但就绪队列选择，增加了队列互斥访问的开销。</p>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="concurrency"><a class="header" href="#concurrency">Concurrency</a></h1>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="mutual-exclusion-and-synchronization"><a class="header" href="#mutual-exclusion-and-synchronization">Mutual Exclusion and Synchronization</a></h1>
+<h2 id="key-terms"><a class="header" href="#key-terms">Key Terms</a></h2>
+<ul>
+<li>Atomic operation: A function or action implemented as a sequence of one or more instructions that appears to be <strong>indivisible</strong>; that is, no other process can see an <strong>intermediate</strong> state or interrupt the operation. The sequence of instruction is guaranteed to execute as a group, or not execute at all, having no visible effect on system state. Atomicity guarantees isolation from concurrent processes.</li>
+<li>Critical section: A section of code within a process that requires <strong>access to shared resources</strong>, and that must not be executed while another process is in a corresponding section of code.</li>
+<li>Deadlock: A situation in which two or more processes are <strong>unable to proceed</strong> because each is waiting for one of the others to do something.</li>
+<li>Livelock: A situation in which two or more processes <strong>continuously change</strong> their states in response to changes in the other process(es) without doing any useful work.</li>
+<li>Mutual exclusion: The requirement that <strong>when one process is in a critical section that accesses shared resources, no other process may be in a critical section</strong> that accesses any of those shared resources.</li>
+<li>Race condition: A situation in which <strong>multiple threads or processes read and write a shared data item</strong>, and the final result depends on the <strong>relative timing of their execution</strong>.</li>
+<li>Starvation: A situation in which a runnable process is <strong>overlooked indefinitely</strong> by the scheduler; although it is able to proceed, it is never chosen.</li>
+</ul>
+<h2 id="critical-section"><a class="header" href="#critical-section">Critical Section</a></h2>
+<pre><code>entry section
+    critical section
+exit section
+    remainder section
+</code></pre>
+<ul>
+<li>
+<p>Critical Section: 进程中访问临界资源的一段需要互斥执行的代码</p>
+</li>
+<li>
+<p>Entry Section: 检查可否进入临界区的一段代码，如可进入，设置相应“正在访问临界区”标志</p>
+</li>
+<li>
+<p>Exit Section: 清除“正在访问临界区”标志</p>
+</li>
+<li>
+<p>Remainder Section: 代码中的其余部分</p>
+</li>
+</ul>
+<p>访问规则：空闲则入，忙则等待，有限等待</p>
+<h2 id="mutual-exclusion-software-support"><a class="header" href="#mutual-exclusion-software-support">Mutual Exclusion Software Support</a></h2>
+<p>Software approaches can be implemented for concurrent processes that execute ona single-processor or a multiprocessor machine with shared main memory. These approaches usually assume elementary mutual exclusion at the memory access level. That is, simultaneous accesses (reading and/or writing) to the same location in main memory are serialized by some sort of memory arbiter, although the order of access granting is not specified ahead of time.</p>
+<h3 id="dekkers-algorithm"><a class="header" href="#dekkers-algorithm">Dekker’s Algorithm</a></h3>
+<p>As mentioned earlier, any attempt at mutual exclusion must rely on some fundamental exclusion mechanism in the hardware. The most common of these is <strong>the constraint that only one access to a memory location can be made at a time</strong>. Using this constraint, we reserve a global memory location labeled <code>turn</code>. A process (P0 or P1) wishing to execute its critical section first examines the contents of <code>turn</code>. <strong>If the value of <code>turn</code> is equal to the number of the process, then the process may proceed to its critical section. Otherwise, it is forced to wait.</strong> Our waiting process repeatedly reads the value of <code>turn</code> until it is allowed to enter its critical section. This procedure is known as <strong>busy waiting</strong>, or <strong>spin waiting</strong>, because the thwarted process can do nothing productive until it gets permission to enter its critical section. Instead, it must linger and periodically check the variable; thus it consumes processor time (busy) while waiting for its chance.<br />
+After a process has gained access to its critical section, and after it has completed that section, it must update the value of turn to that of the other process.<br />
+In formal terms, there is a shared global variable:
+int turn = 0;</p>
+<h4 id="first-attempt"><a class="header" href="#first-attempt">First Attempt</a></h4>
+<pre><code class="language-c++">// PROCESS 0 
+while(turn != 0)
+    /* do nothing */ ;
+/* critical section*/;
+turn = 1;
+
+// PROCESS 1
+while(turn != 1)
+    /* do nothing */ ;
+/* critical section*/;
+turn = 0;
+</code></pre>
+<h4 id="second-attempt"><a class="header" href="#second-attempt">Second Attempt</a></h4>
+<pre><code class="language-c++">// PROCESS 0 
+while(flag[1] != 0)
+    /* do nothing */ ;
+flag[0] = 1;
+/* critical section*/;
+flag[0] = 0;
+
+// PROCESS 1
+while(flag[0] != 0)
+    /* do nothing */ ;
+flag[1] = 1;
+/* critical section*/;
+flag[1] = 0;
+</code></pre>
+<h4 id="third-attempt"><a class="header" href="#third-attempt">Third Attempt</a></h4>
+<pre><code class="language-c++">// PROCESS 0 
+flag[0] = 1;
+while(flag[1] != 0)
+    /* do nothing */ ;
+/* critical section*/;
+flag[0] = 0;
+
+// PROCESS 1
+flag[1] = 1;
+while(flag[0] != 0)
+    /* do nothing */ ;
+/* critical section*/;
+flag[1] = 0;
+</code></pre>
+<h4 id="fourth-attempt"><a class="header" href="#fourth-attempt">Fourth Attempt</a></h4>
+<pre><code class="language-c++">// PROCESS 0 
+flag[0] = 1;
+while(flag[1] != 0) {
+    flag[0] = 0;
+    /* delay */ ;
+    flag[0] = 1;
+}
+/* critical section*/;
+flag[0] = 0;
+
+// PROCESS 1
+flag[1] = 1;
+while(flag[0] != 0) {
+    flag[1] = 0;
+    /* delay */ ;
+    flag[1] = 1;
+}
+/* critical section*/;
+flag[1] = 0;
+</code></pre>
+<h4 id="a-correct-solution"><a class="header" href="#a-correct-solution">A Correct Solution</a></h4>
+<pre><code class="language-c++">bool flag [2];
+int turn;
+void P0() {
+    while (true) {
+        flag[0] = true;
+        while (flag[1]) {
+            if (turn == 1) {
+                flag[0] = false;
+                while (turn == 1) 
+                    /* do nothing */;
+                flag[0] = true;
+            }
+        }
+        /* critical section */;
+        turn = 1;
+        flag[0] = false;
+        /* remainder */;
+    }
+}
+void P1( )
+{
+    while (true) {
+        flag[1] = true;
+        while (flag[0]) {
+            if (turn == 0) {
+                flag[1] = false;
+                while (turn == 0) 
+                    /* do nothing */;
+                flag[1] = true;
+            }
+        }
+        /* critical section */;
+        turn = 0;
+        flag[1] = false;
+        /* remainder */;
+    }
+}
+void main () {
+    flag[0] = false;
+    flag[1] = false;
+    turn = 1;
+    parbegin (P0, P1);
+}
+</code></pre>
+<h3 id="petersons-algorithm"><a class="header" href="#petersons-algorithm">Peterson’s Algorithm</a></h3>
+<p>Dekker’s algorithm solves the mutual exclusion problem, but with a rather complex program that is difficult to follow and whose correctness is tricky to prove. Peterson has provided a simple, elegant solution.</p>
+<pre><code class="language-c++">bool flag[2];
+int turn;
+void P0() {
+    while (true) {
+        flag[0] = true;
+        turn = 1;
+        while (flag[1] &amp;&amp; turn == 1) /* do nothing */;
+        /* critical section */;
+        flag[0] = false;
+        /* remainder */;
+    }
+}
+void P1() {
+    while (true) {
+        flag[1] = true;
+        turn = 0;
+        while (flag[0] &amp;&amp; turn == 0) /* do nothing */;
+        /* critical section */;
+        flag[1] = false;
+        /* remainder */
+    }
+}
+void main() {
+    flag[0] = false;
+    flag[1] = false;
+    parbegin (P0, P1);
+}
+</code></pre>
+<h2 id="mutual-exclusion-hardware-support"><a class="header" href="#mutual-exclusion-hardware-support">Mutual Exclusion Hardware Support</a></h2>
+<h3 id="atomic-operation"><a class="header" href="#atomic-operation">Atomic Operation</a></h3>
+<p>原子操作指不存在任何中断或失败的操作</p>
+<ul>
+<li>要么操作成功完成</li>
+<li>要么操作没有执行</li>
+<li>不会出现部分执行的情况</li>
+</ul>
+<p>操作系统需要利用同步机制在并发执行的同时，保证一些操作是原子操作。</p>
+<ul>
+<li>用两个原子指令实现一个锁（lock）
+<ul>
+<li>Lock.acquire()
+<ul>
+<li>在锁被释放前一直等待，然后获得锁</li>
+<li>如果两个线程都在等待同一个锁，并且同时发现锁被释放了，那么只有一个能够获得锁</li>
+</ul>
+</li>
+<li>Lock.release()
+<ul>
+<li>解锁并唤醒任何等待中的进程</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="interrupt-disabling"><a class="header" href="#interrupt-disabling">Interrupt Disabling</a></h3>
+<p>禁用硬件中断：没有中断，没有上下文切换，因此没有并发</p>
+<pre><code class="language-c++">local_irq_save(unsigned long flags); 
+critical section
+local_irq_restore(unsigned long flags); 
+</code></pre>
+<p>Because the critical section cannot be interrupted, mutual exclusion is guaranteed. The price of this approach, however, is high. The efficiency of execution could be noticeably degraded because the processor is limited in its ability to interleave processes. Another problem is that this approach will not work in a multiprocessor architecture. When the computer includes more than one processor, it is possible (and typical) for more than one process to be executing at a time. In this case, disabled interrupts do not guarantee mutual exclusion.</p>
+<ul>
+<li>进入临界区：禁止所有中断，并保存标志</li>
+<li>离开临界区：使能所有中断，并恢复标志</li>
+<li>缺点：
+<ul>
+<li>
+<p>禁用中断后，进程无法被停止，可能导致其他进程处于饥饿状态</p>
+</li>
+<li>
+<p>临界区可能很长，可能存在对硬件的影响</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="special-machine-instructions"><a class="header" href="#special-machine-instructions">Special Machine Instructions</a></h3>
+<p>At the hardware level, as was mentioned, access to a memory location excludes any other access to that same location. With this as a foundation, processor designers have proposed several machine instructions that carry out two actions atomically, such as reading and writing or reading and testing, of a single memory location with one instruction fetch cycle. During execution of the instruction, access to the memory location is blocked for any other instruction referencing that location.</p>
+<h4 id="compare--swap-instruction"><a class="header" href="#compare--swap-instruction">Compare &amp; Swap Instruction</a></h4>
+<pre><code class="language-c++">int compare_and_swap (int *word, int testval, int newval) {
+    int oldval;
+    oldval = *word
+    if (oldval == testval) *word = newval;
+    return oldval;
+}
+</code></pre>
+<p>This atomic instruction therefore has two parts: A compare is made between a memory value and a test value; if the values are the same, a swap occurs. The entire compare&amp;swap function is carried out atomically—that is, it is not subject to interruption.
+Example:</p>
+<pre><code class="language-c++">/* program mutualexclusion */
+const int n = /* number of processes */;
+int bolt;
+void P(int i)
+{
+    while (true) {
+    while (compare_and_swap(bolt, 0, 1) == 1)
+        /* do nothing */;
+    /* critical section */;
+    bolt = 0;
+    /* remainder */;
+    }
+}
+void main() {
+    bolt = 0;
+    parbegin (P(1), P(2), ... ,P(n));
+}
+</code></pre>
+<p>A shared variable <code>bolt</code> is initialized to 0. The only process that may enter its critical section is one that finds <code>bolt</code> equal to 0. All other processes attempting to enter their critical section go into a busy waiting mode. When a process leaves its critical section, it resets <code>bolt</code> to 0; at this point one and only one of the waiting processes is granted access to its critical section.</p>
+<h4 id="exchange-instruction"><a class="header" href="#exchange-instruction">Exchange Instruction</a></h4>
+<pre><code class="language-c++">void exchange (int *register, int *memory) {
+    int temp;
+    temp = *memory;
+    *memory = *register;
+    *register = temp;
+}
+</code></pre>
+<p>Example:</p>
+<pre><code class="language-c++">/* program mutualexclusion */
+int const n = /* number of processes */;
+int bolt;
+void P(int i)
+{
+    while (true) {
+        int keyi = 1;
+        do exchange (&amp;keyi, &amp;bolt)
+        while (keyi != 0);
+        /* critical section */;
+        bolt = 0;
+        /* remainder */;
+    }
+}
+void main() {
+    bolt = 0;
+    parbegin (P(1), P(2), ..., P(n));
+}
+</code></pre>
+<p>A shared variable <code>bolt</code> is initialized to 0. Each process uses a local variable key that is initialized to 1. The only process that may enter its critical section is one that finds <code>bolt</code> equal to 0. It excludes all other processes from the critical section by setting <code>bolt</code> to 1.<br />
+When a process leaves its critical section, it resets <code>bolt</code> to 0, allowing another process to gain access to its critical section.<br />
+Note the following expression always holds because of the way in which the variables are initialized and because of the nature of the exchange algorithm:
+<span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathrm">b</span><span class="mord mathrm">o</span><span class="mord mathrm">l</span><span class="mord mathrm">t</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.327674em;vertical-align:-1.277669em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0500050000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">k</span><span class="mord mathrm">e</span><span class="mord mathrm" style="margin-right:0.01389em;">y</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.21752399999999997em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span>
+If bolt = 0, then no process is in its critical section. If bolt = 1, then exactly one process is in its critical section, namely the process whose key value equals 0.</p>
+<h4 id="test--set-instruction"><a class="header" href="#test--set-instruction">Test &amp; Set Instruction</a></h4>
+<pre><code class="language-c++">bool test_and_set (bool *target) ‏{
+    boolean rv = *target;
+    *target = true;
+    return rv:
+}
+</code></pre>
+<p>Example:</p>
+<pre><code class="language-c++">/* program mutualexclusion */
+const int n = /* number of processes */;
+int bolt;
+void P(int i)
+{
+    while (true) {
+    while (test_and_set(bolt) == 1)
+        /* do nothing */;
+    /* critical section */;
+    bolt = 0;
+    /* remainder */;
+    }
+}
+void main() {
+    bolt = 0;
+    parbegin (P(1), P(2), ... ,P(n));
+}
+</code></pre>
+<p>忙等待锁 (Busy Waiting Lock)：</p>
+<pre><code class="language-c++">Lock::Acquire() {
+   while (test-and-set(bolt));
+     //spin
+}
+Lock::Release() {
+    bolt = 0;
+}
+
+</code></pre>
+<p>无忙等待锁：</p>
+<pre><code class="language-c++">class Lock {
+   int bolt = 0;
+   WaitQueue q;
+}
+
+Lock::Acquire() {
+   while (test_and_set(bolt)) {
+      // add this TCB to wait queue q;
+      schedule();
+   }
+}
+
+Lock::Release() {
+   bolt = 0;
+   remove one thread t from q;
+   wakeup(t);
+}
+
+</code></pre>
+<h3 id="advantages"><a class="header" href="#advantages">Advantages</a></h3>
+<ul>
+<li>It is applicable to any number of processes on either a single processor or multiple
+processors sharing main memory.</li>
+<li>It is simple and therefore easy to verify.</li>
+<li>It can be used to support multiple critical sections; each critical section can be
+defined by its own variable.</li>
+</ul>
+<h3 id="disadvatages"><a class="header" href="#disadvatages">Disadvatages</a></h3>
+<ul>
+<li><strong>Busy waiting</strong> is employed: Thus, while a process is waiting for access to a critical section, it continues to consume processor time.</li>
+<li><strong>Starvation is possible</strong>: When a process leaves a critical section and more than one process is waiting, the selection of a waiting process is arbitrary. Thus, some process could indefinitely be denied access.</li>
+<li><strong>Deadlock is possible</strong>: Consider the following scenario on a single-processor system. Process P1 executes the special instruction (e.g., <code>compare&amp;swap</code>, <code>exchange</code>) and enters its critical section. P1 is then interrupted to give the processor to P2, which has higher priority. <strong>If P2 now attempts to use the same resource as P1, it will be denied access because of the mutual exclusion mechanism.</strong> Thus, it will go into a busy waiting loop. However, P1 will never be dispatched because it is of lower priority than another ready process, P2.</li>
+</ul>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="semaphore"><a class="header" href="#semaphore">Semaphore</a></h1>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
@@ -1926,7 +2321,7 @@ Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。<
 <li>deadlock</li>
 <li>starvation</li>
 </ul>
-<h2 id="critical-section"><a class="header" href="#critical-section">Critical Section</a></h2>
+<h2 id="critical-section-1"><a class="header" href="#critical-section-1">Critical Section</a></h2>
 <ul>
 <li>
 <p>访问临界资源的代码，任何时候都要互斥执行</p>

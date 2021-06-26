@@ -239,7 +239,7 @@ example of logical address, in which the address is expressed as a location rela
 <h4 id="weaknesses"><a class="header" href="#weaknesses">Weaknesses</a></h4>
 <p>Inefficient use of memory due to internal fragmentation; maximum number of active processes is fixed.</p>
 <p><img src="./assets/example_of_fixed_partitioning.png" alt="Example of Fixed Partitioning" /></p>
-<p>With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition</p>
+<p>With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition.</p>
 <h3 id="internal-fragmentation"><a class="header" href="#internal-fragmentation">Internal Fragmentation</a></h3>
 <p>Occurs when memory is divided into fixed-size partitions (e.g., page frames in main memory, physical blocks on disk). If a block of data is assigned to one or more partitions, then there may be wasted space in the last partition. This will occur if the last portion of data is smaller than the last partition.</p>
 <h3 id="external-fragmentation"><a class="header" href="#external-fragmentation">External Fragmentation</a></h3>
@@ -333,6 +333,10 @@ example of logical address, in which the address is expressed as a location rela
 </ul>
 </li>
 </ul>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<p>Allocation of 16-Mbyte Block:
+<img src="./assets/example_of_memory_configuration.png" alt="Example of Memory Configuration" />
+Worst-fit: 36M</p>
 <h3 id="defragmentation"><a class="header" href="#defragmentation">Defragmentation</a></h3>
 <p>通过调整进程占用的分区位置来减少或避免分区碎片。</p>
 <h4 id="compaction"><a class="header" href="#compaction">Compaction</a></h4>
@@ -364,7 +368,7 @@ The Figure below gives an example using a 1-Mbyte initial block.</p>
 </li>
 <li>分配过程
 <ul>
-<li>由小到大在空闲块数组中找最小的可用空闲块</li>
+<li><strong>由小到大</strong>在空闲块数组中找最小的可用空闲块</li>
 <li>如空闲块过大，对可用空闲块进行二等分，直到得到合适的可用空闲块</li>
 </ul>
 </li>

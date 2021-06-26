@@ -165,14 +165,15 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h1>
+<h2 id="uniprocessor-schduling"><a class="header" href="#uniprocessor-schduling">Uniprocessor Schduling</a></h2>
 <p>In a multiprogramming system, multiple processes exist concurrently in main memory. Each process alternates between using a processor and waiting for some event to occur, such as the completion of an I/O operation. The processor or processors are kept busy by executing one process while the others processes wait.</p>
-<h2 id="types-of-processor-scheduling"><a class="header" href="#types-of-processor-scheduling">Types of Processor Scheduling</a></h2>
+<h3 id="types-of-processor-scheduling"><a class="header" href="#types-of-processor-scheduling">Types of Processor Scheduling</a></h3>
 <ul>
 <li>Long-term scheduling: The decision to add to the pool of processes to be executed.</li>
 <li>Medium-term scheduling: The decision to add to the number of processes that are partially or fully in main memory.</li>
 <li>I/O scheduling: The decision as to which process's pending I/O request shall be handled by an available I/O device.</li>
 </ul>
-<h2 id="time-division-multiplexing"><a class="header" href="#time-division-multiplexing">Time Division Multiplexing</a></h2>
+<h3 id="time-division-multiplexing"><a class="header" href="#time-division-multiplexing">Time Division Multiplexing</a></h3>
 <ul>
 <li>进程切换： CPU 资源占用者的切换
 <ul>
@@ -190,7 +191,7 @@
 </li>
 <li>调度策略：如何从就绪队列中选择下一个执行进程</li>
 </ul>
-<h2 id="principles-of-scheduling-algorithms"><a class="header" href="#principles-of-scheduling-algorithms">Principles of Scheduling Algorithms</a></h2>
+<h3 id="principles-of-scheduling-algorithms"><a class="header" href="#principles-of-scheduling-algorithms">Principles of Scheduling Algorithms</a></h3>
 <ul>
 <li>CPU 使用率：处于忙状态的<strong>时间百分比</strong></li>
 <li>吞吐量 (Throughput)：单位时间完成的<strong>进程数量</strong></li>
@@ -230,7 +231,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="scheduling-criteria"><a class="header" href="#scheduling-criteria">Scheduling Criteria</a></h2>
+<h3 id="scheduling-criteria"><a class="header" href="#scheduling-criteria">Scheduling Criteria</a></h3>
 <ul>
 <li>User Oriented, Performance Related
 <ul>
@@ -258,7 +259,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="scheduling-algorithms"><a class="header" href="#scheduling-algorithms">Scheduling Algorithms</a></h2>
+<h3 id="scheduling-algorithms"><a class="header" href="#scheduling-algorithms">Scheduling Algorithms</a></h3>
 <p>Table below presents some summary information about the various scheduling policies that are examined in this subsection. <strong>The selection function determines which process, among ready processes, is selected next for execution</strong>. The function may be based on priority, resource requirements, or the execution characteristics of the process. In the latter case, three quantities are significant:</p>
 <p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> time spent in system so far, <strong>waiting</strong>
 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> time spent in <strong>execution</strong> <em><strong>so far</strong></em>
@@ -280,7 +281,7 @@
 |Response Time|May be high Provides good response time for short processes|Provides good response time for short processes|Provides good response time|Provides good response time for short processes|
 |Overhead|Penalizes short processes; penalizes I/O-bound processes|Penalizes long processes|Good balance|Fair treatment|
 |Starvation|No|Possible|No|No|</p>
-<h3 id="first-come-first-served-fcfs"><a class="header" href="#first-come-first-served-fcfs">First Come First Served, FCFS</a></h3>
+<h4 id="first-come-first-served-fcfs"><a class="header" href="#first-come-first-served-fcfs">First Come First Served, FCFS</a></h4>
 <p>先来先服务算法：依据进程进入就绪状态的先后顺序排列（超市结账排队）</p>
 <ul>
 <li>优点：简单</li>
@@ -297,20 +298,27 @@
 </ul>
 </li>
 </ul>
-<h3 id="shortest-process-next-spn"><a class="header" href="#shortest-process-next-spn">Shortest Process Next, SPN</a></h3>
+<h4 id="shortest-process-next-spn"><a class="header" href="#shortest-process-next-spn">Shortest Process Next, SPN</a></h4>
 <p>短进程优先算法：选择就绪队列中<strong>执行时间最短</strong>的进程占用 CPU 进入运行状态</p>
 <ul>
-<li>就绪队列按预期的执行时间来排序</li>
-<li>具有最优平均周转时间</li>
-<li>连续的短进程流会使长进程无法获得 CPU 资源，对长进程不公平</li>
-<li>需要预估下一个 CPU 计算的持续时间
+<li>
+<p>就绪队列按预期的执行时间来排序</p>
+</li>
+<li>
+<p>具有最优平均周转时间</p>
+</li>
+<li>
+<p>连续的短进程流会使长进程无法获得 CPU 资源，对长进程不公平</p>
+</li>
+<li>
+<p>需要预估下一个 CPU 计算的持续时间</p>
 <ul>
 <li>通过问用户的方式。用户欺骗就杀死进程</li>
 <li>基于历史的记录学习（类似于动量梯度下降，即 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>）</li>
 </ul>
 </li>
-</ul>
-<h4 id="how-to-estimate-processing-time"><a class="header" href="#how-to-estimate-processing-time">How to Estimate Processing Time</a></h4>
+<li>
+<p>How to Estimate Processing Time</p>
 <ul>
 <li>
 <p>The simplest calculation of estimating the processing time of each process would be <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span> where <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is processor execution time for the <em>i</em>th instance of process, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is predicted value for the <em>i</em>th instance</p>
@@ -324,7 +332,9 @@
 <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8746639999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
 </li>
 </ul>
-<h3 id="highest-response-ratio-next-hrrn"><a class="header" href="#highest-response-ratio-next-hrrn">Highest Response Ratio Next, HRRN</a></h3>
+</li>
+</ul>
+<h4 id="highest-response-ratio-next-hrrn"><a class="header" href="#highest-response-ratio-next-hrrn">Highest Response Ratio Next, HRRN</a></h4>
 <p>最高响应比优先算法：选择就绪队列中相应比 R 值最高的进程
 <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal">s</span></span></span></span></span></p>
 <p>where
@@ -332,7 +342,7 @@
 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> time spent waiting for the processor
 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span> expected service time</p>
 <p>特点：在短进程优先算法的基础上进行改进；不可抢占；关注进程的等待时间；防止无限期推迟</p>
-<h2 id="round-robin-rr"><a class="header" href="#round-robin-rr">Round Robin, RR</a></h2>
+<h4 id="round-robin-rr"><a class="header" href="#round-robin-rr">Round Robin, RR</a></h4>
 <p>时间片轮转算法：A straightforward way to reduce the penalty that <strong>short jobs</strong> suffer with FCFS is to use <strong>preemption</strong> based on a clock.</p>
 <ul>
 <li>时间片 (slices of time)： 分配处理及资源的基本时间单位</li>
@@ -352,7 +362,7 @@
 <li>时间片太小：产生大量上下文切换且开销太大</li>
 <li>经验规则：维持上下文切换开销处于 1% 以内</li>
 </ul>
-<h3 id="multiple-queues-mq"><a class="header" href="#multiple-queues-mq">Multiple Queues, MQ</a></h3>
+<h4 id="multiple-queues-mq"><a class="header" href="#multiple-queues-mq">Multiple Queues, MQ</a></h4>
 <ul>
 <li>多级队列调度算法
 <ul>
@@ -367,7 +377,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="multilevel-feedback-queues-mlfq"><a class="header" href="#multilevel-feedback-queues-mlfq">Multilevel Feedback Queues, MLFQ</a></h3>
+<h4 id="multilevel-feedback-queues-mlfq"><a class="header" href="#multilevel-feedback-queues-mlfq">Multilevel Feedback Queues, MLFQ</a></h4>
 <ul>
 <li>多级反馈队列算法
 <ul>
@@ -377,7 +387,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="fair-share-scheduling"><a class="header" href="#fair-share-scheduling">Fair-Share Scheduling</a></h3>
+<h4 id="fair-share-scheduling"><a class="header" href="#fair-share-scheduling">Fair-Share Scheduling</a></h4>
 <p>公平共享调度算法:公平共享调度控制用户对系统资源的访问</p>
 <ul>
 <li>一些用户组比其他用户组更重要</li>
@@ -385,9 +395,9 @@
 <li>未使用的资源按比例分配</li>
 <li>没有达到资源使用率目标的组获得更高的优先级</li>
 </ul>
-<h3 id="a-comparison-of-scheduling-policies"><a class="header" href="#a-comparison-of-scheduling-policies">A Comparison of Scheduling Policies</a></h3>
+<h4 id="a-comparison-of-scheduling-policies"><a class="header" href="#a-comparison-of-scheduling-policies">A Comparison of Scheduling Policies</a></h4>
 <p><img src="./assets/a_comparison_of_scheduling_policies.png" alt="A Comparison of Scheduling Polices" /></p>
-<h2 id="real-time-scheduling"><a class="header" href="#real-time-scheduling">Real-time Scheduling</a></h2>
+<h3 id="real-time-scheduling"><a class="header" href="#real-time-scheduling">Real-time Scheduling</a></h3>
 <ul>
 <li>
 <p>定义:正确性依赖于其 <strong>时间</strong> 和 <strong>功能</strong> 两方面的操作系统</p>
@@ -418,7 +428,7 @@
 <p>Hard Deadline: 错过任务实现会导致灾难性后果;必须验证,在最坏的情况下能够满足实现</p>
 </li>
 <li>
-<p>Soft deadline: 通常能满足任务时限;尽力保证满足任务时限</p>
+<p>Soft deadline: 通常能满足任务时限，尽力保证满足任务时限；若不能满足则降低要求</p>
 </li>
 <li>
 <p>可调度性: 表示一个实时操作系统能够满足任务时限要求</p>
@@ -426,12 +436,18 @@
 <li>
 <p>实时调度算法</p>
 <ul>
-<li>速率单调调度算法: 通过 <strong>周期</strong> 安排优先级,周期越短优先级越高</li>
-<li>最早截止时间优先算法: 截止时间越早优先级越高</li>
+<li>速率单调调度算法 (Rate Monotonic Scheduling): 通过 <strong>周期</strong> 安排优先级,周期越短优先级越高，执行周期最短的任务
+<ul>
+<li>示例：<img src="../memory_management/assets/rate_monotonic_scheduling.png" alt="Rate Monotonic Scheduling" /></li>
 </ul>
 </li>
-<li>
-<p>多处理器调度</p>
+<li>最早截止时间优先算法 (Earliest Deadline First, EDF): 截止时间越早优先级越高，执行截止时间最早的任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="multicore-scheduling"><a class="header" href="#multicore-scheduling">Multicore Scheduling</a></h2>
+<ul>
+<li>多处理器调度
 <ul>
 <li>多个处理机组成一个多处理器系统</li>
 <li>处理机间可负载共享</li>
@@ -441,26 +457,16 @@
 <li>动态进程分配</li>
 </ul>
 </li>
-<li>优先级反置: 操作系统中出现高优先级进程长时间等待低优先级进程所占用资源的现象
+<li>优先级反置 (Priority Inversion): 操作系统中出现高优先级进程长时间等待低优先级进程所占用资源的现象
 <ul>
-<li>解决方法: 优先级继承、优先级天花板协议</li>
+<li>解决方法: 优先级继承 (Priority Inheritance)、优先级天花板协议  (Priority Ceiling Protocol)</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="multiple-cores"><a class="header" href="#multiple-cores">Multiple Cores</a></h2>
-<h2 id="cache-coherence"><a class="header" href="#cache-coherence">Cache Coherence</a></h2>
-<ul>
-<li>
-<p>Broadcast</p>
-</li>
-<li>
-<p>Flashing</p>
-</li>
-</ul>
-<h2 id="algorithms"><a class="header" href="#algorithms">Algorithms</a></h2>
-<h3 id="sqms-single-queue-multiprocessor-schedule"><a class="header" href="#sqms-single-queue-multiprocessor-schedule">SQMS (Single Queue Multiprocessor Schedule)</a></h3>
+<h3 id="algorithms"><a class="header" href="#algorithms">Algorithms</a></h3>
+<h4 id="sqms-single-queue-multiprocessor-schedule"><a class="header" href="#sqms-single-queue-multiprocessor-schedule">SQMS (Single Queue Multiprocessor Schedule)</a></h4>
 <ul>
 <li>
 <p>Lack of scalability.</p>
@@ -475,7 +481,7 @@
 <p>Thus either assure the cache affinity or load balance.</p>
 </li>
 </ul>
-<h3 id="mqms-multi-queue-multiprocessor-scheduling"><a class="header" href="#mqms-multi-queue-multiprocessor-scheduling">MQMS (Multi-Queue Multiprocessor Scheduling)</a></h3>
+<h4 id="mqms-multi-queue-multiprocessor-scheduling"><a class="header" href="#mqms-multi-queue-multiprocessor-scheduling">MQMS (Multi-Queue Multiprocessor Scheduling)</a></h4>
 <ul>
 <li>
 <p>Queues assign to different CPUs, and the scheduling algorithms can be different.</p>
@@ -497,18 +503,43 @@
 <ul>
 <li>Work stealing: 进程、页表基址等需要迁移。</li>
 </ul>
-<h2 id="smp-and-linux-kernel"><a class="header" href="#smp-and-linux-kernel">SMP and Linux Kernel</a></h2>
+<h3 id="smp-and-linux-kernel"><a class="header" href="#smp-and-linux-kernel">SMP and Linux Kernel</a></h3>
 <p>Linux Kernel 2.4 的 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span> 调度算法：<em>initial queue</em> 和 <em>expired queue</em>， 单队列机制。</p>
 <p>Linux Kernel 2.6 的 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 调度算法：由 Ingo Molnar 设计，由于 Linux 系统有 140 中优先级，因此用一个 140 维的数组存放。在 active bitarray 中寻找 left-most bit 的位置，并在 APA 中寻找 APA[x]， 从 APA[x] 中 dequeue 一个 process，对于当前执行完的 process，重新计算 priority 再 enqueue 到 expired priority array 相应的队列 EPA[x] 中。在一定时间间隔后，要进行 load balance 分析。</p>
 <p><strong>操作系统内核和驱动程序属于动态链接库。</strong></p>
-<p>CPS 算法：通过计算进程消耗的 CPU 时间而不是优先级来进行调度。占用的资源越少，优先级就越高。但有些进程相比于其他进程更加重要即使执行的时间很长，因此会对每个进程进行赋权。分配给进程的运行时间 = 调度周期 × 进程权重/总权重之和。
-Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。</p>
+<h4 id="completely-fair-scheduler-cfs"><a class="header" href="#completely-fair-scheduler-cfs">Completely Fair Scheduler, CFS</a></h4>
+<p>通过<strong>计算进程消耗的 CPU 时间</strong>而不是优先级来进行调度。占用的资源越少，优先级就越高，但这种做法不一定公平，因为有些进程相比于其他进程更加重要即使执行的时间很长，因此会对每个进程进行赋权，即维护相对公平性。</p>
+<p>分配给进程的运行时间 = 调度周期 × 进程权重/总权重之和。调度周期即指把所有 TASK_RUNNING 态进程都调度一遍的时间。
+Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重，vruntime 越小表示以前占用 CPU 时间较短，受到了不公平待遇。
+例如：系统中只有两个权重为 1 和 2 的进程，假设跳读周期为 30ms</p>
+<ul>
+<li>A 的 CPU 时间为 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">/</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">s</span></span></span></span></span></li>
+<li>B 的 CPU 时间为 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mord">/</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">s</span></span></span></span></span></li>
+</ul>
+<p>则在这 30 ms 中 A 运行 10 ms，B 运行 20 ms。</p>
 <p>问题：新进程的 vruntime 为 0，则在相当长时间内都会保持抢占 CPU 的优势，因此应该设定一个最小值从而与老进程保持在一个合理的差距范围内。</p>
+<ul>
+<li>
 <p>休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。</p>
+</li>
+<li>
 <p>进程从一个 CPU 迁移到另一个 CPU 上时 vruntime 会不会变？
 当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。</p>
-<p>同时 vrumtime 可能会溢出，因此在比较 vruntime 的时候应该先减去 min_vruntime。</p>
-<h2 id="brain-fuck-scheduler-bfs"><a class="header" href="#brain-fuck-scheduler-bfs">Brain Fuck Scheduler, BFS</a></h2>
+</li>
+<li>
+<p>同时 vrumtime 可能会溢出（因为类型是 <code>unsigned long</code>，因此在比较 vruntime 的时候应该先减去 min_vruntime。</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre><code class="language-c++">unsigned char a = 251, b = 254;
+b += 5;
+signed char c = a - 250, d = b - 250;
+// b 比 a 大 8
+
+</code></pre>
+</li>
+</ul>
+<h3 id="brain-fuck-scheduler-bfs"><a class="header" href="#brain-fuck-scheduler-bfs">Brain Fuck Scheduler, BFS</a></h3>
 <p>一种时间片轮转算法的变种，在多处理机情况的但就绪队列选择，增加了队列互斥访问的开销。</p>
 
                     </main>

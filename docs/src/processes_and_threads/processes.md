@@ -31,7 +31,7 @@
 
 #### Discrepancies
 
-* 进程时动态的，程序时静态的
+* 进程是动态的，程序是静态的
   * 程序是有序代码的集合
   * 进程是程序的执行
 * 进程是暂时的，程序时永久的
@@ -56,7 +56,12 @@ with this process, plus any memory blocks shared with other processes.
 * Context data: These are data that are present in registers in the processor while the process is executing.
 * I/O status information: Includes outstanding I/O requests, I/O devices assigned to this process, a list of files in use by the process, and so on.
 * Accounting information: May include the amount of processor time and clock time used, time limits, account numbers, and so on.
+
+<center>
+
 ![Simplified Process Control Block](./assets/simplified_process_control_block.png)
+
+</center>
 
 ### Control Information
 
@@ -101,7 +106,7 @@ with this process, plus any memory blocks shared with other processes.
     * 正常退出
     * 错误退出
   * 非自愿结束
-    * 致命错误
+    * 致命错误n
     * 被其他进程所杀
 
 操作系统在 **中断** 中处理进程  

@@ -77,7 +77,7 @@ The decision mode specifies the instants in time at which the selection function
 * Preemptive: The current running process may be interrupted and move to the Ready state by the OS, which happens when a new process arrives, when an interrupt occurs that places a blocked process in the Ready state, or periodically, based on a clock interrupt.
 
 ||FCFS|SPN|HRRN|RR|
-|:--:|:--:|:--:|:--:|:--:|:--:|
+|:--:|:--:|:--:|:--:|:--:|
 |Selection Function|$\max[w]$|$\min[s]$|$\max(\frac{w+s}{s})$|constant|
 |Decision Mode|Non-preemptive|Non-preemptive|Non-preemptive|Preemptive|
 |Throughput|Not emphasized|High|High|May be low if quantum is too small|
@@ -114,7 +114,9 @@ The decision mode specifies the instants in time at which the selection function
   * To avoid recalculating the entire summation each time, we can get $$ S_{n+1} = \frac{1}{n}T_n+\frac{n-1}{n}S_n$$ Typically,we would like to give greater weight to more recent instances, because these are more likely to reflect future behavior.
 
   * A common technique for predicting a future value on the basis of a time series of past values is **exponential averaging**:
-  $$S_{n+1} = \alpha T_n+(1 - \alpha)S_n  $$ where $\alpha$ is a constant weighting factor ($0 < \alpha < 1$) that determines the relative weight given to more recent observations relative to older observations. To see this more clearly, consider an expansion
+  
+  $$S_{n+1} = \alpha T_n+(1 - \alpha)S_n  $$
+  where $\alpha$ is a constant weighting factor ($0 < \alpha < 1$) that determines the relative weight given to more recent observations relative to older observations. To see this more clearly, consider an expansion
   $$
   S_{n+1}=\alpha T_{n}+(1-\alpha) \alpha T_{n-1}+\ldots+(1-\alpha)^{i} \alpha T_{n-i}+\ldots+(1-\alpha)^{n} S_{1}
   $$

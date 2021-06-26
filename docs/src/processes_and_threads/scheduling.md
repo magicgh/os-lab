@@ -23,10 +23,10 @@ In a multiprogramming system, multiple processes exist concurrently in main memo
 ## Principles of Scheduling Algorithms
 
 * CPU 使用率：处于忙状态的**时间百分比**
-* 吞吐量：单位时间完成的**进程数量**
-* 周转时间：进程从初始化到结束的**总时间**
-* 等待时间：进程在就绪队列的**总时间**
-* 响应时间：从提交请求到产生相应所花费的**总时间**  
+* 吞吐量 (Throughput)：单位时间完成的**进程数量**
+* 周转时间 (Turnaround Time)：进程从初始化到结束的**总时间**
+* 等待时间 (Waiting Time)：进程在就绪队列的**总时间**
+* 响应时间 (Response Time)：从提交请求到产生相应所花费的**总时间**  
 
 调度算法需要得到**更快**的服务，也需要得到**高吞吐量**，而***带宽和延迟不可兼得***。
 
@@ -74,9 +74,14 @@ The decision mode specifies the instants in time at which the selection function
 
 * Preemptive: The current running process may be interrupted and move to the Ready state by the OS, which happens when a new process arrives, when an interrupt occurs that places a blocked process in the Ready state, or periodically, based on a clock interrupt.
 
-||FCFS|SPN|HRRN|RR|Feedback|
+||FCFS|SPN|HRRN|RR|
 |:--:|:--:|:--:|:--:|:--:|:--:|
-|Selection Function|$\max[w]$|
+|Selection Function|$\max[w]$|$\min[s]$|$\max(\frac{w+s}{s})$|constant|
+|Decision Mode|Non-preemptive|Non-preemptive|Non-preemptive|Preemptive|
+|Throughput|Not emphasized|High|High|May be low if quantum is too small|
+|Response Time|May be high Provides good response time for short processes|Provides good response time for short processes|Provides good response time|Provides good response time for short processes|
+|Overhead|Penalizes short processes; penalizes I/O-bound processes|Penalizes long processes|Good balance|Fair treatment|
+|Starvation|No|Possible|No|No|
 
 ### First Come First Served, FCFS
 
@@ -131,7 +136,7 @@ $s = $ expected service time
 * 时间片 (slices of time)： 分配处理及资源的基本时间单位
 * 算法思路：时间片结束后，按 FCFS (First come, first service) 算法切换到下一个就绪进程；每隔 $n-1$ 个时间片进程执行一个时间片 q。(When the interrupt occurs, the currently running process is placed in the ready queue, and the next ready job is selected on a FCFS basis.)
 * 示例：
-  * P1-53, P2-8, P3-68, P4-24 （时间片为20）  
+  * P1: 53, P2: 8, P3: 68, P4: 24 （时间片为20）  
   * P1 0-20，P2 20-28，P3 28-48，P4 48-68（P2 已结束）  
   * P1 68-88，P3 88-108，P4 108-112 （P4 已结束）  
   * P1 112-125，P3 125-145 （P1 已结束）  
@@ -143,8 +148,9 @@ $s = $ expected service time
             P4 &= (48-0)+(108-68)=88 \\
         \end{aligned}$  
   * 平均等待时间：$(72+20+85+88)/4 = 66.25$  
-* 时间片太大：等待时间太长
-* 时间片太小：开销太大
+* 时间片太大：等待时间太长，极端情况会退化成 FCFS
+* 时间片太小：产生大量上下文切换且开销太大
+* 经验规则：维持上下文切换开销处于 1% 以内
 
 ### Multiple Queues, MQ
 
@@ -152,8 +158,8 @@ $s = $ expected service time
   * 就绪队列被划分为几个对立的子队列，是上述几种算法的综合
   * 每个队列都有自己的调度策略
   * 队列之间的调度：
-    * 固定优先级
-    * 时间片轮转
+    * 固定优先级：先处理前台，再处理后台
+    * 时间片轮转：每个队列都能得到一个确定且能够调度其进程的 CPU 总时间
 
 ### Multilevel Feedback Queues, MLFQ
 
@@ -161,10 +167,21 @@ $s = $ expected service time
   * 进程可在不同队列间移动的多级队列算法
   * CPU 密集型进程优先级下降得很快
   * 对 I/O 密集型进程有利
-* 公平共享调度算法
-  * 公平共享调度控制用户对系统资源的访问
 
-## 实时操作系统
+### Fair-Share Scheduling
+
+公平共享调度算法:公平共享调度控制用户对系统资源的访问
+
+* 一些用户组比其他用户组更重要
+* 保证不重要的组无法垄断资源
+* 未使用的资源按比例分配
+* 没有达到资源使用率目标的组获得更高的优先级
+
+### A Comparison of Scheduling Policies
+
+![A Comparison of Scheduling Polices](./assets/a_comparison_of_scheduling_policies.png)
+
+## Real-time Scheduling
 
 * 定义:正确性依赖于其 **时间** 和 **功能** 两方面的操作系统
 * 实时操作系统的性能指标
@@ -176,7 +193,7 @@ $s = $ expected service time
   * 弱实时操作系统
     * 重要进程有高优先级
 
-* Hard deadline: 错过任务实现会导致灾难性后果;必须验证,在最坏的情况下能够满足实现
+* Hard Deadline: 错过任务实现会导致灾难性后果;必须验证,在最坏的情况下能够满足实现
 * Soft deadline: 通常能满足任务时限;尽力保证满足任务时限
 * 可调度性: 表示一个实时操作系统能够满足任务时限要求
 * 实时调度算法

@@ -1565,10 +1565,10 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <h2 id="principles-of-scheduling-algorithms"><a class="header" href="#principles-of-scheduling-algorithms">Principles of Scheduling Algorithms</a></h2>
 <ul>
 <li>CPU 使用率：处于忙状态的<strong>时间百分比</strong></li>
-<li>吞吐量：单位时间完成的<strong>进程数量</strong></li>
-<li>周转时间：进程从初始化到结束的<strong>总时间</strong></li>
-<li>等待时间：进程在就绪队列的<strong>总时间</strong></li>
-<li>响应时间：从提交请求到产生相应所花费的<strong>总时间</strong></li>
+<li>吞吐量 (Throughput)：单位时间完成的<strong>进程数量</strong></li>
+<li>周转时间 (Turnaround Time)：进程从初始化到结束的<strong>总时间</strong></li>
+<li>等待时间 (Waiting Time)：进程在就绪队列的<strong>总时间</strong></li>
+<li>响应时间 (Response Time)：从提交请求到产生相应所花费的<strong>总时间</strong></li>
 </ul>
 <p>调度算法需要得到<strong>更快</strong>的服务，也需要得到<strong>高吞吐量</strong>，而<em><strong>带宽和延迟不可兼得</strong></em>。</p>
 <ul>
@@ -1644,9 +1644,14 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <p>Preemptive: The current running process may be interrupted and move to the Ready state by the OS, which happens when a new process arrives, when an interrupt occurs that places a blocked process in the Ready state, or periodically, based on a clock interrupt.</p>
 </li>
 </ul>
-<table><thead><tr><th align="center"></th><th align="center">FCFS</th><th align="center">SPN</th><th align="center">HRRN</th><th align="center">RR</th><th align="center">Feedback</th></tr></thead><tbody>
-<tr><td align="center">Selection Function</td><td align="center"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mclose">]</span></span></span></span></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
-</tbody></table>
+<p>||FCFS|SPN|HRRN|RR|
+|:--:|:--:|:--:|:--:|:--:|:--:|
+|Selection Function|<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mclose">]</span></span></span></span>|<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">[</span><span class="mord mathnormal">s</span><span class="mclose">]</span></span></span></span>|<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1473309999999999em;vertical-align:-0.345em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.802331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02691em;">w</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span></span>|constant|
+|Decision Mode|Non-preemptive|Non-preemptive|Non-preemptive|Preemptive|
+|Throughput|Not emphasized|High|High|May be low if quantum is too small|
+|Response Time|May be high Provides good response time for short processes|Provides good response time for short processes|Provides good response time|Provides good response time for short processes|
+|Overhead|Penalizes short processes; penalizes I/O-bound processes|Penalizes long processes|Good balance|Fair treatment|
+|Starvation|No|Possible|No|No|</p>
 <h3 id="first-come-first-served-fcfs"><a class="header" href="#first-come-first-served-fcfs">First Come First Served, FCFS</a></h3>
 <p>先来先服务算法：依据进程进入就绪状态的先后顺序排列（超市结账排队）</p>
 <ul>
@@ -1706,7 +1711,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>算法思路：时间片结束后，按 FCFS (First come, first service) 算法切换到下一个就绪进程；每隔 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 个时间片进程执行一个时间片 q。(When the interrupt occurs, the currently running process is placed in the ready queue, and the next ready job is selected on a FCFS basis.)</li>
 <li>示例：
 <ul>
-<li>P1-53, P2-8, P3-68, P4-24 （时间片为20）</li>
+<li>P1: 53, P2: 8, P3: 68, P4: 24 （时间片为20）</li>
 <li>P1 0-20，P2 20-28，P3 28-48，P4 48-68（P2 已结束）</li>
 <li>P1 68-88，P3 88-108，P4 108-112 （P4 已结束）</li>
 <li>P1 112-125，P3 125-145 （P1 已结束）</li>
@@ -1715,8 +1720,9 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>平均等待时间：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">7</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">8</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">8</span><span class="mord">8</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">6</span><span class="mord">.</span><span class="mord">2</span><span class="mord">5</span></span></span></span></li>
 </ul>
 </li>
-<li>时间片太大：等待时间太长</li>
-<li>时间片太小：开销太大</li>
+<li>时间片太大：等待时间太长，极端情况会退化成 FCFS</li>
+<li>时间片太小：产生大量上下文切换且开销太大</li>
+<li>经验规则：维持上下文切换开销处于 1% 以内</li>
 </ul>
 <h3 id="multiple-queues-mq"><a class="header" href="#multiple-queues-mq">Multiple Queues, MQ</a></h3>
 <ul>
@@ -1726,8 +1732,8 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>每个队列都有自己的调度策略</li>
 <li>队列之间的调度：
 <ul>
-<li>固定优先级</li>
-<li>时间片轮转</li>
+<li>固定优先级：先处理前台，再处理后台</li>
+<li>时间片轮转：每个队列都能得到一个确定且能够调度其进程的 CPU 总时间</li>
 </ul>
 </li>
 </ul>
@@ -1742,13 +1748,18 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 <li>对 I/O 密集型进程有利</li>
 </ul>
 </li>
-<li>公平共享调度算法
+</ul>
+<h3 id="fair-share-scheduling"><a class="header" href="#fair-share-scheduling">Fair-Share Scheduling</a></h3>
+<p>公平共享调度算法:公平共享调度控制用户对系统资源的访问</p>
 <ul>
-<li>公平共享调度控制用户对系统资源的访问</li>
+<li>一些用户组比其他用户组更重要</li>
+<li>保证不重要的组无法垄断资源</li>
+<li>未使用的资源按比例分配</li>
+<li>没有达到资源使用率目标的组获得更高的优先级</li>
 </ul>
-</li>
-</ul>
-<h2 id="实时操作系统"><a class="header" href="#实时操作系统">实时操作系统</a></h2>
+<h3 id="a-comparison-of-scheduling-policies"><a class="header" href="#a-comparison-of-scheduling-policies">A Comparison of Scheduling Policies</a></h3>
+<p><img src="processes_and_threads/./assets/a_comparison_of_scheduling_policies.png" alt="A Comparison of Scheduling Polices" /></p>
+<h2 id="real-time-scheduling"><a class="header" href="#real-time-scheduling">Real-time Scheduling</a></h2>
 <ul>
 <li>
 <p>定义:正确性依赖于其 <strong>时间</strong> 和 <strong>功能</strong> 两方面的操作系统</p>
@@ -1776,7 +1787,7 @@ kernel-supported threads or <strong>lightweight processes</strong>.</p>
 </ul>
 </li>
 <li>
-<p>Hard deadline: 错过任务实现会导致灾难性后果;必须验证,在最坏的情况下能够满足实现</p>
+<p>Hard Deadline: 错过任务实现会导致灾难性后果;必须验证,在最坏的情况下能够满足实现</p>
 </li>
 <li>
 <p>Soft deadline: 通常能满足任务时限;尽力保证满足任务时限</p>

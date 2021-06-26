@@ -165,6 +165,199 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="semaphore"><a class="header" href="#semaphore">Semaphore</a></h1>
+<h2 id="key-terms"><a class="header" href="#key-terms">Key Terms</a></h2>
+<ul>
+<li>
+<p>Semaphore: An integer value used for signaling among processes. Only three operations may be
+performed on a semaphore, all of which are <strong>atomic</strong>: <strong>initialize, decrement, and increment</strong>. The decrement operation may result in the blocking of a process, and the increment
+operation may result in the unblocking of a process. Also known as a counting
+semaphore or a general semaphore.</p>
+</li>
+<li>
+<p>Binary semaphore: A semaphore that takes on only the <strong>values 0 and 1</strong>.</p>
+</li>
+<li>
+<p>Mutex: Similar to a binary semaphore. A key difference between the two is that <strong>the process that locks the mutex (sets the value to 0) must be the one to unlock it (sets the value to 1)</strong>.</p>
+</li>
+<li>
+<p>Condition variable: A data type that is used to block a process or thread until a particular condition is true.</p>
+</li>
+<li>
+<p>Monitor: A programming language construct that <strong>encapsulates variables, access procedures, and
+initialization code within an abstract data type</strong>. The monitor’s variable may only be accessed via its access procedures and <strong>only one process may be actively accessing the monitor at any one time</strong>. The access procedures are critical sections. A monitor may have a queue of processes that are waiting to access it.</p>
+</li>
+<li>
+<p>Event flags: A memory word used as a synchronization mechanism. Application code may associate a different event with each bit in a flag. A thread can wait for either a single event or a combination of events by checking one or multiple bits in the corresponding flag. The thread is blocked until all of the required bits are set (AND) or until at least one of the bits is set (OR).</p>
+</li>
+<li>
+<p>Mailboxes/messages: A means for two processes to exchange information and that may be used for synchronization.</p>
+</li>
+<li>
+<p>Spinlocks: Mutual exclusion mechanism in which a process executes in an infinite loop waiting for the value of a lock variable to indicate availability.</p>
+</li>
+</ul>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>信号量是操作系统提供的一种协调共享资源访问的方法，由一个整形（sem）变量和两个原子操作组成。</p>
+<ul>
+<li>
+<p>P()：减少</p>
+<ul>
+<li>sem -1</li>
+<li>若 sem &lt;0，进入等待，否则继续</li>
+</ul>
+</li>
+<li>
+<p>V()：增加</p>
+<ul>
+<li>sem +1</li>
+<li>若 sem <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span></span></span></span> 0，则唤醒一个进程</li>
+</ul>
+</li>
+<li>
+<p>信号量是<strong>被保护</strong>的整数变量：初始化完成后，只能通过 P()，V() 进程修改且 PV 是原子操作。</p>
+</li>
+<li>
+<p>P() 可能阻塞，V() 不会阻塞</p>
+</li>
+</ul>
+<p>For signaling, special variables called semaphores are used.</p>
+<ul>
+<li>To transmit a signal via semaphore s, a process executes the primitive semSignal (s).</li>
+<li>To receive a signal via semaphore s, a process executes the primitive semWait (s); if the corresponding signal has not yet been transmitted, the process is suspended until the transmission takes place.</li>
+</ul>
+<p>To achieve the desired effect, we can view the semaphore as a variable that has an integer value upon which only three operations are defined:</p>
+<ol>
+<li>A semaphore may be initialized to a nonnegative integer value.</li>
+<li>The semWait operation decrements the semaphore value. If the value becomes negative, then the process executing the semWait is blocked. Otherwise, the process continues execution.</li>
+<li>The semSignal operation increments the semaphore value. If the resulting value is less than or equal to zero, then a process blocked by a semWait operation, if any, is unblocked.</li>
+</ol>
+<pre><code class="language-c++">struct semaphore {
+    int count;
+    queueType queue;
+};
+void semWait(semaphore s) // P 操作
+{
+    s.count--;
+    if (s.count &lt; 0) {
+    /* place this process in s.queue */;
+    /* block this process */;
+    }
+}
+void semSignal(semaphore s) { // V 操作
+    s.count++;
+    if (s.count&lt;= 0) {
+    /* remove a process P from s.queue */;
+    /* place process P on ready list */;
+    }
+}
+</code></pre>
+<h2 id="categories"><a class="header" href="#categories">Categories</a></h2>
+<ul>
+<li>
+<p>Binary Semaphore, may only take on the value 0 and 1.</p>
+<ul>
+<li>
+<p>Three Operations:</p>
+<ol>
+<li>binary semaphore may be initialized to 0 or 1.</li>
+<li>The <code>semWaitB</code> operations checks the semaphore value. If the value is zero, then the process executing the <code>semWaitB</code> is blocked.</li>
+<li>The <code>semSignalB</code> operation checks to see if any processes are blocked on this semaphore (semaphore value equals 0). If so, then a process blocked by a <code>semWaitB</code> operation is unblocked. If no processes are blocked, then the value of the semaphore is set to one.</li>
+</ol>
+<pre><code class="language-c++">struct semaphore {
+  int count;
+  queueType queue;
+};
+void semWait(semaphore s){
+  s.count--;
+  if (s.count &lt; 0) {
+    /*place this process in s.queue*/;
+    /*block this process*/;
+  }
+}
+void semSignal(semaphore s) {
+  s.count++;
+  if (s.count&lt;= 0) {
+    /*remove a process P from s.queue*/;
+    /*place process P on ready list*/;
+  }
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>The nonbinary semaphore is often referred to as either a counting semaphore or a general semaphore.</p>
+</li>
+</ul>
+<h2 id="application"><a class="header" href="#application">Application</a></h2>
+<h3 id="mutual-exclusion"><a class="header" href="#mutual-exclusion">Mutual Exclusion</a></h3>
+<p>每个 Critical Section 设置一个信号量，初值为 1。</p>
+<ul>
+<li>Consider n processes, identified in the array P(i), all of which need access to the same resource. Each process has a critical section
+used to access the resource.</li>
+<li>In each process, a semWait (s) is executed just before its critical section.</li>
+<li>If the value of s becomes negative, the process is blocked. If the value is 1, then it is decremented to 0 and the process immediately enters its critical section.</li>
+</ul>
+<pre><code class="language-c++">/* program mutualexclusion */
+const int n = /* number of processes */;
+semaphore s = 1;
+void P(int i) {
+  while (true) {
+    semWait(s);
+    /* critical section */;
+    semSignal(s);
+    /* remainder */;
+  }
+}
+void main() {
+  parbegin (P(1), P(2), . . . , P(n));
+}
+</code></pre>
+<p>必须<strong>成对使用</strong> PV 操作。</p>
+<h3 id="conditional-synchronization"><a class="header" href="#conditional-synchronization">Conditional Synchronization</a></h3>
+<p>用信号量实现条件同步：每个条件同步设置一个信号量</p>
+<pre><code class="language-c++">condition = new Semaphore(0);
+// Thread A
+...M...
+condition -&gt; P();
+.. N ..
+
+// Thread B
+.. X ..
+condition -&gt; V();
+.. Y ..
+</code></pre>
+<h3 id="the-producerconsumer-problem"><a class="header" href="#the-producerconsumer-problem">The Producer/Consumer Problem</a></h3>
+<ul>
+<li>There are one or more producers generating some type of data (records, characters) and placing these in a buffer.（一个或多个生产者在生成数据后放在一个缓冲区里）</li>
+<li>There is a single consumer that is taking items out of the buffer one at a time.（单个消费者从缓冲区取出数据处理）</li>
+<li>The system is to be constrained to prevent the overlap of buffer operations, that is only one agent (producer or consumer) may access the buffer at any one time.（系统限制同时访问）</li>
+</ul>
+<p>The problem is to make sure that the producer won’t try to add data into the buffer if it’s full, and that the consumer won’t try to remove data from an empty buffer.</p>
+<pre><code class="language-c++">/* program producerconsumer */
+semaphore n = 0, s = 1;
+void producer() {
+  while (true) {
+    produce();
+    semWait(s);
+    append();
+    semSignal(s);
+    semSignal(n);
+  }
+}
+void consumer() {
+  while (true) {
+    semWait(n);
+    semWait(s);
+    take();
+    semSignal(s);
+    consume();
+  }
+}
+void main() {
+  parbegin (producer, consumer);
+}
+</code></pre>
 
                     </main>
 

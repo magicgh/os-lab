@@ -94,7 +94,7 @@ Inefficient use of memory due to internal fragmentation; maximum number of activ
 
 ![Example of Fixed Partitioning](./assets/example_of_fixed_partitioning.png)
 
-With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition
+With unequal-size partitions, there are two possible ways to assign processes to partitions. The simplest way is to assign each process to the smallest partition within which it will fit. In this case, a scheduling queue is needed for each partition to hold swapped-out processes destined for that partition.
 
 ### Internal Fragmentation
 
@@ -162,6 +162,12 @@ Three placement algorithms that might be considered are **best-fit, first-fit, a
     * 分配大块空间速度较慢
     * 容易产生外部碎片
 
+### Example
+
+Allocation of 16-Mbyte Block:
+![Example of Memory Configuration](./assets/example_of_memory_configuration.png)
+Worst-fit: 36M
+
 ### Defragmentation
 
 通过调整进程占用的分区位置来减少或避免分区碎片。
@@ -195,7 +201,7 @@ The Figure below gives an example using a 1-Mbyte initial block.
   * 空闲块按大小和起始地址组织成二维数组
   * 初始状态：只有一个大小为 $2^U$ 的空闲块
 * 分配过程
-  * 由小到大在空闲块数组中找最小的可用空闲块
+  * **由小到大**在空闲块数组中找最小的可用空闲块
   * 如空闲块过大，对可用空闲块进行二等分，直到得到合适的可用空闲块
 * 释放过程
   * 把释放的块放入空闲块数组

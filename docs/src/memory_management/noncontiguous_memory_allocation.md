@@ -18,9 +18,9 @@
 * 段的概念
 
   * 段表示访问方式和储存数据等属性相同的一段地址空间。
-  * 对应一个连续的内存块
+  * 段地址在逻辑空间上连续，在物理空间上不连续
   * 若干个段组成逻辑地址空间
-* 段访问： 逻辑地址由段基址+段内偏移组成的二元组$(\mathrm{s}, \mathrm{addr})$构成
+* 段访问： 逻辑地址由段基址和段内偏移组成的二元组$(\mathrm{s}, \mathrm{addr})$构成
 
 ## Paging
 
@@ -72,6 +72,10 @@ How to solve: Caching or Indirection
 Translation lookaside buffer (TLB) functions in the same way as a memory cache and contains those page table entries that have been most recently used. The organization of the resulting paging hardware is illustrated in Figure below. Given a virtual address, the processor will first examine the TLB. If the desired page table entry is present (TLB hit), then the frame number is retrieved and the real address is formed. If the desired page table entry is not found (TLB miss), then the processor uses the page number to index the process page table and examine the corresponding page table entry. If the “present bit” is set, then the page is in main memory, and the processor can retrieve the frame number from the page table entry to form the real address. The processor also updates the TLB to include this new page table entry. Finally, if the present bit is not set, then the desired page is not in main memory and a memory access fault, called a page fault, is issued.  
 
 ![Use of a Translation Lookaside Buffer](./assets/use_of_a_tlb.png)
+
+### Comparison between Paging and Segmentation
+
+![Logical Addresses](./assets/logical_addresses.png)
 
 ### Hierarchical Page Table
 

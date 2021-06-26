@@ -1,14 +1,16 @@
 # Scheduling
 
+## Uniprocessor Schduling
+
 In a multiprogramming system, multiple processes exist concurrently in main memory. Each process alternates between using a processor and waiting for some event to occur, such as the completion of an I/O operation. The processor or processors are kept busy by executing one process while the others processes wait.
 
-## Types of Processor Scheduling
+### Types of Processor Scheduling
 
 * Long-term scheduling: The decision to add to the pool of processes to be executed.
 * Medium-term scheduling: The decision to add to the number of processes that are partially or fully in main memory.
 * I/O scheduling: The decision as to which process's pending I/O request shall be handled by an available I/O device.
 
-## Time Division Multiplexing
+### Time Division Multiplexing
 
 * 进程切换： CPU 资源占用者的切换
   * 保存当前进程在 PCB 的上下文
@@ -20,7 +22,7 @@ In a multiprogramming system, multiple processes exist concurrently in main memo
   * 可抢占系统：中断请求被服务例程响应完成时或当前进程被抢占
 * 调度策略：如何从就绪队列中选择下一个执行进程
 
-## Principles of Scheduling Algorithms
+### Principles of Scheduling Algorithms
 
 * CPU 使用率：处于忙状态的**时间百分比**
 * 吞吐量 (Throughput)：单位时间完成的**进程数量**
@@ -44,7 +46,7 @@ In a multiprogramming system, multiple processes exist concurrently in main memo
   * 公平性即保证每个进程占用相同的 CPU 的时间、保证每个进程的等待时间相同
   * 公平通常会增加平均响应时间，降低效率
 
-## Scheduling Criteria
+### Scheduling Criteria
 
 * User Oriented, Performance Related
   * Turnaround time（周转时间）：waiting time plus service time
@@ -60,7 +62,7 @@ In a multiprogramming system, multiple processes exist concurrently in main memo
   * Enforcing priorities
   * Balancing resources
 
-## Scheduling Algorithms
+### Scheduling Algorithms
 
 Table below presents some summary information about the various scheduling policies that are examined in this subsection. **The selection function determines which process, among ready processes, is selected next for execution**. The function may be based on priority, resource requirements, or the execution characteristics of the process. In the latter case, three quantities are significant:  
 
@@ -83,7 +85,7 @@ The decision mode specifies the instants in time at which the selection function
 |Overhead|Penalizes short processes; penalizes I/O-bound processes|Penalizes long processes|Good balance|Fair treatment|
 |Starvation|No|Possible|No|No|
 
-### First Come First Served, FCFS
+#### First Come First Served, FCFS
 
 先来先服务算法：依据进程进入就绪状态的先后顺序排列（超市结账排队）
 
@@ -95,7 +97,7 @@ The decision mode specifies the instants in time at which the selection function
   * 任务到达顺序：P<sub>1</sub>, P<sub>2</sub>, P<sub>3</sub>，周转时间 (Turnaround Time)为$(12+15+18)/3=15$
   * 任务到达顺序：P<sub>2</sub>, P<sub>3</sub>, P<sub>1</sub>，周转时间为$(3+6+18)/3=9$
 
-### Shortest Process Next, SPN
+#### Shortest Process Next, SPN
 
 短进程优先算法：选择就绪队列中**执行时间最短**的进程占用 CPU 进入运行状态
 
@@ -106,18 +108,18 @@ The decision mode specifies the instants in time at which the selection function
   * 通过问用户的方式。用户欺骗就杀死进程
   * 基于历史的记录学习（类似于动量梯度下降，即 $t_i = \alpha t_i + (1-\alpha)\tau_{i-1}$）
 
-#### How to Estimate Processing Time
+* How to Estimate Processing Time
 
-* The simplest calculation of estimating the processing time of each process would be $$ S_{n+1} = \frac{1}{n}\sum \limits_{i=1}^nT_i$$ where $T_i$ is processor execution time for the *i*th instance of process, $S_i$ is predicted value for the *i*th instance
-* To avoid recalculating the entire summation each time, we can get $$ S_{n+1} = \frac{1}{n}T_n+\frac{n-1}{n}S_n$$ Typically,we would like to give greater weight to more recent instances, because these are more likely to reflect future behavior.
+  * The simplest calculation of estimating the processing time of each process would be $$ S_{n+1} = \frac{1}{n}\sum \limits_{i=1}^nT_i$$ where $T_i$ is processor execution time for the *i*th instance of process, $S_i$ is predicted value for the *i*th instance
+  * To avoid recalculating the entire summation each time, we can get $$ S_{n+1} = \frac{1}{n}T_n+\frac{n-1}{n}S_n$$ Typically,we would like to give greater weight to more recent instances, because these are more likely to reflect future behavior.
 
-* A common technique for predicting a future value on the basis of a time series of past values is **exponential averaging**:
-$$S_{n+1} = \alpha T_n+(1 - \alpha)S_n  $$ where $\alpha$ is a constant weighting factor ($0 < \alpha < 1$) that determines the relative weight given to more recent observations relative to older observations. To see this more clearly, consider an expansion
-$$
-S_{n+1}=\alpha T_{n}+(1-\alpha) \alpha T_{n-1}+\ldots+(1-\alpha)^{i} \alpha T_{n-i}+\ldots+(1-\alpha)^{n} S_{1}
-$$
+  * A common technique for predicting a future value on the basis of a time series of past values is **exponential averaging**:
+  $$S_{n+1} = \alpha T_n+(1 - \alpha)S_n  $$ where $\alpha$ is a constant weighting factor ($0 < \alpha < 1$) that determines the relative weight given to more recent observations relative to older observations. To see this more clearly, consider an expansion
+  $$
+  S_{n+1}=\alpha T_{n}+(1-\alpha) \alpha T_{n-1}+\ldots+(1-\alpha)^{i} \alpha T_{n-i}+\ldots+(1-\alpha)^{n} S_{1}
+  $$
 
-### Highest Response Ratio Next, HRRN
+#### Highest Response Ratio Next, HRRN
 
 最高响应比优先算法：选择就绪队列中相应比 R 值最高的进程
 $$R = (w+s)/s$$
@@ -129,7 +131,7 @@ $s = $ expected service time
 
 特点：在短进程优先算法的基础上进行改进；不可抢占；关注进程的等待时间；防止无限期推迟
 
-## Round Robin, RR
+#### Round Robin, RR
 
 时间片轮转算法：A straightforward way to reduce the penalty that **short jobs** suffer with FCFS is to use **preemption** based on a clock.
 
@@ -152,7 +154,7 @@ $s = $ expected service time
 * 时间片太小：产生大量上下文切换且开销太大
 * 经验规则：维持上下文切换开销处于 1% 以内
 
-### Multiple Queues, MQ
+#### Multiple Queues, MQ
 
 * 多级队列调度算法
   * 就绪队列被划分为几个对立的子队列，是上述几种算法的综合
@@ -161,14 +163,14 @@ $s = $ expected service time
     * 固定优先级：先处理前台，再处理后台
     * 时间片轮转：每个队列都能得到一个确定且能够调度其进程的 CPU 总时间
 
-### Multilevel Feedback Queues, MLFQ
+#### Multilevel Feedback Queues, MLFQ
 
 * 多级反馈队列算法
   * 进程可在不同队列间移动的多级队列算法
   * CPU 密集型进程优先级下降得很快
   * 对 I/O 密集型进程有利
 
-### Fair-Share Scheduling
+#### Fair-Share Scheduling
 
 公平共享调度算法:公平共享调度控制用户对系统资源的访问
 
@@ -177,11 +179,11 @@ $s = $ expected service time
 * 未使用的资源按比例分配
 * 没有达到资源使用率目标的组获得更高的优先级
 
-### A Comparison of Scheduling Policies
+#### A Comparison of Scheduling Policies
 
 ![A Comparison of Scheduling Polices](./assets/a_comparison_of_scheduling_policies.png)
 
-## Real-time Scheduling
+### Real-time Scheduling
 
 * 定义:正确性依赖于其 **时间** 和 **功能** 两方面的操作系统
 * 实时操作系统的性能指标
@@ -194,11 +196,14 @@ $s = $ expected service time
     * 重要进程有高优先级
 
 * Hard Deadline: 错过任务实现会导致灾难性后果;必须验证,在最坏的情况下能够满足实现
-* Soft deadline: 通常能满足任务时限;尽力保证满足任务时限
+* Soft deadline: 通常能满足任务时限，尽力保证满足任务时限；若不能满足则降低要求
 * 可调度性: 表示一个实时操作系统能够满足任务时限要求
 * 实时调度算法
-  * 速率单调调度算法: 通过 **周期** 安排优先级,周期越短优先级越高
-  * 最早截止时间优先算法: 截止时间越早优先级越高
+  * 速率单调调度算法 (Rate Monotonic Scheduling): 通过 **周期** 安排优先级,周期越短优先级越高，执行周期最短的任务
+    * 示例：![Rate Monotonic Scheduling](../memory_management/assets/rate_monotonic_scheduling.png)
+  * 最早截止时间优先算法 (Earliest Deadline First, EDF): 截止时间越早优先级越高，执行截止时间最早的任务
+
+## Multicore Scheduling
 
 * 多处理器调度
   * 多个处理机组成一个多处理器系统
@@ -206,20 +211,12 @@ $s = $ expected service time
   * 对称多处理机的进程分配:
     * 静态进程分配
     * 动态进程分配
-  * 优先级反置: 操作系统中出现高优先级进程长时间等待低优先级进程所占用资源的现象
-    * 解决方法: 优先级继承、优先级天花板协议
+  * 优先级反置 (Priority Inversion): 操作系统中出现高优先级进程长时间等待低优先级进程所占用资源的现象
+    * 解决方法: 优先级继承 (Priority Inheritance)、优先级天花板协议  (Priority Ceiling Protocol)
 
-## Multiple Cores
+### Algorithms
 
-## Cache Coherence
-
-* Broadcast
-
-* Flashing
-
-## Algorithms
-
-### SQMS (Single Queue Multiprocessor Schedule)
+#### SQMS (Single Queue Multiprocessor Schedule)
 
 * Lack of scalability.
 * Weak in cache affinity, violates the locality principle.
@@ -228,7 +225,7 @@ $s = $ expected service time
 
 * Thus either assure the cache affinity or load balance.
 
-### MQMS (Multi-Queue Multiprocessor Scheduling)
+#### MQMS (Multi-Queue Multiprocessor Scheduling)
 
 * Queues assign to different CPUs, and the scheduling algorithms can be different.
 
@@ -244,7 +241,7 @@ $s = $ expected service time
 
 * Work stealing: 进程、页表基址等需要迁移。
 
-## SMP and Linux Kernel
+### SMP and Linux Kernel
 
 Linux Kernel 2.4 的 $O(n)$ 调度算法：*initial queue* 和 *expired queue*， 单队列机制。
 
@@ -252,18 +249,37 @@ Linux Kernel 2.6 的 $O(1)$ 调度算法：由 Ingo Molnar 设计，由于 Linux
 
 **操作系统内核和驱动程序属于动态链接库。**
 
-CPS 算法：通过计算进程消耗的 CPU 时间而不是优先级来进行调度。占用的资源越少，优先级就越高。但有些进程相比于其他进程更加重要即使执行的时间很长，因此会对每个进程进行赋权。分配给进程的运行时间 = 调度周期 × 进程权重/总权重之和。
-Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重。
+#### Completely Fair Scheduler, CFS
+
+通过**计算进程消耗的 CPU 时间**而不是优先级来进行调度。占用的资源越少，优先级就越高，但这种做法不一定公平，因为有些进程相比于其他进程更加重要即使执行的时间很长，因此会对每个进程进行赋权，即维护相对公平性。
+
+分配给进程的运行时间 = 调度周期 × 进程权重/总权重之和。调度周期即指把所有 TASK_RUNNING 态进程都调度一遍的时间。
+Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重，vruntime 越小表示以前占用 CPU 时间较短，受到了不公平待遇。
+例如：系统中只有两个权重为 1 和 2 的进程，假设跳读周期为 30ms
+
+* A 的 CPU 时间为 $30 \times 1/3 = 10 \mathrm{ms}$
+* B 的 CPU 时间为 $30 \times 2/3 = 20 \mathrm{ms}$
+
+则在这 30 ms 中 A 运行 10 ms，B 运行 20 ms。
 
 问题：新进程的 vruntime 为 0，则在相当长时间内都会保持抢占 CPU 的优势，因此应该设定一个最小值从而与老进程保持在一个合理的差距范围内。  
 
-休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。
+* 休眠进程在唤醒后的 vruntime 相比于其他 active 进程较小，因此会强占 CPU，因此在进程重新唤醒后应该对 vruntime 进行一些补偿。在 Linux 中 sched_features 的 WAKEUP_PREEMPT 位决定在休眠后是否主动强占 CPU。
 
-进程从一个 CPU 迁移到另一个 CPU 上时 vruntime 会不会变？
+* 进程从一个 CPU 迁移到另一个 CPU 上时 vruntime 会不会变？
 当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。
 
-同时 vrumtime 可能会溢出，因此在比较 vruntime 的时候应该先减去 min_vruntime。
+* 同时 vrumtime 可能会溢出（因为类型是 `unsigned long`，因此在比较 vruntime 的时候应该先减去 min_vruntime。
+  * 例子
 
-## Brain Fuck Scheduler, BFS
+  ```c++
+  unsigned char a = 251, b = 254;
+  b += 5;
+  signed char c = a - 250, d = b - 250;
+  // b 比 a 大 8
+
+  ```  
+
+### Brain Fuck Scheduler, BFS
 
 一种时间片轮转算法的变种，在多处理机情况的但就绪队列选择，增加了队列互斥访问的开销。

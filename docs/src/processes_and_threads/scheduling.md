@@ -115,7 +115,7 @@ The decision mode specifies the instants in time at which the selection function
 
   * A common technique for predicting a future value on the basis of a time series of past values is **exponential averaging**:
   
-  $$S_{n+1} = \alpha T_n+(1 - \alpha)S_n  $$
+  $$S_{n+1} = \alpha T_n+(1 - \alpha)S_n$$
   where $\alpha$ is a constant weighting factor ($0 < \alpha < 1$) that determines the relative weight given to more recent observations relative to older observations. To see this more clearly, consider an expansion
   $$
   S_{n+1}=\alpha T_{n}+(1-\alpha) \alpha T_{n-1}+\ldots+(1-\alpha)^{i} \alpha T_{n-i}+\ldots+(1-\alpha)^{n} S_{1}
@@ -127,9 +127,9 @@ The decision mode specifies the instants in time at which the selection function
 $$R = (w+s)/s$$
 
 where
-$R = $ response ratio
-$w = $ time spent waiting for the processor
-$s = $ expected service time  
+$R = $ response ratio  
+$w = $ time spent waiting for the processor  
+$s = $ expected service time    
 
 特点：在短进程优先算法的基础上进行改进；不可抢占；关注进程的等待时间；防止无限期推迟
 
@@ -272,7 +272,7 @@ Linux 引入 vruntime 进行计算：实际运行时间 × 1024/进程权重，v
 当一个进程从 CPU_x 出去并进入 CPU_y 的运行队列中时，它的 vruntime = vruntime - min_vruntime_x + min_vruntime_y。
 
 * 同时 vrumtime 可能会溢出（因为类型是 `unsigned long`，因此在比较 vruntime 的时候应该先减去 min_vruntime。
-  * 例子
+  * 示例
 
   ```c++
   unsigned char a = 251, b = 254;

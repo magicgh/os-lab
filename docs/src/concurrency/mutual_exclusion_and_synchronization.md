@@ -351,7 +351,7 @@ void main() {
 
 ```c++
 Lock::Acquire() {
-   while (test-and-set(bolt));
+   while (test_and_set(bolt));
      //spin
 }
 Lock::Release() {

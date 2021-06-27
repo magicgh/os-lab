@@ -74,9 +74,12 @@ $$R_j \geq C_{(n+1)j} + \sum_{i=1}^nC_{ij}, \textnormal{for all} \space j$$
 
 In terms of the matrices and vectors introduced earlier, the condition to be met for process $i$ is:
 $$C_{ij} - A_{ij} \leq V_{j}, \textnormal{for all} \space j$$
-Safe State:
+Safe State:  
+
 ![Safe State](./assets/safe_state.png)
-Unsafe State:
+
+Unsafe State:  
+
 ![Unsafe State](./assets/unsafe_state.png)
 
 It is unsafe because each process will need at least one additional unit of R1, and there are none available. Thus, on the basis of deadlock avoidance, the request by P1 should be denied and P1 should be blocked. **It is important to point out that Figure (b) is not a deadlocked state. It merely has the potential for deadlock.** If P1 were run from this state, it would subsequently release one unit of R1 and one unit of R3 prior to needing these resources again. If that happened, the system would return to a safe state.
@@ -158,4 +161,5 @@ Once deadlock has been detected, some strategy is needed for recovery. The follo
 没有死锁，可有多人同时就餐。
 
 ### A Solution Using a Monitor
+
 ![DPP Monitor](./assets/dpp_monitor.png)

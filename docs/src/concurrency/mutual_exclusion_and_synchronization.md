@@ -391,7 +391,7 @@ processors sharing main memory.
 * It can be used to support multiple critical sections; each critical section can be
 defined by its own variable.
 
-### Disadvatages
+### Disadvantages
 
 * **Busy waiting** is employed: Thus, while a process is waiting for access to a critical section, it continues to consume processor time.
 * **Starvation is possible**: When a process leaves a critical section and more than one process is waiting, the selection of a waiting process is arbitrary. Thus, some process could indefinitely be denied access.

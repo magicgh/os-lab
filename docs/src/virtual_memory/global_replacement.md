@@ -33,7 +33,11 @@ $$
 1 \leq|\mathrm{W}(t, \Delta)| \leq \min (\Delta, N)
 $$
 
+<center>
+
 ![Typical Graph of Working Set Size](./assets/typical_graph_of_working_set_size.png)
+
+</center>
 
 Figure above indicates the way in which the working set size can vary over time for a fixed value of $\Delta$. For many programs, periods of relatively stable working set sizes alternate with periods of rapid change.  
 
@@ -100,6 +104,7 @@ The reciprocal of time between page faults is the page fault rate.
 #### Example
 
 The threshold F=2
+
 ![PBR Example](./assets/pfr_example.png)
 
 ## Thrashing

@@ -191,7 +191,12 @@ Finally, let us add a new and realistic restriction to the producer/consumer pro
 |Producer: insert in full buffer |Consumer: item inserted|
 |Consumer: remove from empty buffer| Producer: item removed|
 The producer and consumer functions can be expressed as follows (variable in and out are initialized to 0 and n is the size of the buffer):
+
+<center>
+
 ![Producer and Consumer with Finite Buffer](assets/producer_and_consumer_with_finite_buffer.png)
+
+</center>
 
 ```c++
 /* program boundedbuffer */
@@ -224,7 +229,11 @@ void main() {
 
 #### Implementation of Semaphores
 
+<center>
+
 ![Implementation of Semaphores](./assets/implementation_of_semaphores.png)
+
+</center>
 
 ### Monitor
 
@@ -247,10 +256,15 @@ the same condition. If there are several such processes, choose one of them; if 
 
 Structure of Monitor:
 
-![Structure of Monitor](./assets/structure_of_monitor.png)
+<center>
+
+![Structure of Monitor](./assets/structure_of_monitor.png)  
+
+</center>
+
 Although a process can enter the monitor by invoking any of its procedures, we can think of the monitor as having **a single entry point** that is guarded so **only one process may be in the monitor at a time**. Other processes that attempt to enter the monitor join a queue of processes blocked waiting for monitor availability.
 
-Once a process is in the monitor, it may temporarily block itself on condition x by issuing cwait (x); it is then placed in a queue of processes waiting to reenter the monitor when the condition changes, and resume execution at the point in its program following the cwait (x) call. If a process that is executing in the monitor detects a change in the condition variable x, it issues csignal (x), which alerts the corresponding condition queue that the condition has changed.
+Once a process is in the monitor, it may temporarily block itself on condition x by issuing `cwait (x)`; it is then placed in a queue of processes waiting to reenter the monitor when the condition changes, and resume execution at the point in its program following the cwait (x) call. If a process that is executing in the monitor detects a change in the condition variable x, it issues `csignal (x)`, which alerts the corresponding condition queue that the condition has changed.
 
 Implementation:
 
@@ -400,7 +414,11 @@ State of the Process Queues for Program:
   * one reader queues on rsem
   * other readers queue on z
 
+<center>
+
 ![Writers Have Priority](assets/writer_have_priority.png)
+
+</center>
 
 #### Readers Have Priority
 
@@ -434,4 +452,8 @@ void main() {
 }
 ```
 
+<center>
+
 ![Readers Have Priority](assets/reader_have_priority.png)
+
+</center>

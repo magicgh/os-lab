@@ -3,7 +3,11 @@
 Deadlock can be defined as the permanent blocking of a set of processes that either compete for system resources or communicate with each other. A set of processes is deadlocked when each process in the set is blocked awaiting an event (typically the freeing up of some requested resource) that can only be triggered by another blocked process in the set. Deadlock is permanent because none of the events is ever triggered. Unlike other problems in concurrent process management, there is no efficient solution in the general case.
 Illustration of Deadlock:
 
+<center>
+
 ![Illustration of Deadlock](./assets/illustration_of_deadlock.png)  
+
+</center>
 
 死锁问题：由于竞争资源或者通信关系，两个或更多线程在执行中出现，永远相互等待只能由其他进程引发的事件。
 
@@ -24,7 +28,11 @@ Illustration of Deadlock:
 
 A useful tool in characterizing the allocation of resources to processes is the resource allocation graph.The resource allocation graph is **a directed graph** that depicts a state of the system of resources and processes, with **each process and each resource represented by a node**. **A graph edge directed** from a process to a resource **indicates a resource that has been requested by the process but not yet granted**. Within a resource node, a dot is shown for each instance of that resource.
 
+<center>
+
 ![Examples of Resource Allocation Graphs](./assets/example_of_resource_allocation_graphs.png)
+
+</center>
 
 ## The Conditions for Deadlock
 
@@ -76,11 +84,19 @@ In terms of the matrices and vectors introduced earlier, the condition to be met
 $$C_{ij} - A_{ij} \leq V_{j}, \textnormal{for all} \space j$$
 Safe State:  
 
+<center>
+
 ![Safe State](./assets/safe_state.png)
+
+</center>
 
 Unsafe State:  
 
+<center>
+
 ![Unsafe State](./assets/unsafe_state.png)
+
+</center>
 
 It is unsafe because each process will need at least one additional unit of R1, and there are none available. Thus, on the basis of deadlock avoidance, the request by P1 should be denied and P1 should be blocked. **It is important to point out that Figure (b) is not a deadlocked state. It merely has the potential for deadlock.** If P1 were run from this state, it would subsequently release one unit of R1 and one unit of R3 prior to needing these resources again. If that happened, the system would return to a safe state.
 
@@ -99,7 +115,11 @@ The algorithm proceeds by **marking processes that are not part of a deadlocked 
 
 #### Example I
 
+<center>
+
 ![Example of Deadlock](./assets/example_of_deadlock.png)
+
+</center>
 
 1. Mark P4, because P4 has no allocated resources.
 2. Set $W=(0 \space 0 \space 0 \space 0 \space 1)$
@@ -113,7 +133,11 @@ are deadlocked.
 
 #### Example II
 
-![](./assets/example_two_of_deadlock.png)
+<center>
+
+![Example Two of Deadlock](./assets/example_two_of_deadlock.png)
+
+</center>
 
 1. 由于已分配进程中找不到全 0 向量，所以不能 mark。
 2. 计算 $W$ 向量为全 0。
@@ -162,4 +186,8 @@ Once deadlock has been detected, some strategy is needed for recovery. The follo
 
 ### A Solution Using a Monitor
 
+<center>
+
 ![DPP Monitor](./assets/dpp_monitor.png)
+
+</center>

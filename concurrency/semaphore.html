@@ -196,6 +196,11 @@ initialization code within an abstract data type</strong>. The monitor’s varia
 <p>Spinlocks: Mutual exclusion mechanism in which a process executes in an infinite loop waiting for the value of a lock variable to indicate availability.</p>
 </li>
 </ul>
+<p><em><em>Notice that</em>:</em></p>
+<ul>
+<li>A mutex can be released only by the thread that had acquired it.</li>
+<li>A binary semaphore can be signaled by any thread (or process).</li>
+</ul>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <p>信号量是操作系统提供的一种协调共享资源访问的方法，由一个整形（sem）变量和两个原子操作组成。</p>
 <ul>

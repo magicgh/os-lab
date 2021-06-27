@@ -523,6 +523,22 @@ defined by its own variable.</li>
 <li><strong>Starvation is possible</strong>: When a process leaves a critical section and more than one process is waiting, the selection of a waiting process is arbitrary. Thus, some process could indefinitely be denied access.</li>
 <li><strong>Deadlock is possible</strong>: Consider the following scenario on a single-processor system. Process P1 executes the special instruction (e.g., <code>compare&amp;swap</code>, <code>exchange</code>) and enters its critical section. P1 is then interrupted to give the processor to P2, which has higher priority. <strong>If P2 now attempts to use the same resource as P1, it will be denied access because of the mutual exclusion mechanism.</strong> Thus, it will go into a busy waiting loop. However, P1 will never be dispatched because it is of lower priority than another ready process, P2.</li>
 </ul>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<ul>
+<li>锁是一种高级的同步抽象方法
+<ul>
+<li>互斥可以使用锁来实现</li>
+<li>需要硬件支持</li>
+</ul>
+</li>
+<li>常用的三种同步实现方法
+<ul>
+<li>禁用中断（仅限于单处理器）</li>
+<li>软件方法（复杂）</li>
+<li>原子操作指令（单处理器或多处理器均可）</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 

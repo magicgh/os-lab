@@ -396,3 +396,13 @@ defined by its own variable.
 * **Busy waiting** is employed: Thus, while a process is waiting for access to a critical section, it continues to consume processor time.
 * **Starvation is possible**: When a process leaves a critical section and more than one process is waiting, the selection of a waiting process is arbitrary. Thus, some process could indefinitely be denied access.
 * **Deadlock is possible**: Consider the following scenario on a single-processor system. Process P1 executes the special instruction (e.g., `compare&swap`, `exchange`) and enters its critical section. P1 is then interrupted to give the processor to P2, which has higher priority. **If P2 now attempts to use the same resource as P1, it will be denied access because of the mutual exclusion mechanism.** Thus, it will go into a busy waiting loop. However, P1 will never be dispatched because it is of lower priority than another ready process, P2.
+
+## Summary
+
+* 锁是一种高级的同步抽象方法
+  * 互斥可以使用锁来实现
+  * 需要硬件支持
+* 常用的三种同步实现方法
+  * 禁用中断（仅限于单处理器）
+  * 软件方法（复杂）
+  * 原子操作指令（单处理器或多处理器均可）

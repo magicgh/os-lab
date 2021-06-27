@@ -17,6 +17,11 @@ initialization code within an abstract data type**. The monitor’s variable may
 * Mailboxes/messages: A means for two processes to exchange information and that may be used for synchronization.
 * Spinlocks: Mutual exclusion mechanism in which a process executes in an infinite loop waiting for the value of a lock variable to indicate availability.
 
+**Notice that*:*
+
+* A mutex can be released only by the thread that had acquired it.
+* A binary semaphore can be signaled by any thread (or process).
+
 ## Introduction
 
 信号量是操作系统提供的一种协调共享资源访问的方法，由一个整形（sem）变量和两个原子操作组成。

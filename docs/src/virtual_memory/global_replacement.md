@@ -110,3 +110,13 @@ A phenomenon in virtual memory schemes, in which the processor **spends most of 
 * 操作系统需要在并发水平和缺页率间达到一个平衡，即选择一个适当进程数目和进程需要的页面数
 
 ## [FBR](./local_replacement.md#fbr)
+
+## Local vs. Global Replacement
+
+Replacement algorithms can be local or global.
+
+* When a process incurs a page fault, a local page replacement algorithm selects for replacement some page that belongs to that same process (or a group of processes sharing a memory partition).
+* A global replacement algorithm is free to select any page in memory.
+* With a local replacement strategy, the number of frames allocated to a process does not change.
+* With global replacement, a process may happen to select only frames allocated to other processes, thus increasing the number of frames allocated to it (assuming that other processes do not choose its frames for replacement).
+* Global replacement generally results in greater system throughput and is therefore the more common method.

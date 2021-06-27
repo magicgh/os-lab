@@ -100,7 +100,7 @@ void semSignal(semaphore s) { // V 操作
 
 * The nonbinary semaphore is often referred to as either a counting semaphore or a general semaphore.
 
-## Application
+## Applications
 
 ### Mutual Exclusion
 
@@ -326,7 +326,7 @@ void main() {
 }
 ```
 
-### Readers/Writters Problem
+### Readers/Writers Problem
 
 The readers/writers problem is defined as follows: There is a data area shared among a number of processes. The data area could be a file, a block of main memory, or even a bank of processor registers. There are a number of processes that only read the data area (readers) and a number that only write to the data area (writers). The conditions that must be satisfied are as follows:
 

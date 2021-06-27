@@ -370,8 +370,10 @@ void main() {
 |:--:|:--:|
 |Producer: insert in full buffer |Consumer: item inserted|
 |Consumer: remove from empty buffer| Producer: item removed|
-The producer and consumer functions can be expressed as follows (variable in and out are initialized to 0 and n is the size of the buffer):
-<img src="assets/producer_and_consumer_with_finite_buffer.png" alt="Producer and Consumer with Finite Buffer" /></p>
+The producer and consumer functions can be expressed as follows (variable in and out are initialized to 0 and n is the size of the buffer):</p>
+<center>
+<p><img src="assets/producer_and_consumer_with_finite_buffer.png" alt="Producer and Consumer with Finite Buffer" /></p>
+</center>
 <pre><code class="language-c++">/* program boundedbuffer */
 const int sizeofbuffer = /* buffer size */;
 semaphore s = 1, n = 0, e = sizeofbuffer;
@@ -400,7 +402,9 @@ void main() {
 }
 </code></pre>
 <h4 id="implementation-of-semaphores"><a class="header" href="#implementation-of-semaphores">Implementation of Semaphores</a></h4>
+<center>
 <p><img src="./assets/implementation_of_semaphores.png" alt="Implementation of Semaphores" /></p>
+</center>
 <h3 id="monitor"><a class="header" href="#monitor">Monitor</a></h3>
 <p><img src="assets/monitor_outline.png" alt="Monitor Outline" />
 A monitor is a software module consisting of <strong>one or more procedures, an initialization sequence, and local data</strong>. The chief characteristics of a monitor are the following:</p>
@@ -418,9 +422,11 @@ A monitor is a software module consisting of <strong>one or more procedures, an 
 the same condition. If there are several such processes, choose one of them; if there is no such process, do nothing.</li>
 </ul>
 <p>Structure of Monitor:</p>
-<p><img src="./assets/structure_of_monitor.png" alt="Structure of Monitor" />
-Although a process can enter the monitor by invoking any of its procedures, we can think of the monitor as having <strong>a single entry point</strong> that is guarded so <strong>only one process may be in the monitor at a time</strong>. Other processes that attempt to enter the monitor join a queue of processes blocked waiting for monitor availability.</p>
-<p>Once a process is in the monitor, it may temporarily block itself on condition x by issuing cwait (x); it is then placed in a queue of processes waiting to reenter the monitor when the condition changes, and resume execution at the point in its program following the cwait (x) call. If a process that is executing in the monitor detects a change in the condition variable x, it issues csignal (x), which alerts the corresponding condition queue that the condition has changed.</p>
+<center>
+<p><img src="./assets/structure_of_monitor.png" alt="Structure of Monitor" /></p>
+</center>
+<p>Although a process can enter the monitor by invoking any of its procedures, we can think of the monitor as having <strong>a single entry point</strong> that is guarded so <strong>only one process may be in the monitor at a time</strong>. Other processes that attempt to enter the monitor join a queue of processes blocked waiting for monitor availability.</p>
+<p>Once a process is in the monitor, it may temporarily block itself on condition x by issuing <code>cwait (x)</code>; it is then placed in a queue of processes waiting to reenter the monitor when the condition changes, and resume execution at the point in its program following the cwait (x) call. If a process that is executing in the monitor detects a change in the condition variable x, it issues <code>csignal (x)</code>, which alerts the corresponding condition queue that the condition has changed.</p>
 <p>Implementation:</p>
 <pre><code class="language-c++">class Condition {
     int numWaiting = 0;
@@ -570,7 +576,9 @@ void main() {
 </ul>
 </li>
 </ul>
+<center>
 <p><img src="assets/writer_have_priority.png" alt="Writers Have Priority" /></p>
+</center>
 <h4 id="readers-have-priority"><a class="header" href="#readers-have-priority">Readers Have Priority</a></h4>
 <pre><code class="language-c++">/* program readersandwriters */
 int readcount;
@@ -600,7 +608,9 @@ void main() {
   parbegin (reader,writer);
 }
 </code></pre>
+<center>
 <p><img src="assets/reader_have_priority.png" alt="Readers Have Priority" /></p>
+</center>
 
                     </main>
 

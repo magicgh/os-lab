@@ -1091,7 +1091,9 @@ relationship:
 The working set is also a function of time. If a process executes over <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span> time units and uses only a single page, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mclose">)</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>. A working set can also grow as large as the number of pages N of the process, if many different pages are rapidly
 addressed and if the window size allows. Thus,
 <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">W</span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">Δ</span><span class="mclose">)</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">(</span><span class="mord">Δ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span></span></p>
+<center>
 <p><img src="virtual_memory/./assets/typical_graph_of_working_set_size.png" alt="Typical Graph of Working Set Size" /></p>
+</center>
 <p>Figure above indicates the way in which the working set size can vary over time for a fixed value of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span>. For many programs, periods of relatively stable working set sizes alternate with periods of rapid change.</p>
 <ul>
 <li>When a process first begins executing, it gradually builds up to a working set as it references new pages.</li>
@@ -1160,8 +1162,8 @@ resident set includes its working set).</li>
 <li>Otherwise, <strong>discard all pages with a use bit of 0, and shrink the resident set accordingly</strong>. At the same time, <em>reset the use bit on the remaining pages of the process to 0</em>.</li>
 </ul>
 <h4 id="example-5"><a class="header" href="#example-5">Example</a></h4>
-<p>The threshold F=2
-<img src="virtual_memory/./assets/pfr_example.png" alt="PBR Example" /></p>
+<p>The threshold F=2</p>
+<p><img src="virtual_memory/./assets/pfr_example.png" alt="PBR Example" /></p>
 <h2 id="thrashing"><a class="header" href="#thrashing">Thrashing</a></h2>
 <p>A phenomenon in virtual memory schemes, in which the processor <strong>spends most of its time swapping pieces rather than executing instructions</strong>.</p>
 <ul>
@@ -2520,8 +2522,10 @@ void main() {
 |:--:|:--:|
 |Producer: insert in full buffer |Consumer: item inserted|
 |Consumer: remove from empty buffer| Producer: item removed|
-The producer and consumer functions can be expressed as follows (variable in and out are initialized to 0 and n is the size of the buffer):
-<img src="concurrency/assets/producer_and_consumer_with_finite_buffer.png" alt="Producer and Consumer with Finite Buffer" /></p>
+The producer and consumer functions can be expressed as follows (variable in and out are initialized to 0 and n is the size of the buffer):</p>
+<center>
+<p><img src="concurrency/assets/producer_and_consumer_with_finite_buffer.png" alt="Producer and Consumer with Finite Buffer" /></p>
+</center>
 <pre><code class="language-c++">/* program boundedbuffer */
 const int sizeofbuffer = /* buffer size */;
 semaphore s = 1, n = 0, e = sizeofbuffer;
@@ -2550,7 +2554,9 @@ void main() {
 }
 </code></pre>
 <h4 id="implementation-of-semaphores"><a class="header" href="#implementation-of-semaphores">Implementation of Semaphores</a></h4>
+<center>
 <p><img src="concurrency/./assets/implementation_of_semaphores.png" alt="Implementation of Semaphores" /></p>
+</center>
 <h3 id="monitor"><a class="header" href="#monitor">Monitor</a></h3>
 <p><img src="concurrency/assets/monitor_outline.png" alt="Monitor Outline" />
 A monitor is a software module consisting of <strong>one or more procedures, an initialization sequence, and local data</strong>. The chief characteristics of a monitor are the following:</p>
@@ -2568,9 +2574,11 @@ A monitor is a software module consisting of <strong>one or more procedures, an 
 the same condition. If there are several such processes, choose one of them; if there is no such process, do nothing.</li>
 </ul>
 <p>Structure of Monitor:</p>
-<p><img src="concurrency/./assets/structure_of_monitor.png" alt="Structure of Monitor" />
-Although a process can enter the monitor by invoking any of its procedures, we can think of the monitor as having <strong>a single entry point</strong> that is guarded so <strong>only one process may be in the monitor at a time</strong>. Other processes that attempt to enter the monitor join a queue of processes blocked waiting for monitor availability.</p>
-<p>Once a process is in the monitor, it may temporarily block itself on condition x by issuing cwait (x); it is then placed in a queue of processes waiting to reenter the monitor when the condition changes, and resume execution at the point in its program following the cwait (x) call. If a process that is executing in the monitor detects a change in the condition variable x, it issues csignal (x), which alerts the corresponding condition queue that the condition has changed.</p>
+<center>
+<p><img src="concurrency/./assets/structure_of_monitor.png" alt="Structure of Monitor" /></p>
+</center>
+<p>Although a process can enter the monitor by invoking any of its procedures, we can think of the monitor as having <strong>a single entry point</strong> that is guarded so <strong>only one process may be in the monitor at a time</strong>. Other processes that attempt to enter the monitor join a queue of processes blocked waiting for monitor availability.</p>
+<p>Once a process is in the monitor, it may temporarily block itself on condition x by issuing <code>cwait (x)</code>; it is then placed in a queue of processes waiting to reenter the monitor when the condition changes, and resume execution at the point in its program following the cwait (x) call. If a process that is executing in the monitor detects a change in the condition variable x, it issues <code>csignal (x)</code>, which alerts the corresponding condition queue that the condition has changed.</p>
 <p>Implementation:</p>
 <pre><code class="language-c++">class Condition {
     int numWaiting = 0;
@@ -2720,7 +2728,9 @@ void main() {
 </ul>
 </li>
 </ul>
+<center>
 <p><img src="concurrency/assets/writer_have_priority.png" alt="Writers Have Priority" /></p>
+</center>
 <h4 id="readers-have-priority"><a class="header" href="#readers-have-priority">Readers Have Priority</a></h4>
 <pre><code class="language-c++">/* program readersandwriters */
 int readcount;
@@ -2750,12 +2760,16 @@ void main() {
   parbegin (reader,writer);
 }
 </code></pre>
+<center>
 <p><img src="concurrency/assets/reader_have_priority.png" alt="Readers Have Priority" /></p>
+</center>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="deadlock-and-starvation"><a class="header" href="#deadlock-and-starvation">Deadlock and Starvation</a></h1>
 <p>Deadlock can be defined as the permanent blocking of a set of processes that either compete for system resources or communicate with each other. A set of processes is deadlocked when each process in the set is blocked awaiting an event (typically the freeing up of some requested resource) that can only be triggered by another blocked process in the set. Deadlock is permanent because none of the events is ever triggered. Unlike other problems in concurrent process management, there is no efficient solution in the general case.
 Illustration of Deadlock:</p>
+<center>
 <p><img src="concurrency/./assets/illustration_of_deadlock.png" alt="Illustration of Deadlock" /></p>
+</center>
 <p>死锁问题：由于竞争资源或者通信关系，两个或更多线程在执行中出现，永远相互等待只能由其他进程引发的事件。</p>
 <h2 id="general-categories-of-resources"><a class="header" href="#general-categories-of-resources">General Categories of Resources</a></h2>
 <h3 id="reusable-resource"><a class="header" href="#reusable-resource">Reusable Resource</a></h3>
@@ -2774,7 +2788,9 @@ Illustration of Deadlock:</p>
 </ul>
 <h2 id="resource-allocation-graphs"><a class="header" href="#resource-allocation-graphs">Resource Allocation Graphs</a></h2>
 <p>A useful tool in characterizing the allocation of resources to processes is the resource allocation graph.The resource allocation graph is <strong>a directed graph</strong> that depicts a state of the system of resources and processes, with <strong>each process and each resource represented by a node</strong>. <strong>A graph edge directed</strong> from a process to a resource <strong>indicates a resource that has been requested by the process but not yet granted</strong>. Within a resource node, a dot is shown for each instance of that resource.</p>
+<center>
 <p><img src="concurrency/./assets/example_of_resource_allocation_graphs.png" alt="Examples of Resource Allocation Graphs" /></p>
+</center>
 <h2 id="the-conditions-for-deadlock"><a class="header" href="#the-conditions-for-deadlock">The Conditions for Deadlock</a></h2>
 <ol>
 <li>Mutual exclusion. Only one process may use a resource at a time. No process may access a resource unit that has been allocated to another process.</li>
@@ -2834,9 +2850,13 @@ amount of resources in the system.</p>
 <p>In terms of the matrices and vectors introduced earlier, the condition to be met for process <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> is:
 <span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord text"><span class="mord textrm">for all</span></span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></span>
 Safe State:</p>
+<center>
 <p><img src="concurrency/./assets/safe_state.png" alt="Safe State" /></p>
+</center>
 <p>Unsafe State:</p>
+<center>
 <p><img src="concurrency/./assets/unsafe_state.png" alt="Unsafe State" /></p>
+</center>
 <p>It is unsafe because each process will need at least one additional unit of R1, and there are none available. Thus, on the basis of deadlock avoidance, the request by P1 should be denied and P1 should be blocked. <strong>It is important to point out that Figure (b) is not a deadlocked state. It merely has the potential for deadlock.</strong> If P1 were run from this state, it would subsequently release one unit of R1 and one unit of R3 prior to needing these resources again. If that happened, the system would return to a safe state.</p>
 <p>Thus, the deadlock avoidance strategy does not predict deadlock with certainty; it merely anticipates the possibility of deadlock and assures that there is never such a possibility.</p>
 <h3 id="deadlock-detection"><a class="header" href="#deadlock-detection">Deadlock Detection</a></h3>
@@ -2849,7 +2869,9 @@ Safe State:</p>
 <li>If such a row is found, mark process <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> and add the corresponding row of the allocation matrix to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span>. That is, set <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, for <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span>. Return to step 3.</li>
 </ol>
 <h4 id="example-i"><a class="header" href="#example-i">Example I</a></h4>
+<center>
 <p><img src="concurrency/./assets/example_of_deadlock.png" alt="Example of Deadlock" /></p>
+</center>
 <ol>
 <li>Mark P4, because P4 has no allocated resources.</li>
 <li>Set <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mspace"> </span><span class="mord">0</span><span class="mspace"> </span><span class="mord">0</span><span class="mspace"> </span><span class="mord">0</span><span class="mspace"> </span><span class="mord">1</span><span class="mclose">)</span></span></span></span></li>
@@ -2861,7 +2883,9 @@ Therefore, terminate the algorithm.</li>
 <p>The algorithm concludes with P1 and P2 unmarked, indicating these processes
 are deadlocked.</p>
 <h4 id="example-ii"><a class="header" href="#example-ii">Example II</a></h4>
-<p><img src="concurrency/./assets/example_two_of_deadlock.png" alt="" /></p>
+<center>
+<p><img src="concurrency/./assets/example_two_of_deadlock.png" alt="Example Two of Deadlock" /></p>
+</center>
 <ol>
 <li>由于已分配进程中找不到全 0 向量，所以不能 mark。</li>
 <li>计算 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span> 向量为全 0。</li>
@@ -2906,8 +2930,9 @@ are deadlocked.</p>
 <p><img src="concurrency/./assets/dpp_solution_three.png" alt="DPP Solution 3" /><br />
 没有死锁，可有多人同时就餐。</p>
 <h3 id="a-solution-using-a-monitor"><a class="header" href="#a-solution-using-a-monitor">A Solution Using a Monitor</a></h3>
+<center>
 <p><img src="concurrency/./assets/dpp_monitor.png" alt="DPP Monitor" /></p>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+</center><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="interprocess-communication"><a class="header" href="#interprocess-communication">Interprocess Communication</a></h1>
 <ul>
 <li>进程通信是进程进行通信和同步的机制</li>
